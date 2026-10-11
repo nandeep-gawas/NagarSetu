@@ -539,7 +539,7 @@ export default function StaffPortalPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
         <CivicHeader />
-        <div className="max-w-md mx-auto my-16 p-8 bg-white rounded-2xl shadow-sm border border-slate-200 text-center">
+        <div className="max-w-md mx-auto my-16 p-8 bg-white rounded-none shadow-sm border border-slate-200 text-center">
           <Shield className="w-12 h-12 text-indigo-600 mx-auto mb-3" />
           <h2 className="text-xl font-bold text-slate-900">Pune Municipal Staff Portal</h2>
           <p className="text-xs text-slate-500 mt-2 mb-6">
@@ -547,7 +547,7 @@ export default function StaffPortalPage() {
           </p>
           <Link
             href="/login?returnTo=/staff"
-            className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition block text-center"
+            className="w-full py-2.5 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-none text-sm font-semibold transition block text-center"
           >
             Log In to Staff Portal
           </Link>
@@ -564,7 +564,7 @@ export default function StaffPortalPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
         <CivicHeader />
-        <div className="max-w-lg mx-auto my-16 p-8 bg-white rounded-2xl shadow-sm border border-rose-200 text-center">
+        <div className="max-w-lg mx-auto my-16 p-8 bg-white rounded-none shadow-sm border border-rose-200 text-center">
           <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-3">
             <Lock className="w-6 h-6" />
           </div>
@@ -579,13 +579,13 @@ export default function StaffPortalPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/my-complaints"
-              className="px-5 py-2.5 bg-indigo-600 text-white text-xs font-semibold rounded-xl hover:bg-indigo-700 transition"
+              className="px-5 py-2.5 bg-indigo-600 text-white text-xs font-semibold rounded-none hover:bg-indigo-700 transition"
             >
               Go to My Complaints
             </Link>
             <button
               onClick={() => handleQuickDemoSwitch("officer.roads@pune.gov.in")}
-              className="px-5 py-2.5 bg-slate-100 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-200 transition"
+              className="px-5 py-2.5 bg-slate-100 text-slate-700 text-xs font-semibold rounded-none hover:bg-slate-200 transition"
             >
               Switch to Officer Demo Account
             </button>
@@ -646,7 +646,7 @@ export default function StaffPortalPage() {
             {/* Logo & Portal Label */}
             <div className="flex items-center gap-3">
               <Link href="/" className="flex items-center gap-2">
-                <span className="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-700 to-indigo-500 text-white flex items-center justify-center font-bold text-base shadow-sm">
+                <span className="w-8 h-8 rounded-none bg-gradient-to-tr from-indigo-700 to-indigo-500 text-white flex items-center justify-center font-bold text-base shadow-sm">
                   न
                 </span>
                 <span className="font-bold text-slate-900 text-base">NagarSetu</span>
@@ -671,51 +671,51 @@ export default function StaffPortalPage() {
             {/* Right Controls: Demo Switcher & Notifications */}
             <div className="flex items-center gap-3">
               {/* Quick Demo Switcher */}
-              <div className="hidden lg:flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs">
+              <div className="hidden lg:flex items-center gap-1.5 bg-slate-100 p-1 rounded-none text-xs">
                 <span className="text-[10px] font-bold text-slate-400 px-1 uppercase">Switch Demo:</span>
                 <button
                   onClick={() => handleQuickDemoSwitch("officer.roads@pune.gov.in")}
-                  className={`px-2 py-1 rounded-lg font-medium transition ${
+                  className={`px-2 py-1 rounded-none font-medium transition ${
                     user.email === "officer.roads@pune.gov.in"
                       ? "bg-white text-blue-700 shadow-xs font-bold"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                   title="Roads Officer (FC Road, Potholes)"
                 >
-                  👷 Roads
+                   Roads
                 </button>
                 <button
                   onClick={() => handleQuickDemoSwitch("officer.water@pune.gov.in")}
-                  className={`px-2 py-1 rounded-lg font-medium transition ${
+                  className={`px-2 py-1 rounded-none font-medium transition ${
                     user.email === "officer.water@pune.gov.in"
                       ? "bg-white text-blue-700 shadow-xs font-bold"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                   title="Water Officer (Kothrud water supply)"
                 >
-                  🚰 Water
+                   Water
                 </button>
                 <button
                   onClick={() => handleQuickDemoSwitch("supervisor.west@pune.gov.in")}
-                  className={`px-2 py-1 rounded-lg font-medium transition ${
+                  className={`px-2 py-1 rounded-none font-medium transition ${
                     user.email === "supervisor.west@pune.gov.in"
                       ? "bg-white text-purple-700 shadow-xs font-bold"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                   title="Supervisor West (Reassignment, Deadlines, Duplicates)"
                 >
-                  🛡️ Supervisor
+                   Supervisor
                 </button>
                 <button
                   onClick={() => handleQuickDemoSwitch("admin@pune.gov.in")}
-                  className={`px-2 py-1 rounded-lg font-medium transition ${
+                  className={`px-2 py-1 rounded-none font-medium transition ${
                     user.email === "admin@pune.gov.in"
                       ? "bg-white text-rose-700 shadow-xs font-bold"
                       : "text-slate-600 hover:text-slate-900"
                   }`}
                   title="PMC Admin (Rules, Config, Full audit)"
                 >
-                  ⚙️ Admin
+                   Admin
                 </button>
               </div>
 
@@ -744,7 +744,7 @@ export default function StaffPortalPage() {
               <>
                 <button
                   onClick={() => setActiveTab("assigned")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "assigned"
                       ? "bg-blue-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -754,7 +754,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("queue")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "queue"
                       ? "bg-blue-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -764,7 +764,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("audit")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "audit"
                       ? "bg-blue-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -780,7 +780,7 @@ export default function StaffPortalPage() {
               <>
                 <button
                   onClick={() => setActiveTab("queue")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "queue"
                       ? "bg-purple-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -790,7 +790,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("duplicates")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "duplicates"
                       ? "bg-purple-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -800,7 +800,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("analytics")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "analytics"
                       ? "bg-purple-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -810,7 +810,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("audit")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "audit"
                       ? "bg-purple-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -820,13 +820,13 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("demo_h")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "demo_h"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100 text-rose-700"
                   }`}
                 >
-                  ⚠️ Scenario H Demo (Invalid Action)
+                   Scenario H Demo (Invalid Action)
                 </button>
               </>
             )}
@@ -836,7 +836,7 @@ export default function StaffPortalPage() {
               <>
                 <button
                   onClick={() => setActiveTab("all_issues")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "all_issues"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -846,7 +846,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("rules")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "rules"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -856,7 +856,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("workflow")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "workflow"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -866,7 +866,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("staff_mgmt")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "staff_mgmt"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -876,7 +876,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("analytics")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "analytics"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -886,7 +886,7 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("audit")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "audit"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100"
@@ -896,13 +896,13 @@ export default function StaffPortalPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("demo_h")}
-                  className={`px-3 py-1.5 rounded-lg font-semibold transition whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-none font-semibold transition whitespace-nowrap ${
                     activeTab === "demo_h"
                       ? "bg-rose-600 text-white shadow-xs"
                       : "text-slate-600 hover:bg-slate-100 text-rose-700"
                   }`}
                 >
-                  ⚠️ Scenario H Demo
+                   Scenario H Demo
                 </button>
               </>
             )}
@@ -915,7 +915,7 @@ export default function StaffPortalPage() {
         {/* OFFICER KPI SUMMARY CARDS */}
         {user.role === "OFFICER" && activeTab === "assigned" && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm">
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Assigned to Me
               </span>
@@ -925,7 +925,7 @@ export default function StaffPortalPage() {
               <p className="text-[11px] text-slate-400 mt-0.5">Active field queue</p>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm">
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Due Soon (&lt; 24h)
               </span>
@@ -935,7 +935,7 @@ export default function StaffPortalPage() {
               <p className="text-[11px] text-slate-400 mt-0.5">Nearing SLA deadline</p>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm">
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Overdue (Breached)
               </span>
@@ -945,7 +945,7 @@ export default function StaffPortalPage() {
               <p className="text-[11px] text-slate-400 mt-0.5">Requires immediate action</p>
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm">
               <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                 Resolved This Week
               </span>
@@ -965,7 +965,7 @@ export default function StaffPortalPage() {
           activeTab === "escalated") && (
           <div className="space-y-4">
             {/* Filter Bar */}
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="relative w-full sm:w-72">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
@@ -973,7 +973,7 @@ export default function StaffPortalPage() {
                   placeholder="Search reference, title, location..."
                   value={filterSearch}
                   onChange={(e) => setFilterSearch(e.target.value)}
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-none border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
 
@@ -981,7 +981,7 @@ export default function StaffPortalPage() {
                 <select
                   value={filterPriority}
                   onChange={(e) => setFilterPriority(e.target.value)}
-                  className="text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white text-slate-700"
+                  className="text-xs px-3 py-2 rounded-none border border-slate-200 bg-white text-slate-700"
                 >
                   <option value="ALL">All Priorities</option>
                   <option value="CRITICAL">Critical</option>
@@ -993,7 +993,7 @@ export default function StaffPortalPage() {
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white text-slate-700"
+                  className="text-xs px-3 py-2 rounded-none border border-slate-200 bg-white text-slate-700"
                 >
                   <option value="ALL">All Statuses</option>
                   <option value="SUBMITTED">Submitted</option>
@@ -1008,7 +1008,7 @@ export default function StaffPortalPage() {
 
                 <button
                   onClick={fetchStaffIssues}
-                  className="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600 transition"
+                  className="p-2 border border-slate-200 rounded-none hover:bg-slate-50 text-slate-600 transition"
                   title="Refresh list"
                 >
                   <RefreshCw className="w-4 h-4" />
@@ -1017,7 +1017,7 @@ export default function StaffPortalPage() {
             </div>
 
             {/* Issues Table */}
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden">
               {issuesLoading ? (
                 <div className="p-12 text-center text-slate-500">
                   <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-indigo-600" />
@@ -1157,7 +1157,7 @@ export default function StaffPortalPage() {
                                   e.stopPropagation();
                                   loadIssueDetail(issue.id);
                                 }}
-                                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-none bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
                               >
                                 Inspect
                                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1183,7 +1183,7 @@ export default function StaffPortalPage() {
         {/* AUDIT LOG TAB (SHARED) */}
         {activeTab === "audit" && (
           <div className="space-y-4">
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="bg-white p-5 rounded-none border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <h2 className="text-base font-bold text-slate-900">
                   Municipal Grievance Audit &amp; Governance Ledger
@@ -1198,7 +1198,7 @@ export default function StaffPortalPage() {
                 <select
                   value={auditFilterOutcome}
                   onChange={(e) => setAuditFilterOutcome(e.target.value)}
-                  className="text-xs px-3 py-2 rounded-lg border border-slate-200 bg-white"
+                  className="text-xs px-3 py-2 rounded-none border border-slate-200 bg-white"
                 >
                   <option value="ALL">All Outcomes</option>
                   <option value="ACCEPTED">ACCEPTED Only</option>
@@ -1210,19 +1210,19 @@ export default function StaffPortalPage() {
                   placeholder="Filter actor (e.g. system:deadline-monitor)..."
                   value={auditFilterActor}
                   onChange={(e) => setAuditFilterActor(e.target.value)}
-                  className="text-xs px-3 py-2 rounded-lg border border-slate-200"
+                  className="text-xs px-3 py-2 rounded-none border border-slate-200"
                 />
 
                 <button
                   onClick={fetchAuditLogs}
-                  className="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 text-slate-600 transition"
+                  className="p-2 border border-slate-200 rounded-none hover:bg-slate-50 text-slate-600 transition"
                 >
                   <RefreshCw className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden">
               {auditLoading ? (
                 <div className="p-12 text-center text-slate-500">
                   <RefreshCw className="w-6 h-6 animate-spin mx-auto mb-2 text-indigo-600" />
@@ -1318,7 +1318,7 @@ export default function StaffPortalPage() {
         {/* DEMO SCENARIO H TAB */}
         {activeTab === "demo_h" && (
           <div className="space-y-6">
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-900">
+            <div className="bg-amber-50 border border-amber-200 rounded-none p-4 text-xs text-amber-900">
               <strong>Judge &amp; Evaluator Demonstration Tool:</strong> This panel executes Scenario H.
               It verifies that the backend workflow engine rejects unauthorized or graph-skipping operations,
               and immutably records the refusal reason in the AuditEvent ledger.
@@ -1330,7 +1330,7 @@ export default function StaffPortalPage() {
         {/* ADMIN: RULES & SLAS TAB */}
         {activeTab === "rules" && adminRules && (
           <div className="space-y-6">
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-5 rounded-none border border-slate-200 shadow-sm">
               <h2 className="text-base font-bold text-slate-900">
                 DeadlineRules Configuration Engine
               </h2>
@@ -1341,7 +1341,7 @@ export default function StaffPortalPage() {
 
               {adminFeedback && (
                 <div
-                  className={`mt-3 p-3 rounded-lg text-xs font-medium ${
+                  className={`mt-3 p-3 rounded-none text-xs font-medium ${
                     adminFeedback.type === "success"
                       ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                       : "bg-rose-50 text-rose-800 border border-rose-200"
@@ -1467,7 +1467,7 @@ export default function StaffPortalPage() {
             </div>
 
             {/* Priority Escalation Rules */}
-            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white p-5 rounded-none border border-slate-200 shadow-sm">
               <h2 className="text-base font-bold text-slate-900">
                 PriorityRules &amp; Escalation Thresholds
               </h2>
@@ -1512,7 +1512,7 @@ export default function StaffPortalPage() {
 
         {/* ADMIN: WORKFLOW STATE MACHINE TAB */}
         {activeTab === "workflow" && (
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <div className="bg-white p-5 rounded-none border border-slate-200 shadow-sm space-y-4">
             <div>
               <h2 className="text-base font-bold text-slate-900">
                 Workflow Transitions &amp; Role-Based Graph
@@ -1579,7 +1579,7 @@ export default function StaffPortalPage() {
 
         {/* ADMIN: STAFF MANAGEMENT TAB */}
         {activeTab === "staff_mgmt" && (
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <div className="bg-white p-5 rounded-none border border-slate-200 shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-base font-bold text-slate-900">
@@ -1661,7 +1661,7 @@ export default function StaffPortalPage() {
                   setSelectedIssue(null);
                   setActionTransition(null);
                 }}
-                className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
+                className="p-2 text-slate-400 hover:text-white rounded-none hover:bg-slate-800 transition"
               >
                 <XCircle className="w-6 h-6" />
               </button>
@@ -1677,7 +1677,7 @@ export default function StaffPortalPage() {
               ) : (
                 <>
                   {/* Status & Priority Strip */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 rounded-none border border-slate-200">
                     <div className="space-y-1">
                       <span className="text-[11px] text-slate-500 uppercase font-bold tracking-wider block">
                         Current Status
@@ -1719,17 +1719,17 @@ export default function StaffPortalPage() {
 
                   {/* Supervisor Controls: Reassign & Deadline Modification */}
                   {(user.role === "SUPERVISOR" || user.role === "ADMIN") && (
-                    <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-xl border border-purple-200 text-xs">
+                    <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-none border border-purple-200 text-xs">
                       <span className="font-semibold text-purple-900">Supervisor Actions:</span>
                       <button
                         onClick={() => setShowReassignModal(true)}
-                        className="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition"
+                        className="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-none font-semibold transition"
                       >
                         Reassign Officer
                       </button>
                       <button
                         onClick={() => setShowDeadlineModal(true)}
-                        className="px-3 py-1 bg-white hover:bg-purple-100 text-purple-700 border border-purple-300 rounded-lg font-semibold transition"
+                        className="px-3 py-1 bg-white hover:bg-purple-100 text-purple-700 border border-purple-300 rounded-none font-semibold transition"
                       >
                         Modify Deadline SLA
                       </button>
@@ -1738,12 +1738,12 @@ export default function StaffPortalPage() {
 
                   {/* Reassign Modal */}
                   {showReassignModal && (
-                    <div className="p-4 bg-slate-100 rounded-xl border border-slate-300 space-y-3">
+                    <div className="p-4 bg-slate-100 rounded-none border border-slate-300 space-y-3">
                       <h4 className="text-xs font-bold text-slate-900">Reassign Field Officer</h4>
                       <select
                         value={reassignOfficerId}
                         onChange={(e) => setReassignOfficerId(e.target.value)}
-                        className="w-full text-xs p-2 rounded-lg border border-slate-300 bg-white"
+                        className="w-full text-xs p-2 rounded-none border border-slate-300 bg-white"
                       >
                         <option value="">Select Department Officer...</option>
                         {departmentOfficers.map((off) => (
@@ -1757,7 +1757,7 @@ export default function StaffPortalPage() {
                         placeholder="Mandatory reason for reassignment..."
                         value={reassignReason}
                         onChange={(e) => setReassignReason(e.target.value)}
-                        className="w-full text-xs p-2 rounded-lg border border-slate-300"
+                        className="w-full text-xs p-2 rounded-none border border-slate-300"
                       />
                       <div className="flex justify-end gap-2">
                         <button
@@ -1779,7 +1779,7 @@ export default function StaffPortalPage() {
 
                   {/* Deadline Modal */}
                   {showDeadlineModal && (
-                    <div className="p-4 bg-slate-100 rounded-xl border border-slate-300 space-y-3">
+                    <div className="p-4 bg-slate-100 rounded-none border border-slate-300 space-y-3">
                       <h4 className="text-xs font-bold text-slate-900">Change Resolution Deadline</h4>
                       <p className="text-[11px] text-slate-500">
                         Current: {selectedIssue.resolutionDeadline ? new Date(selectedIssue.resolutionDeadline).toLocaleString("en-IN") : "None"}
@@ -1788,14 +1788,14 @@ export default function StaffPortalPage() {
                         type="datetime-local"
                         value={newDeadlineVal}
                         onChange={(e) => setNewDeadlineVal(e.target.value)}
-                        className="w-full text-xs p-2 rounded-lg border border-slate-300"
+                        className="w-full text-xs p-2 rounded-none border border-slate-300"
                       />
                       <input
                         type="text"
                         placeholder="Mandatory reason / justification for deadline revision..."
                         value={deadlineReason}
                         onChange={(e) => setDeadlineReason(e.target.value)}
-                        className="w-full text-xs p-2 rounded-lg border border-slate-300"
+                        className="w-full text-xs p-2 rounded-none border border-slate-300"
                       />
                       <div className="flex justify-end gap-2">
                         <button
@@ -1832,7 +1832,7 @@ export default function StaffPortalPage() {
                     {selectedIssue.reports.map((report, idx) => (
                       <div
                         key={report.id}
-                        className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3"
+                        className="p-4 bg-slate-50 rounded-none border border-slate-200 space-y-3"
                       >
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-slate-800">
@@ -1867,7 +1867,7 @@ export default function StaffPortalPage() {
                                     href={ev.filePath}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="block relative group overflow-hidden rounded-lg border border-slate-300"
+                                    className="block relative group overflow-hidden rounded-none border border-slate-300"
                                   >
                                     <img
                                       src={ev.filePath}
@@ -1904,7 +1904,7 @@ export default function StaffPortalPage() {
                   </div>
 
                   {/* Allowed Transitions Action Panel */}
-                  <div className="p-5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-xl space-y-4">
+                  <div className="p-5 bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-none space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="text-xs font-bold text-white uppercase tracking-wider">
                         Workflow State Actions (Backend Enforced)
@@ -1929,7 +1929,7 @@ export default function StaffPortalPage() {
                               setActionResolutionNote("");
                               setActionError(null);
                             }}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                            className={`px-3 py-1.5 rounded-none text-xs font-semibold transition ${
                               actionTransition?.id === tr.id
                                 ? "bg-white text-slate-900 shadow-md ring-2 ring-indigo-400"
                                 : "bg-indigo-600 hover:bg-indigo-500 text-white"
@@ -1943,7 +1943,7 @@ export default function StaffPortalPage() {
 
                     {/* Active Transition Form */}
                     {actionTransition && (
-                      <div className="p-4 bg-white/10 rounded-xl space-y-3 border border-white/20">
+                      <div className="p-4 bg-white/10 rounded-none space-y-3 border border-white/20">
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-bold text-white">
                             Action: Move to {actionTransition.toState.replace(/_/g, " ")}
@@ -1954,7 +1954,7 @@ export default function StaffPortalPage() {
                         </div>
 
                         {actionError && (
-                          <div className="p-2.5 bg-rose-500/20 border border-rose-500/40 rounded-lg text-xs text-rose-200">
+                          <div className="p-2.5 bg-rose-500/20 border border-rose-500/40 rounded-none text-xs text-rose-200">
                             {actionError}
                           </div>
                         )}
@@ -1969,7 +1969,7 @@ export default function StaffPortalPage() {
                               value={actionResolutionNote}
                               onChange={(e) => setActionResolutionNote(e.target.value)}
                               placeholder="Describe work completed (e.g. Pothole filled with cold asphalt mix, leveled and compacted)..."
-                              className="w-full text-xs p-2 rounded-lg bg-white/90 text-slate-900 placeholder-slate-400 focus:outline-none"
+                              className="w-full text-xs p-2 rounded-none bg-white/90 text-slate-900 placeholder-slate-400 focus:outline-none"
                             />
 
                             <label className="text-[11px] font-semibold text-slate-200 block mt-2">
@@ -1997,21 +1997,21 @@ export default function StaffPortalPage() {
                                 ? "Mandatory justification for this state change..."
                                 : "Optional workflow note..."
                             }
-                            className="w-full text-xs p-2 rounded-lg bg-white/90 text-slate-900 placeholder-slate-400 focus:outline-none"
+                            className="w-full text-xs p-2 rounded-none bg-white/90 text-slate-900 placeholder-slate-400 focus:outline-none"
                           />
                         </div>
 
                         <div className="flex justify-end gap-2 pt-1">
                           <button
                             onClick={() => setActionTransition(null)}
-                            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs"
+                            className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-none text-xs"
                           >
                             Cancel
                           </button>
                           <button
                             disabled={isSubmittingAction}
                             onClick={handleExecuteTransition}
-                            className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow-sm transition disabled:opacity-50"
+                            className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-none text-xs font-semibold shadow-sm transition disabled:opacity-50"
                           >
                             {isSubmittingAction ? "Verifying..." : "Execute State Transition"}
                           </button>

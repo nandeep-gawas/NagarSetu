@@ -42,7 +42,7 @@ export function FloatingHelpAssistant() {
       id: "initial",
       role: "assistant",
       content:
-        "Namaskar! I am your NagarSetu Civic Assistant for Pune Municipal Corporation grievances. You can describe your issue in English, Hindi, or Marathi, or use voice input to speak directly. How can I help you today?",
+        "Namaskar. Welcome to the Pune Municipal Corporation NagarSetu Grievance Helpdesk. You can describe your civic issue in English, Hindi, or Marathi, or use microphone speech-to-text. How can we assist you today?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -227,7 +227,7 @@ export function FloatingHelpAssistant() {
           id: Math.random().toString(),
           role: "assistant",
           content:
-            "I encountered a temporary connection issue. You can still file your grievance directly via the 'Register a Complaint' menu, or try asking again.",
+            "A temporary connection error occurred. You can lodge your grievance directly via the 'Lodge Grievance' menu, or try again.",
         },
       ]);
     } finally {
@@ -235,12 +235,10 @@ export function FloatingHelpAssistant() {
     }
   };
 
-  // Quick suggestion chips handler
   const handleChipClick = (chipText: string) => {
     sendMessage(chipText);
   };
 
-  // Resolve category selection
   const handleSelectCategory = (catName: string) => {
     const matched = categories.find(
       (c) => c.name.toLowerCase() === catName.toLowerCase()
@@ -253,7 +251,6 @@ export function FloatingHelpAssistant() {
     sendMessage(`I confirm category: ${catName}`);
   };
 
-  // Resolve subcategory selection
   const handleSelectSubcategory = (subName: string) => {
     let subId = "";
     categories.forEach((c) => {
@@ -271,7 +268,6 @@ export function FloatingHelpAssistant() {
     sendMessage(`I confirm subcategory: ${subName}`);
   };
 
-  // Location Preset Handler
   const handleSelectLocation = (loc: { name: string; lat: number; lng: number }) => {
     setCollected((prev) => ({
       ...prev,
@@ -282,7 +278,6 @@ export function FloatingHelpAssistant() {
     sendMessage(`My location is ${loc.name}`);
   };
 
-  // Browser Geolocation
   const handleGetBrowserLocation = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser.");
@@ -306,7 +301,6 @@ export function FloatingHelpAssistant() {
     );
   };
 
-  // Photo / Evidence Upload
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -326,7 +320,7 @@ export function FloatingHelpAssistant() {
           filePath: data.filePath,
           mimeType: data.mimeType,
           sizeBytes: data.sizeBytes,
-          caption: "Uploaded via AI Help Assistant",
+          caption: "Uploaded via Civic Helpdesk",
         });
         if (data.exif?.latitude && data.exif?.longitude) {
           setCollected((prev) => ({
@@ -336,7 +330,7 @@ export function FloatingHelpAssistant() {
             locationLabel: `Photo EXIF GPS (${data.exif.latitude.toFixed(4)}, ${data.exif.longitude.toFixed(4)})`,
           }));
         }
-        sendMessage("I have uploaded a photo as evidence.");
+        sendMessage("I have uploaded photo evidence.");
       } else {
         alert(data.error || "Upload failed. Please choose JPG/PNG under 10 MB.");
       }
@@ -347,13 +341,11 @@ export function FloatingHelpAssistant() {
     }
   };
 
-  // Final Submission via standard POST /api/reports route
   const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
     setSubmissionResult(null);
 
     try {
-      // Find database category ID
       let finalCatId = collected.categoryId;
       if (!finalCatId && collected.categoryName) {
         const cat = categories.find(
@@ -366,10 +358,9 @@ export function FloatingHelpAssistant() {
         finalCatId = categories[0].id;
       }
 
-      // Default Pune coordinates if not chosen
       const finalLat = collected.latitude || 18.5204;
       const finalLng = collected.longitude || 73.8567;
-      const finalDesc = collected.description || "Civic grievance reported via NagarSetu Assistant";
+      const finalDesc = collected.description || "Civic grievance reported via NagarSetu Helpdesk";
 
       const payload = {
         categoryId: finalCatId,
@@ -400,7 +391,7 @@ export function FloatingHelpAssistant() {
       }
 
       if (res.ok && data.ok) {
-        const refId = data.issue?.publicRef || data.report?.id || "PUN-REGISTERED";
+        const refId = data.issue?.publicRef || data.report?.id || "PMC-REGISTERED";
         setSubmissionResult({
           success: true,
           referenceId: refId,
@@ -411,8 +402,8 @@ export function FloatingHelpAssistant() {
           id: Math.random().toString(),
           role: "assistant",
           content: data.status === "LINKED_AS_DUPLICATE"
-            ? `Your complaint has been successfully registered and linked as a duplicate to existing Issue ${refId}. Because multiple citizens reported this location, priority was automatically raised!`
-            : `Success! Your municipal complaint has been registered with reference ID ${refId}. You can track its live status anytime on the Track page or right here in chat.`,
+            ? `Your grievance has been registered and merged into existing Issue ${refId}. Due to multiple reports at this location, municipal priority was raised.`
+            : `Grievance registered successfully. Official Reference ID: ${refId}. You can track status on the Track Status page or directly in this helpdesk.`,
         };
         setMessages((prev) => [...prev, confirmMsg]);
       } else {
@@ -433,43 +424,42 @@ export function FloatingHelpAssistant() {
 
   return (
     <div className="fixed bottom-5 right-5 z-50 font-sans">
-      {/* Expanded Chat Drawer */}
+      {/* Expanded Chat Drawer (Strict Sharp Government Card) */}
       {isOpen && (
         <div
           role="dialog"
-          aria-label="NagarSetu Civic Assistant"
-          className="mb-3 w-80 sm:w-[420px] h-[580px] bg-white border-2 border-[#0f2942] rounded-2xl shadow-2xl flex flex-col text-xs animate-in fade-in slide-in-from-bottom-3 overflow-hidden"
+          aria-label="Pune Municipal Civic Helpdesk"
+          className="mb-2 w-80 sm:w-[420px] h-[580px] bg-white border-2 border-[#0f3057] shadow-2xl flex flex-col text-xs rounded-none animate-in fade-in slide-in-from-bottom-2 overflow-hidden"
         >
           {/* Header */}
-          <div className="p-3 bg-[#0f2942] text-white flex items-center justify-between border-b border-slate-700">
+          <div className="p-3 bg-[#0f3057] text-white flex items-center justify-between border-b border-slate-700">
             <div className="flex items-center gap-2">
-              <span className="h-7 w-7 rounded-full bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xs shadow">
-                NS
+              <span className="h-6 w-6 bg-[#c31a26] text-white font-bold flex items-center justify-center text-[10px] rounded-none">
+                PMC
               </span>
               <div>
-                <strong className="text-white block text-xs leading-none">
-                  NagarSetu Civic Assistant
+                <strong className="text-white block text-xs leading-none uppercase tracking-wide">
+                  NagarSetu Civic Helpdesk
                 </strong>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span
-                    className={`inline-block h-1.5 w-1.5 rounded-full ${
+                    className={`inline-block h-1.5 w-1.5 ${
                       isDemoMode ? "bg-amber-400" : "bg-emerald-400"
                     }`}
                   />
                   <span className="text-[10px] text-slate-300">
-                    {isDemoMode ? "Demo Mode (Offline Mock)" : "Gemini AI Active"}
+                    {isDemoMode ? "Rule Engine Active" : "Gemini API Active"}
                   </span>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              {/* Language selection */}
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value as any)}
                 aria-label="Select speech language"
-                className="bg-slate-800 text-slate-200 text-[10px] rounded px-1.5 py-0.5 border border-slate-600 focus:outline-none"
+                className="bg-[#092240] text-slate-200 text-[10px] px-1.5 py-0.5 border border-slate-500 rounded-none focus:outline-none"
               >
                 <option value="en-IN">EN (English)</option>
                 <option value="hi-IN">HI (हिंदी)</option>
@@ -480,7 +470,7 @@ export function FloatingHelpAssistant() {
                 type="button"
                 onClick={() => setIsOpen(false)}
                 aria-label="Close Assistant"
-                className="h-6 w-6 rounded-full hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold"
+                className="h-6 w-6 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm font-bold rounded-none"
               >
                 ✕
               </button>
@@ -488,15 +478,15 @@ export function FloatingHelpAssistant() {
           </div>
 
           {/* Governance Notice Banner */}
-          <div className="bg-amber-50 border-b border-amber-200 px-3 py-1.5 text-[10px] text-amber-900 flex items-start gap-1.5 leading-tight">
-            <span>🛡️</span>
+          <div className="bg-[#fef2f2] border-b border-rose-200 px-3 py-1.5 text-[10px] text-rose-950 flex items-start gap-1.5 leading-tight">
+            <span className="font-bold text-[#c31a26]">[NOTICE]</span>
             <div>
-              <strong>Governance Guardrail:</strong> AI Assistant cannot alter complaint status, assign officers, or change SLA deadlines. Complaints are officially verified by Pune Municipal authorities.
+              <strong>Governance Rule:</strong> Helpdesk assistant cannot mutate complaint state, assign staff, or modify deadlines. All actions require municipal verification.
             </div>
           </div>
 
           {/* Conversation Messages */}
-          <div className="flex-1 p-3 overflow-y-auto space-y-3 bg-slate-50 text-slate-800">
+          <div className="flex-1 p-3 overflow-y-auto space-y-3 bg-[#f8fafc] text-slate-800">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -505,10 +495,10 @@ export function FloatingHelpAssistant() {
                 }`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl p-2.5 text-xs leading-relaxed shadow-sm ${
+                  className={`max-w-[85%] p-2.5 text-xs leading-relaxed border ${
                     msg.role === "user"
-                      ? "bg-[#0f2942] text-white rounded-br-none"
-                      : "bg-white text-slate-800 border border-slate-200 rounded-bl-none"
+                      ? "bg-[#0f3057] text-white border-[#0f3057] rounded-none"
+                      : "bg-white text-slate-800 border-slate-300 rounded-none"
                   }`}
                 >
                   <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -516,21 +506,21 @@ export function FloatingHelpAssistant() {
                   {/* Category confirmation buttons */}
                   {msg.suggestedCategory && !collected.categoryId && (
                     <div className="mt-2 pt-2 border-t border-slate-200 space-y-1.5">
-                      <div className="text-[11px] font-semibold text-slate-600">
+                      <div className="text-[11px] font-semibold text-slate-700">
                         Suggested Category:
                       </div>
                       <div className="flex flex-wrap gap-1">
                         <button
                           type="button"
                           onClick={() => handleSelectCategory(msg.suggestedCategory!)}
-                          className="px-2 py-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold rounded text-[11px]"
+                          className="px-2 py-1 bg-[#c31a26] hover:bg-[#a61520] text-white font-bold text-[11px] rounded-none"
                         >
-                          ✓ Confirm {msg.suggestedCategory}
+                          Confirm: {msg.suggestedCategory}
                         </button>
                         <button
                           type="button"
                           onClick={() => sendMessage("Let me choose a different category")}
-                          className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[11px]"
+                          className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 text-[11px] rounded-none"
                         >
                           Change Category
                         </button>
@@ -541,15 +531,15 @@ export function FloatingHelpAssistant() {
                   {/* Subcategory selection buttons */}
                   {msg.suggestedSubcategory && !collected.subcategoryId && (
                     <div className="mt-2 pt-2 border-t border-slate-200 space-y-1.5">
-                      <div className="text-[11px] font-semibold text-slate-600">
+                      <div className="text-[11px] font-semibold text-slate-700">
                         Suggested Subcategory:
                       </div>
                       <button
                         type="button"
                         onClick={() => handleSelectSubcategory(msg.suggestedSubcategory!)}
-                        className="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded text-[11px]"
+                        className="px-2 py-1 bg-[#0f3057] hover:bg-[#1a4473] text-white font-semibold text-[11px] rounded-none"
                       >
-                        ✓ Confirm: {msg.suggestedSubcategory}
+                        Confirm: {msg.suggestedSubcategory}
                       </button>
                     </div>
                   )}
@@ -559,18 +549,17 @@ export function FloatingHelpAssistant() {
 
             {/* In-chat Location Selection Step */}
             {collected.categoryName && !collected.latitude && (
-              <div className="bg-white border border-blue-200 rounded-xl p-3 shadow-sm space-y-2">
-                <div className="font-semibold text-slate-900 text-xs flex items-center gap-1.5">
-                  <span>📍</span>
-                  <span>Select Pune Location:</span>
+              <div className="bg-white border border-slate-300 rounded-none p-3 space-y-2">
+                <div className="font-bold text-slate-900 text-xs">
+                  Select Pune Municipal Ward / Area:
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   {PUNE_PRESET_LOCATIONS.map((loc) => (
                     <button
                       key={loc.name}
                       type="button"
                       onClick={() => handleSelectLocation(loc)}
-                      className="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] font-medium border border-slate-300"
+                      className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-800 text-[10px] font-medium border border-slate-300 rounded-none"
                     >
                       {loc.name}
                     </button>
@@ -578,9 +567,9 @@ export function FloatingHelpAssistant() {
                   <button
                     type="button"
                     onClick={handleGetBrowserLocation}
-                    className="px-2 py-1 rounded bg-blue-50 hover:bg-blue-100 text-blue-700 text-[10px] font-bold border border-blue-300"
+                    className="px-2 py-1 bg-[#0f3057] text-white text-[10px] font-bold rounded-none"
                   >
-                    📡 Use Device GPS
+                    Acquire Device GPS
                   </button>
                 </div>
               </div>
@@ -588,12 +577,9 @@ export function FloatingHelpAssistant() {
 
             {/* In-chat Evidence Upload Step */}
             {collected.categoryName && !uploadedEvidence && (
-              <div className="bg-white border border-slate-200 rounded-xl p-3 shadow-sm space-y-2">
-                <div className="font-semibold text-slate-900 text-xs flex items-center justify-between">
-                  <span className="flex items-center gap-1">
-                    <span>📷</span>
-                    <span>Attach Photo/Video Evidence (Optional):</span>
-                  </span>
+              <div className="bg-white border border-slate-300 rounded-none p-3 space-y-2">
+                <div className="font-bold text-slate-900 text-xs flex items-center justify-between">
+                  <span>Attach Photographic Evidence (Optional):</span>
                   <button
                     type="button"
                     onClick={() => sendMessage("I will skip uploading a photo for now.")}
@@ -603,8 +589,8 @@ export function FloatingHelpAssistant() {
                   </button>
                 </div>
                 <div className="flex items-center gap-2">
-                  <label className="cursor-pointer px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-800 rounded font-semibold text-[11px] flex items-center gap-1">
-                    <span>{isUploading ? "Uploading..." : "Upload / Camera"}</span>
+                  <label className="cursor-pointer px-3 py-1.5 bg-[#0f3057] hover:bg-[#1a4473] text-white rounded-none font-semibold text-[11px]">
+                    <span>{isUploading ? "Uploading..." : "Select File"}</span>
                     <input
                       type="file"
                       accept="image/*,video/*"
@@ -622,18 +608,17 @@ export function FloatingHelpAssistant() {
 
             {/* Uploaded Evidence Thumbnail */}
             {uploadedEvidence && (
-              <div className="bg-emerald-50 border border-emerald-300 rounded-lg p-2 flex items-center justify-between text-xs text-emerald-900">
+              <div className="bg-slate-50 border border-slate-300 rounded-none p-2 flex items-center justify-between text-xs text-slate-900">
                 <div className="flex items-center gap-2">
-                  <span>📸</span>
-                  <span className="font-semibold">Evidence attached</span>
-                  <span className="text-[10px] text-emerald-700">
+                  <span className="font-bold">[PHOTO ATTACHED]</span>
+                  <span className="text-[10px] text-slate-600">
                     ({Math.round(uploadedEvidence.sizeBytes / 1024)} KB)
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setUploadedEvidence(null)}
-                  className="text-rose-600 hover:underline text-[10px] font-bold"
+                  className="text-[#c31a26] hover:underline text-[10px] font-bold"
                 >
                   Remove
                 </button>
@@ -642,14 +627,13 @@ export function FloatingHelpAssistant() {
 
             {/* Review & Confirmation Card */}
             {collected.categoryName && collected.latitude && (
-              <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 shadow space-y-2">
-                <div className="flex items-center justify-between border-b border-amber-200 pb-1">
-                  <strong className="text-amber-950 text-xs flex items-center gap-1">
-                    <span>📋</span>
-                    <span>Review Grievance Summary</span>
+              <div className="bg-white border-2 border-[#0f3057] rounded-none p-3 space-y-2">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-1">
+                  <strong className="text-slate-900 text-xs uppercase tracking-wide">
+                    Review Grievance Summary
                   </strong>
-                  <span className="text-[10px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-semibold">
-                    Ready to File
+                  <span className="text-[10px] bg-slate-200 text-slate-800 px-1.5 py-0.5 rounded-none font-semibold">
+                    Ready to Lodge
                   </span>
                 </div>
 
@@ -671,18 +655,18 @@ export function FloatingHelpAssistant() {
                   <div>
                     <span className="font-semibold text-slate-600">Description: </span>
                     <span className="italic">
-                      "{collected.description || "Civic issue reported"}"
+                      "{collected.description || "Civic grievance reported"}"
                     </span>
                   </div>
                 </div>
 
                 {submissionResult && !submissionResult.success && (
-                  <div className="p-2 bg-rose-100 border border-rose-300 rounded text-rose-800 text-[11px] space-y-1">
+                  <div className="p-2 bg-rose-50 border border-rose-300 rounded-none text-rose-900 text-[11px] space-y-1">
                     <div>{submissionResult.error}</div>
                     {submissionResult.error?.includes("log in") && (
                       <Link
                         href="/login?redirect=/report"
-                        className="inline-block px-2 py-0.5 bg-rose-700 text-white rounded font-bold hover:bg-rose-800 text-[10px]"
+                        className="inline-block px-2 py-0.5 bg-[#c31a26] text-white rounded-none font-bold hover:bg-[#a61520] text-[10px]"
                       >
                         Log In to Account →
                       </Link>
@@ -691,9 +675,9 @@ export function FloatingHelpAssistant() {
                 )}
 
                 {submissionResult && submissionResult.success && (
-                  <div className="p-2 bg-emerald-100 border border-emerald-300 rounded text-emerald-900 text-[11px] space-y-1">
+                  <div className="p-2 bg-emerald-50 border border-emerald-300 rounded-none text-emerald-950 text-[11px] space-y-1">
                     <div className="font-bold">
-                      Complaint Registered: {submissionResult.referenceId}
+                      Grievance Lodged: {submissionResult.referenceId}
                     </div>
                     {submissionResult.isDuplicate && (
                       <div className="text-[10px] text-emerald-800">
@@ -702,9 +686,9 @@ export function FloatingHelpAssistant() {
                     )}
                     <Link
                       href={`/track?ref=${submissionResult.referenceId}`}
-                      className="inline-block px-2 py-0.5 bg-emerald-700 text-white rounded font-bold hover:bg-emerald-800 text-[10px]"
+                      className="inline-block px-2 py-0.5 bg-[#0f3057] text-white rounded-none font-bold hover:bg-[#1a4473] text-[10px]"
                     >
-                      View Live Tracking →
+                      View Live Tracking Receipt →
                     </Link>
                   </div>
                 )}
@@ -715,18 +699,16 @@ export function FloatingHelpAssistant() {
                       type="button"
                       onClick={handleConfirmSubmit}
                       disabled={isSubmitting}
-                      className="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg text-xs shadow flex items-center justify-center gap-1.5 transition active:scale-95 disabled:opacity-50"
+                      className="w-full py-2 bg-[#c31a26] hover:bg-[#a61520] text-white font-bold rounded-none text-xs flex items-center justify-center transition disabled:opacity-50 uppercase tracking-wider"
                     >
                       {isSubmitting ? (
                         <span>Submitting to Municipal Engine...</span>
                       ) : (
-                        <>
-                          <span>✓ Confirm & Submit Complaint</span>
-                        </>
+                        <span>Confirm & Lodge Grievance</span>
                       )}
                     </button>
                     <span className="block text-[9px] text-slate-500 text-center mt-1">
-                      AI cannot submit without citizen confirmation. Submitting registers directly via Pune Municipal Grievance API.
+                      Formal complaint registration under Maharashtra Public Records standards.
                     </span>
                   </div>
                 )}
@@ -736,44 +718,44 @@ export function FloatingHelpAssistant() {
             {/* Quick Suggestion Chips (when starting or idle) */}
             {messages.length <= 2 && (
               <div className="pt-2">
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
-                  Common Pune Grievances & Queries:
+                <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+                  Frequently Lodged Grievances:
                 </div>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1">
                   <button
                     type="button"
                     onClick={() => handleChipClick("There is a large pothole damaging vehicles on the main road in Kothrud")}
-                    className="px-2.5 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-full text-[11px] text-slate-800 shadow-sm transition"
+                    className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-none text-[10px] text-slate-800 transition"
                   >
-                    🕳️ Pothole on road
+                    Potholes & Damaged Road
                   </button>
                   <button
                     type="button"
                     onClick={() => handleChipClick("Major water pipe burst and dirty water is overflowing near Shivajinagar")}
-                    className="px-2.5 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-full text-[11px] text-slate-800 shadow-sm transition"
+                    className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-none text-[10px] text-slate-800 transition"
                   >
-                    💧 Water pipeline leak
+                    Water Pipeline Leakage
                   </button>
                   <button
                     type="button"
                     onClick={() => handleChipClick("Garbage collection vehicle has not come for three days, bins are overflowing")}
-                    className="px-2.5 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-full text-[11px] text-slate-800 shadow-sm transition"
+                    className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-none text-[10px] text-slate-800 transition"
                   >
-                    🗑️ Garbage not collected
+                    Uncollected Solid Waste
                   </button>
                   <button
                     type="button"
                     onClick={() => handleChipClick("How do I track my complaint and what are the Pune municipal deadlines?")}
-                    className="px-2.5 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-full text-[11px] text-slate-800 shadow-sm transition"
+                    className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-none text-[10px] text-slate-800 transition"
                   >
-                    ⏱️ Pune SLA Deadlines
+                    Citizen Charter SLAs
                   </button>
                   <button
                     type="button"
                     onClick={() => handleChipClick("What is the status of PUN-2026-0001?")}
-                    className="px-2.5 py-1 bg-white hover:bg-amber-50 border border-slate-200 rounded-full text-[11px] text-slate-800 shadow-sm transition"
+                    className="px-2 py-1 bg-white hover:bg-slate-100 border border-slate-300 rounded-none text-[10px] text-slate-800 transition"
                   >
-                    🔍 Track PUN-2026-0001
+                    Track Ref: PUN-2026-0001
                   </button>
                 </div>
               </div>
@@ -781,8 +763,8 @@ export function FloatingHelpAssistant() {
 
             {isLoading && (
               <div className="flex items-center gap-1.5 text-slate-500 text-xs italic">
-                <span className="h-2 w-2 rounded-full bg-amber-500 animate-ping"></span>
-                <span>NagarSetu Assistant is thinking...</span>
+                <span className="h-1.5 w-1.5 bg-[#c31a26] animate-ping"></span>
+                <span>NagarSetu Helpdesk is processing...</span>
               </div>
             )}
 
@@ -791,7 +773,7 @@ export function FloatingHelpAssistant() {
 
           {/* Speech Error Banner */}
           {speechError && (
-            <div className="px-3 py-1 bg-rose-50 text-rose-700 border-t border-rose-200 text-[10px] flex items-center justify-between">
+            <div className="px-3 py-1 bg-rose-50 text-rose-800 border-t border-rose-200 text-[10px] flex items-center justify-between">
               <span>{speechError}</span>
               <button
                 type="button"
@@ -805,15 +787,14 @@ export function FloatingHelpAssistant() {
 
           {/* Active Listening Indicator */}
           {isListening && (
-            <div className="px-3 py-1.5 bg-rose-600 text-white text-[10px] flex items-center justify-between animate-pulse">
-              <span className="flex items-center gap-1.5 font-bold">
-                <span className="h-2 w-2 rounded-full bg-white animate-ping"></span>
-                Listening in {language}... Speak clearly now
+            <div className="px-3 py-1.5 bg-[#c31a26] text-white text-[10px] flex items-center justify-between animate-pulse">
+              <span className="flex items-center gap-1.5 font-bold uppercase tracking-wider">
+                Listening in {language}... Speak clearly into microphone
               </span>
               <button
                 type="button"
                 onClick={toggleListening}
-                className="bg-white text-rose-800 px-2 py-0.5 rounded font-bold"
+                className="bg-white text-[#c31a26] px-2 py-0.5 rounded-none font-bold text-[10px]"
               >
                 Stop
               </button>
@@ -821,9 +802,9 @@ export function FloatingHelpAssistant() {
           )}
 
           {/* Speech Privacy Note */}
-          <div className="px-3 py-1 bg-slate-100 text-slate-500 text-[9px] border-t border-slate-200 flex items-center justify-between">
-            <span>🎤 Audio processed in-browser via Web Speech API; voice is not stored.</span>
-            <Link href="/help" className="text-blue-600 hover:underline">
+          <div className="px-3 py-1 bg-slate-100 text-slate-600 text-[9px] border-t border-slate-200 flex items-center justify-between">
+            <span>Audio processed in-browser via standard Web Speech API; voice is not stored.</span>
+            <Link href="/help" className="text-[#0f3057] font-semibold hover:underline">
               Help
             </Link>
           </div>
@@ -834,7 +815,7 @@ export function FloatingHelpAssistant() {
               e.preventDefault();
               sendMessage();
             }}
-            className="p-2.5 bg-white border-t border-slate-200 flex items-center gap-2"
+            className="p-2 bg-white border-t border-slate-300 flex items-center gap-1.5"
           >
             {/* Mic Button for Speech-to-Text */}
             <button
@@ -842,13 +823,13 @@ export function FloatingHelpAssistant() {
               onClick={toggleListening}
               aria-label={isListening ? "Stop voice listening" : "Start voice listening"}
               title="Speak complaint in English, Hindi, or Marathi"
-              className={`h-9 w-9 rounded-full flex items-center justify-center text-base transition shrink-0 ${
+              className={`h-9 px-2.5 flex items-center justify-center text-xs font-bold transition shrink-0 rounded-none border ${
                 isListening
-                  ? "bg-rose-600 text-white animate-pulse"
-                  : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300"
+                  ? "bg-[#c31a26] text-white border-[#c31a26]"
+                  : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300"
               }`}
             >
-              🎤
+              MIC
             </button>
 
             {/* Text Input */}
@@ -859,10 +840,10 @@ export function FloatingHelpAssistant() {
               placeholder={
                 isListening
                   ? "Listening to speech..."
-                  : "Describe issue, track ref, or ask SLA rules..."
+                  : "Type issue, reference ID, or question..."
               }
               aria-label="Civic Assistant input"
-              className="flex-1 px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-none text-xs text-slate-900 focus:outline-none focus:ring-1 focus:ring-[#c31a26]"
             />
 
             {/* Send Button */}
@@ -870,7 +851,7 @@ export function FloatingHelpAssistant() {
               type="submit"
               disabled={isLoading || !input.trim()}
               aria-label="Send message"
-              className="h-9 px-3.5 bg-[#0f2942] hover:bg-slate-800 disabled:opacity-40 text-white font-bold rounded-lg text-xs transition flex items-center justify-center shrink-0"
+              className="h-9 px-4 bg-[#0f3057] hover:bg-[#1a4473] disabled:opacity-40 text-white font-bold rounded-none text-xs transition uppercase shrink-0"
             >
               Send
             </button>
@@ -878,18 +859,15 @@ export function FloatingHelpAssistant() {
         </div>
       )}
 
-      {/* Floating Action Button */}
+      {/* Floating Action Button (Sharp Corner Government Badge, NO Emoji) */}
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        aria-label="Toggle NagarSetu Help Assistant"
-        className="min-h-[48px] px-4 py-2.5 rounded-full bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-xl border-2 border-amber-500 transition hover:scale-105 active:scale-95"
+        aria-label="Toggle NagarSetu Civic Helpdesk"
+        className="min-h-[44px] px-4 py-2 bg-[#0f3057] hover:bg-[#1a4473] text-white font-bold text-xs flex items-center gap-2 shadow-2xl border-2 border-[#c31a26] rounded-none transition uppercase tracking-wider"
       >
-        <span className="text-base">💬</span>
-        <span>Help Assistant</span>
-        {!isOpen && (
-          <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        )}
+        <span className="h-2 w-2 bg-[#c31a26] inline-block"></span>
+        <span>Civic Helpdesk</span>
       </button>
     </div>
   );

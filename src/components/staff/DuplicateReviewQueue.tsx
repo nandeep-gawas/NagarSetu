@@ -129,10 +129,10 @@ export default function DuplicateReviewQueue() {
   return (
     <div className="space-y-6">
       {/* Header & Filter */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-5 rounded-none border border-slate-200 shadow-sm">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-1.5 bg-indigo-50 text-indigo-700 rounded-lg">
+            <span className="p-1.5 bg-indigo-50 text-indigo-700 rounded-none">
               <Sparkles className="w-4 h-4" />
             </span>
             <h2 className="text-lg font-bold text-slate-900">
@@ -145,7 +145,7 @@ export default function DuplicateReviewQueue() {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs">
+          <div className="flex rounded-none border border-slate-200 overflow-hidden text-xs">
             <button
               onClick={() => setStatusFilter("PENDING")}
               className={`px-3 py-1.5 font-medium transition ${
@@ -170,7 +170,7 @@ export default function DuplicateReviewQueue() {
 
           <button
             onClick={fetchCandidates}
-            className="p-2 text-slate-500 hover:text-slate-800 rounded-lg border border-slate-200 hover:bg-slate-50 transition"
+            className="p-2 text-slate-500 hover:text-slate-800 rounded-none border border-slate-200 hover:bg-slate-50 transition"
             title="Refresh"
           >
             <RefreshCw className="w-4 h-4" />
@@ -179,12 +179,12 @@ export default function DuplicateReviewQueue() {
       </div>
 
       {loading ? (
-        <div className="p-12 text-center bg-white rounded-xl border border-slate-200">
+        <div className="p-12 text-center bg-white rounded-none border border-slate-200">
           <RefreshCw className="w-6 h-6 animate-spin text-indigo-600 mx-auto mb-2" />
           <p className="text-sm text-slate-500">Scanning duplicate candidates...</p>
         </div>
       ) : candidates.length === 0 ? (
-        <div className="p-12 text-center bg-white rounded-xl border border-slate-200">
+        <div className="p-12 text-center bg-white rounded-none border border-slate-200">
           <CheckCircle className="w-10 h-10 text-emerald-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-slate-800">Review Queue Clear</h3>
           <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
@@ -201,7 +201,7 @@ export default function DuplicateReviewQueue() {
             return (
               <div
                 key={cand.id}
-                className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+                className="bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden"
               >
                 {/* Comparison Banner */}
                 <div className="bg-slate-50 px-6 py-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
@@ -253,7 +253,7 @@ export default function DuplicateReviewQueue() {
                       <h4 className="font-semibold text-slate-900 text-sm">
                         {cand.primaryIssue.title}
                       </h4>
-                      <p className="text-xs text-slate-600 mt-1 whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-100">
+                      <p className="text-xs text-slate-600 mt-1 whitespace-pre-line bg-slate-50 p-3 rounded-none border border-slate-100">
                         {cand.primaryIssue.description}
                       </p>
                     </div>
@@ -290,9 +290,9 @@ export default function DuplicateReviewQueue() {
                                 <img
                                   src={r.evidenceUrl!}
                                   alt="Primary evidence"
-                                  className="w-20 h-20 object-cover rounded-lg border border-slate-200"
+                                  className="w-20 h-20 object-cover rounded-none border border-slate-200"
                                 />
-                                <span className="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-lg text-xs transition">
+                                <span className="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-none text-xs transition">
                                   <ExternalLink className="w-3.5 h-3.5" />
                                 </span>
                               </a>
@@ -317,7 +317,7 @@ export default function DuplicateReviewQueue() {
                       <h4 className="font-semibold text-slate-900 text-sm">
                         {cand.duplicateIssue.title}
                       </h4>
-                      <p className="text-xs text-slate-600 mt-1 whitespace-pre-line bg-slate-50 p-3 rounded-lg border border-slate-100">
+                      <p className="text-xs text-slate-600 mt-1 whitespace-pre-line bg-slate-50 p-3 rounded-none border border-slate-100">
                         {cand.duplicateIssue.description}
                       </p>
                     </div>
@@ -354,9 +354,9 @@ export default function DuplicateReviewQueue() {
                                 <img
                                   src={r.evidenceUrl!}
                                   alt="Duplicate candidate evidence"
-                                  className="w-20 h-20 object-cover rounded-lg border border-slate-200"
+                                  className="w-20 h-20 object-cover rounded-none border border-slate-200"
                                 />
-                                <span className="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-lg text-xs transition">
+                                <span className="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center rounded-none text-xs transition">
                                   <ExternalLink className="w-3.5 h-3.5" />
                                 </span>
                               </a>
@@ -371,7 +371,7 @@ export default function DuplicateReviewQueue() {
                 <div className="bg-slate-50 p-4 border-t border-slate-200">
                   {resultMessage && resultMessage.id === cand.id && (
                     <div
-                      className={`mb-3 p-3 rounded-lg text-xs font-medium flex items-center gap-2 ${
+                      className={`mb-3 p-3 rounded-none text-xs font-medium flex items-center gap-2 ${
                         resultMessage.type === "success"
                           ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                           : "bg-rose-50 text-rose-800 border border-rose-200"
@@ -399,7 +399,7 @@ export default function DuplicateReviewQueue() {
                             }))
                           }
                           placeholder="Supervisor note / reason (e.g. Same pothole on FC road photographed by different citizens)..."
-                          className="w-full text-xs px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          className="w-full text-xs px-3 py-2 rounded-none border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         />
                       </div>
 
@@ -407,7 +407,7 @@ export default function DuplicateReviewQueue() {
                         <button
                           disabled={actionLoading === cand.id}
                           onClick={() => handleResolve(cand.id, "KEEP_SEPARATE")}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 rounded-lg text-xs font-semibold transition disabled:opacity-50"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-slate-700 hover:bg-slate-100 border border-slate-300 rounded-none text-xs font-semibold transition disabled:opacity-50"
                         >
                           <Split className="w-3.5 h-3.5 text-slate-500" />
                           Keep Separate
@@ -416,7 +416,7 @@ export default function DuplicateReviewQueue() {
                         <button
                           disabled={actionLoading === cand.id}
                           onClick={() => handleResolve(cand.id, "MERGE")}
-                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-sm transition disabled:opacity-50"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-none text-xs font-semibold shadow-sm transition disabled:opacity-50"
                         >
                           {actionLoading === cand.id ? (
                             <RefreshCw className="w-3.5 h-3.5 animate-spin" />

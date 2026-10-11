@@ -15,7 +15,7 @@ import {
 const PuneLeafletMap = dynamic(() => import("@/components/PuneLeafletMap"), {
   ssr: false,
   loading: () => (
-    <div className="h-[340px] sm:h-[400px] w-full rounded-xl border border-slate-300 bg-slate-100 flex items-center justify-center text-xs text-slate-600">
+    <div className="h-[340px] sm:h-[400px] w-full rounded-none border border-slate-300 bg-slate-100 flex items-center justify-center text-xs text-slate-600">
       Loading interactive Pune OpenStreetMap...
     </div>
   ),
@@ -758,7 +758,7 @@ function ReportWizardContent() {
 
       <main className="max-w-4xl mx-auto px-4 py-6 sm:py-8">
         {/* Top Title Banner */}
-        <div className="bg-[#0f2942] text-white rounded-xl p-5 sm:p-6 shadow-sm border-l-8 border-amber-500 mb-6">
+        <div className="bg-[#0f2942] text-white rounded-none p-5 sm:p-6 shadow-sm border-l-8 border-amber-500 mb-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <span className="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold mb-1.5">
@@ -773,9 +773,9 @@ function ReportWizardContent() {
             </div>
             <Link
               href="/track"
-              className="min-h-[40px] px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-600 text-xs font-bold flex items-center"
+              className="min-h-[40px] px-3.5 py-2 rounded-none bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-600 text-xs font-bold flex items-center"
             >
-              🔍 {t("navTrack")}
+               {t("navTrack")}
             </Link>
           </div>
         </div>
@@ -784,7 +784,7 @@ function ReportWizardContent() {
         {!submissionSuccess && (
           <nav
             aria-label="Complaint Registration Steps"
-            className="bg-white border border-slate-300 rounded-xl p-3 sm:p-4 mb-6 shadow-2xs"
+            className="bg-white border border-slate-300 rounded-none p-3 sm:p-4 mb-6 shadow-2xs"
           >
             <ol className="grid grid-cols-2 sm:grid-cols-7 gap-2">
               {stepsList.map((s) => {
@@ -798,7 +798,7 @@ function ReportWizardContent() {
                         if (s.num < step) setStep(s.num);
                       }}
                       disabled={s.num > step}
-                      className={`w-full min-h-[42px] px-2.5 py-1.5 rounded-lg text-left text-xs font-bold transition flex items-center gap-1.5 border ${
+                      className={`w-full min-h-[42px] px-2.5 py-1.5 rounded-none text-left text-xs font-bold transition flex items-center gap-1.5 border ${
                         isCurrent
                           ? "bg-[#0f2942] text-white border-[#0f2942] shadow-2xs"
                           : isCompleted
@@ -827,7 +827,7 @@ function ReportWizardContent() {
         )}
 
         {/* MAIN STEP CARD */}
-        <div className="bg-white border border-slate-300 rounded-xl p-5 sm:p-7 shadow-sm">
+        <div className="bg-white border border-slate-300 rounded-none p-5 sm:p-7 shadow-sm">
           {/* STEP 1: CATEGORY & SUBCATEGORY */}
           {step === 1 && (
             <div className="space-y-6">
@@ -858,7 +858,7 @@ function ReportWizardContent() {
                           key={cat.id}
                           type="button"
                           onClick={() => handleSelectCategory(cat)}
-                          className={`min-h-[64px] p-4 rounded-xl border-2 text-left transition flex items-start gap-3.5 ${
+                          className={`min-h-[64px] p-4 rounded-none border-2 text-left transition flex items-start gap-3.5 ${
                             active
                               ? "border-[#0f2942] bg-amber-50/70 shadow-2xs"
                               : "border-slate-200 hover:border-slate-400 bg-white"
@@ -896,7 +896,7 @@ function ReportWizardContent() {
                               key={sub.id}
                               type="button"
                               onClick={() => setSubcategoryId(sub.id)}
-                              className={`min-h-[52px] p-3.5 rounded-lg border text-left transition flex items-center justify-between gap-2 ${
+                              className={`min-h-[52px] p-3.5 rounded-none border text-left transition flex items-center justify-between gap-2 ${
                                 active
                                   ? "border-[#0f2942] bg-[#0f2942] text-white font-bold shadow-2xs"
                                   : "border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-900 font-medium"
@@ -941,7 +941,7 @@ function ReportWizardContent() {
                   type="button"
                   onClick={handleNextStep}
                   disabled={!categoryId || !subcategoryId}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition disabled:opacity-50"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition disabled:opacity-50"
                 >
                   {t("btnNext")}
                 </button>
@@ -959,7 +959,7 @@ function ReportWizardContent() {
                 <p className="text-xs text-slate-600 mt-1">{t("descHelp")}</p>
               </div>
 
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-700 flex flex-wrap items-center justify-between gap-2">
+              <div className="bg-slate-50 border border-slate-200 rounded-none p-3 text-xs text-slate-700 flex flex-wrap items-center justify-between gap-2">
                 <span>
                   Selected:{" "}
                   <strong>
@@ -999,11 +999,11 @@ function ReportWizardContent() {
                     if (step2Error) setStep2Error(null);
                   }}
                   placeholder={t("descPlaceholder")}
-                  className="w-full p-3.5 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+                  className="w-full p-3.5 rounded-none border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
                 />
                 <div className="flex items-center justify-between mt-1.5 text-xs">
                   <span className="text-slate-600">
-                    🔒 Stored verbatim as typed — never auto-translated or
+                     Stored verbatim as typed — never auto-translated or
                     rewritten by AI.
                   </span>
                   <span
@@ -1021,7 +1021,7 @@ function ReportWizardContent() {
                     role="alert"
                     className="mt-2 text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 rounded p-2.5"
                   >
-                    ⚠️ {step2Error}
+                     {step2Error}
                   </p>
                 )}
               </div>
@@ -1030,14 +1030,14 @@ function ReportWizardContent() {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="min-h-[46px] px-5 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
+                  className="min-h-[46px] px-5 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
                 >
                   {t("btnBack")}
                 </button>
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
                 >
                   {t("btnNext")}
                 </button>
@@ -1088,7 +1088,7 @@ function ReportWizardContent() {
                   type="button"
                   disabled={uploadingFile}
                   onClick={() => cameraInputRef.current?.click()}
-                  className="min-h-[56px] p-4 rounded-xl bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-2xs transition disabled:opacity-50"
+                  className="min-h-[56px] p-4 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-2xs transition disabled:opacity-50"
                 >
                   {t("btnTakePhoto")}
                 </button>
@@ -1096,39 +1096,39 @@ function ReportWizardContent() {
                   type="button"
                   disabled={uploadingFile}
                   onClick={() => galleryInputRef.current?.click()}
-                  className="min-h-[56px] p-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-2xs transition disabled:opacity-50"
+                  className="min-h-[56px] p-4 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-2xs transition disabled:opacity-50"
                 >
                   {t("btnUploadFile")}
                 </button>
               </div>
 
               {/* Interactive Hackathon Test Helper for Real EXIF & Stripped EXIF */}
-              <div className="bg-slate-50 border border-slate-300 rounded-xl p-3.5">
+              <div className="bg-slate-50 border border-slate-300 rounded-none p-3.5">
                 <div className="text-xs font-bold text-slate-800 mb-1.5">
-                  🧪 Instant Evidence Test Fixtures (for Hackathon Verification):
+                   Instant Evidence Test Fixtures (for Hackathon Verification):
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
                     type="button"
                     disabled={uploadingFile}
                     onClick={handleLoadSampleExifPhoto}
-                    className="min-h-[38px] px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition"
+                    className="min-h-[38px] px-3 py-1.5 rounded-none bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition"
                   >
-                    📸 Test Photo WITH Real GPS EXIF (Kothrud 18.5074, 73.8077)
+                     Test Photo WITH Real GPS EXIF (Kothrud 18.5074, 73.8077)
                   </button>
                   <button
                     type="button"
                     disabled={uploadingFile}
                     onClick={handleLoadSampleStrippedPhoto}
-                    className="min-h-[38px] px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition"
+                    className="min-h-[38px] px-3 py-1.5 rounded-none bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition"
                   >
-                    🖼️ Test Gallery Photo WITHOUT EXIF (Stripped Metadata)
+                     Test Gallery Photo WITHOUT EXIF (Stripped Metadata)
                   </button>
                 </div>
               </div>
 
               {uploadingFile && (
-                <div className="p-4 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold">
+                <div className="p-4 rounded-none bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold">
                   ⏳ Validating file & extracting EXIF metadata on client +
                   server...
                 </div>
@@ -1137,15 +1137,15 @@ function ReportWizardContent() {
               {uploadError && (
                 <div
                   role="alert"
-                  className="p-3.5 rounded-lg bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold"
+                  className="p-3.5 rounded-none bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold"
                 >
-                  ⚠️ {uploadError}
+                   {uploadError}
                 </div>
               )}
 
               {/* Preview Card */}
               {evidence && (
-                <div className="border border-slate-300 rounded-xl p-4 bg-slate-50 space-y-3">
+                <div className="border border-slate-300 rounded-none p-4 bg-slate-50 space-y-3">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
                       <span className="text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded">
@@ -1161,14 +1161,14 @@ function ReportWizardContent() {
                       <button
                         type="button"
                         onClick={() => galleryInputRef.current?.click()}
-                        className="min-h-[38px] px-3 py-1 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-800"
+                        className="min-h-[38px] px-3 py-1 rounded-none bg-white border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-800"
                       >
                         {t("btnReplaceFile")}
                       </button>
                       <button
                         type="button"
                         onClick={() => setEvidence(null)}
-                        className="min-h-[38px] px-3 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-900 text-xs font-bold"
+                        className="min-h-[38px] px-3 py-1 rounded-none bg-rose-100 hover:bg-rose-200 text-rose-900 text-xs font-bold"
                       >
                         {t("btnRemoveFile")}
                       </button>
@@ -1176,7 +1176,7 @@ function ReportWizardContent() {
                   </div>
 
                   {/* Visual preview */}
-                  <div className="bg-slate-900 rounded-lg p-3 flex items-center justify-center max-h-60 overflow-hidden">
+                  <div className="bg-slate-900 rounded-none p-3 flex items-center justify-center max-h-60 overflow-hidden">
                     {evidence.mimeType.startsWith("video/") ? (
                       <video
                         src={evidence.url}
@@ -1209,7 +1209,7 @@ function ReportWizardContent() {
                         setEvidence({ ...evidence, caption: e.target.value })
                       }
                       placeholder={t("captionPlaceholder")}
-                      className="w-full min-h-[42px] px-3 py-2 rounded-lg border border-slate-300 bg-white text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+                      className="w-full min-h-[42px] px-3 py-2 rounded-none border border-slate-300 bg-white text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
                     />
                   </div>
                 </div>
@@ -1219,7 +1219,7 @@ function ReportWizardContent() {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="min-h-[46px] px-5 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
+                  className="min-h-[46px] px-5 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
                 >
                   {t("btnBack")}
                 </button>
@@ -1227,7 +1227,7 @@ function ReportWizardContent() {
                   type="button"
                   onClick={handleNextStep}
                   disabled={uploadingFile}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
                 >
                   {t("btnNext")}
                 </button>
@@ -1242,15 +1242,15 @@ function ReportWizardContent() {
                 <h2 className="text-lg font-bold text-slate-900">
                   {t("step4Title")} — {t("step4Header")}
                 </h2>
-                <p className="text-xs text-amber-900 bg-amber-50 border border-amber-300 rounded-lg p-3 mt-2 font-medium">
+                <p className="text-xs text-amber-900 bg-amber-50 border border-amber-300 rounded-none p-3 mt-2 font-medium">
                   ℹ️ {t("exifDisclaimer")}
                 </p>
               </div>
 
               {/* Photo Timestamp Display (Kept separate from server submittedAt) */}
-              <div className="p-4 rounded-xl border border-slate-300 bg-slate-50">
+              <div className="p-4 rounded-none border border-slate-300 bg-slate-50">
                 <div className="text-xs font-bold text-slate-700">
-                  🕒 {t("photoTimeLabel")}
+                   {t("photoTimeLabel")}
                 </div>
                 {photoTimestamp ? (
                   <div className="mt-1 text-sm font-mono font-bold text-slate-900">
@@ -1269,7 +1269,7 @@ function ReportWizardContent() {
 
               {/* GPS Found vs GPS Missing Branch */}
               {hasPhotoGps ? (
-                <div className="p-4 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 space-y-3">
+                <div className="p-4 rounded-none border-2 border-emerald-600 bg-emerald-50/70 space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <span className="inline-block px-2 py-0.5 rounded bg-emerald-700 text-white text-[11px] font-bold">
@@ -1299,7 +1299,7 @@ function ReportWizardContent() {
                         setLocationSource("PHOTO_EXIF");
                         setGpsConfirmed(true);
                       }}
-                      className={`min-h-[42px] px-4 py-2 rounded-lg text-xs font-bold transition ${
+                      className={`min-h-[42px] px-4 py-2 rounded-none text-xs font-bold transition ${
                         gpsConfirmed && locationSource === "PHOTO_EXIF"
                           ? "bg-emerald-700 text-white"
                           : "bg-[#0f2942] hover:bg-slate-800 text-white"
@@ -1313,7 +1313,7 @@ function ReportWizardContent() {
                     <button
                       type="button"
                       onClick={handleRequestDeviceLocation}
-                      className="min-h-[42px] px-3.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold"
+                      className="min-h-[42px] px-3.5 py-2 rounded-none bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 text-xs font-bold"
                     >
                       {t("btnUseDeviceLocation")}
                     </button>
@@ -1321,14 +1321,14 @@ function ReportWizardContent() {
                     <button
                       type="button"
                       onClick={handleSimulateDiscrepancyDeviceGps}
-                      className="min-h-[42px] px-3 py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 text-xs font-bold"
+                      className="min-h-[42px] px-3 py-2 rounded-none bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 text-xs font-bold"
                     >
-                      🧪 Simulate Device GPS &gt;100m Away
+                       Simulate Device GPS &gt;100m Away
                     </button>
                   </div>
                 </div>
               ) : (
-                <div className="p-4 rounded-xl border border-slate-300 bg-slate-50 space-y-3">
+                <div className="p-4 rounded-none border border-slate-300 bg-slate-50 space-y-3">
                   <span className="inline-block px-2 py-0.5 rounded bg-slate-700 text-white text-[11px] font-bold">
                     NO GPS IN PHOTO METADATA
                   </span>
@@ -1340,16 +1340,16 @@ function ReportWizardContent() {
                     <button
                       type="button"
                       onClick={handleRequestDeviceLocation}
-                      className="min-h-[44px] px-4 py-2 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold transition"
+                      className="min-h-[44px] px-4 py-2 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold transition"
                     >
                       {t("btnUseDeviceLocation")}
                     </button>
                     <button
                       type="button"
                       onClick={handleSimulateDeniedGeolocation}
-                      className="min-h-[44px] px-3.5 py-2 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-900 border border-rose-300 text-xs font-bold transition"
+                      className="min-h-[44px] px-3.5 py-2 rounded-none bg-rose-100 hover:bg-rose-200 text-rose-900 border border-rose-300 text-xs font-bold transition"
                     >
-                      🧪 Simulate Denied Location Permission
+                       Simulate Denied Location Permission
                     </button>
                   </div>
                 </div>
@@ -1358,7 +1358,7 @@ function ReportWizardContent() {
               {/* Geolocation status banner */}
               {geoStatusMessage && (
                 <div
-                  className={`p-3.5 rounded-lg border text-xs font-semibold ${
+                  className={`p-3.5 rounded-none border text-xs font-semibold ${
                     geoPermissionState === "denied"
                       ? "bg-amber-50 border-amber-300 text-amber-950"
                       : "bg-blue-50 border-blue-200 text-blue-950"
@@ -1373,9 +1373,9 @@ function ReportWizardContent() {
                 deviceGps &&
                 gpsDiscrepancyMeters !== null &&
                 gpsDiscrepancyMeters > 100 && (
-                  <div className="p-4 rounded-xl border-2 border-amber-500 bg-amber-50 space-y-3">
+                  <div className="p-4 rounded-none border-2 border-amber-500 bg-amber-50 space-y-3">
                     <div className="text-xs sm:text-sm font-bold text-amber-950">
-                      ⚠️ {t("distanceWarningTitle")} ({gpsDiscrepancyMeters}m
+                       {t("distanceWarningTitle")} ({gpsDiscrepancyMeters}m
                       apart)
                     </div>
                     <p className="text-xs text-slate-700">
@@ -1396,13 +1396,13 @@ function ReportWizardContent() {
                           setLocationSource("PHOTO_EXIF");
                           setGpsConfirmed(true);
                         }}
-                        className={`min-h-[52px] p-3 rounded-lg border text-left text-xs font-bold transition ${
+                        className={`min-h-[52px] p-3 rounded-none border text-left text-xs font-bold transition ${
                           locationSource === "PHOTO_EXIF"
                             ? "bg-[#0f2942] text-white border-[#0f2942]"
                             : "bg-white text-slate-900 border-slate-300 hover:bg-slate-100"
                         }`}
                       >
-                        <div>📷 {t("btnChoosePhotoGps")}</div>
+                        <div> {t("btnChoosePhotoGps")}</div>
                         <div className="text-[11px] opacity-80 mt-0.5">
                           {findNearestPuneLandmark(photoLat, photoLng)}
                         </div>
@@ -1422,13 +1422,13 @@ function ReportWizardContent() {
                           setLocationSource("DEVICE_GPS");
                           setGpsConfirmed(true);
                         }}
-                        className={`min-h-[52px] p-3 rounded-lg border text-left text-xs font-bold transition ${
+                        className={`min-h-[52px] p-3 rounded-none border text-left text-xs font-bold transition ${
                           locationSource === "DEVICE_GPS"
                             ? "bg-[#0f2942] text-white border-[#0f2942]"
                             : "bg-white text-slate-900 border-slate-300 hover:bg-slate-100"
                         }`}
                       >
-                        <div>📍 {t("btnChooseDeviceGps")}</div>
+                        <div> {t("btnChooseDeviceGps")}</div>
                         <div className="text-[11px] opacity-80 mt-0.5">
                           {findNearestPuneLandmark(
                             deviceGps.lat,
@@ -1444,14 +1444,14 @@ function ReportWizardContent() {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="min-h-[46px] px-5 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
+                  className="min-h-[46px] px-5 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
                 >
                   {t("btnBack")}
                 </button>
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
                 >
                   {t("btnNext")}
                 </button>
@@ -1485,7 +1485,7 @@ function ReportWizardContent() {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="min-h-[46px] px-5 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
+                  className="min-h-[46px] px-5 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
                 >
                   {t("btnBack")}
                 </button>
@@ -1493,7 +1493,7 @@ function ReportWizardContent() {
                   type="button"
                   onClick={handleNextStep}
                   disabled={!publicLocationLabel.trim()}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition disabled:opacity-50"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition disabled:opacity-50"
                 >
                   {t("btnNext")}
                 </button>
@@ -1510,7 +1510,7 @@ function ReportWizardContent() {
                 </h2>
               </div>
 
-              <div className="divide-y divide-slate-200 border border-slate-300 rounded-xl overflow-hidden">
+              <div className="divide-y divide-slate-200 border border-slate-300 rounded-none overflow-hidden">
                 {/* Category & Subcategory */}
                 <div className="p-4 bg-white flex items-start justify-between gap-3">
                   <div>
@@ -1541,7 +1541,7 @@ function ReportWizardContent() {
                     <div className="text-xs font-bold text-slate-500 uppercase">
                       {t("step2Title")} (Verbatim Citizen Text)
                     </div>
-                    <p className="text-sm text-slate-900 mt-1 whitespace-pre-wrap bg-slate-50 p-3 rounded-lg border border-slate-200">
+                    <p className="text-sm text-slate-900 mt-1 whitespace-pre-wrap bg-slate-50 p-3 rounded-none border border-slate-200">
                       {description}
                     </p>
                   </div>
@@ -1597,7 +1597,7 @@ function ReportWizardContent() {
                       {t("step5Title")}
                     </div>
                     <div className="text-sm font-bold text-slate-900 mt-0.5">
-                      📍 {publicLocationLabel}
+                       {publicLocationLabel}
                     </div>
                   </div>
                   <button
@@ -1612,12 +1612,12 @@ function ReportWizardContent() {
 
               {/* SLA Targets Preview Box */}
               {slaPreview && (
-                <div className="bg-amber-50 border-2 border-amber-400 rounded-xl p-4 space-y-2">
+                <div className="bg-amber-50 border-2 border-amber-400 rounded-none p-4 space-y-2">
                   <div className="text-xs font-bold text-amber-950 uppercase">
                     ⏱️ {t("slaTargetTitle")}
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                    <div className="bg-white p-3 rounded-lg border border-amber-200">
+                    <div className="bg-white p-3 rounded-none border border-amber-200">
                       <div className="text-xs text-slate-600">
                         {t("expectedResponseLabel")}
                       </div>
@@ -1631,7 +1631,7 @@ function ReportWizardContent() {
                         ).toLocaleString()}
                       </div>
                     </div>
-                    <div className="bg-white p-3 rounded-lg border border-amber-200">
+                    <div className="bg-white p-3 rounded-none border border-amber-200">
                       <div className="text-xs text-slate-600">
                         {t("expectedResolutionLabel")}
                       </div>
@@ -1657,14 +1657,14 @@ function ReportWizardContent() {
                 <button
                   type="button"
                   onClick={handlePrevStep}
-                  className="min-h-[46px] px-5 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
+                  className="min-h-[46px] px-5 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition"
                 >
                   {t("btnBack")}
                 </button>
                 <button
                   type="button"
                   onClick={handleNextStep}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
                 >
                   {t("btnNext")}
                 </button>
@@ -1686,9 +1686,9 @@ function ReportWizardContent() {
 
               {/* Auth Check Notice */}
               {!currentUser ? (
-                <div className="p-4 rounded-xl bg-amber-50 border-2 border-amber-500 space-y-3">
+                <div className="p-4 rounded-none bg-amber-50 border-2 border-amber-500 space-y-3">
                   <div className="text-sm font-bold text-amber-950">
-                    🔐 Citizen Sign-In Required Before Final Submission
+                     Citizen Sign-In Required Before Final Submission
                   </div>
                   <p className="text-xs text-slate-700">
                     Your 7-step complaint draft is safely saved in this browser
@@ -1697,13 +1697,13 @@ function ReportWizardContent() {
                   </p>
                   <Link
                     href="/login?returnTo=/report"
-                    className="inline-flex min-h-[44px] px-5 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold items-center"
+                    className="inline-flex min-h-[44px] px-5 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold items-center"
                   >
-                    🔐 Sign In / Register to Submit →
+                     Sign In / Register to Submit →
                   </Link>
                 </div>
               ) : (
-                <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 flex items-center justify-between">
+                <div className="p-3.5 rounded-none bg-emerald-50 border border-emerald-300 text-xs text-emerald-950 flex items-center justify-between">
                   <span>
                     Submitting as authenticated citizen:{" "}
                     <strong>{currentUser.name}</strong> ({currentUser.email})
@@ -1717,9 +1717,9 @@ function ReportWizardContent() {
               {submitError && (
                 <div
                   role="alert"
-                  className="p-3.5 rounded-lg bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold"
+                  className="p-3.5 rounded-none bg-rose-50 border border-rose-300 text-rose-900 text-xs font-bold"
                 >
-                  ⚠️ {submitError}
+                   {submitError}
                 </div>
               )}
 
@@ -1728,7 +1728,7 @@ function ReportWizardContent() {
                 <div
                   role="region"
                   aria-label="Potential Duplicate Complaint Warning"
-                  className="p-5 rounded-xl border-2 border-amber-600 bg-amber-50 space-y-4 shadow-sm"
+                  className="p-5 rounded-none border-2 border-amber-600 bg-amber-50 space-y-4 shadow-sm"
                 >
                   <div>
                     <span className="inline-block px-2.5 py-0.5 rounded bg-amber-600 text-white text-[11px] font-bold uppercase">
@@ -1742,7 +1742,7 @@ function ReportWizardContent() {
                     </p>
                   </div>
 
-                  <div className="bg-white p-3.5 rounded-lg border border-amber-300 text-xs space-y-1">
+                  <div className="bg-white p-3.5 rounded-none border border-amber-300 text-xs space-y-1">
                     <div className="font-bold text-slate-900">
                       Existing Active Issue:{" "}
                       <span className="font-mono text-amber-900">
@@ -1763,9 +1763,9 @@ function ReportWizardContent() {
                     {/* Option 1: Track existing complaint */}
                     <Link
                       href={`/track/${duplicateWarning.referenceId}`}
-                      className="min-h-[46px] px-4 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold flex items-center justify-center text-center"
+                      className="min-h-[46px] px-4 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold flex items-center justify-center text-center"
                     >
-                      1. 🔍 {t("optTrackExisting")} ({duplicateWarning.referenceId})
+                      1.  {t("optTrackExisting")} ({duplicateWarning.referenceId})
                     </Link>
 
                     {/* Option 2: Add new evidence/update */}
@@ -1777,9 +1777,9 @@ function ReportWizardContent() {
                           duplicateWarning.referenceId
                         )
                       }
-                      className="min-h-[46px] px-4 py-2.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition disabled:opacity-50"
+                      className="min-h-[46px] px-4 py-2.5 rounded-none bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition disabled:opacity-50"
                     >
-                      2. 📎{" "}
+                      2. {" "}
                       {addingToDuplicate
                         ? "Adding Update..."
                         : t("optAddEvidence")}
@@ -1792,9 +1792,9 @@ function ReportWizardContent() {
                         setDuplicateWarning(null);
                         setStep(2);
                       }}
-                      className="min-h-[46px] px-4 py-2.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-slate-900 text-xs font-bold transition"
+                      className="min-h-[46px] px-4 py-2.5 rounded-none bg-white border border-slate-300 hover:bg-slate-100 text-slate-900 text-xs font-bold transition"
                     >
-                      3. ✏️ {t("optGoBack")}
+                      3.  {t("optGoBack")}
                     </button>
 
                     {/* Option 4: Submit as a different issue */}
@@ -1802,9 +1802,9 @@ function ReportWizardContent() {
                       type="button"
                       disabled={submitting}
                       onClick={() => submitComplaint(true)}
-                      className="min-h-[46px] px-4 py-2.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition disabled:opacity-50"
+                      className="min-h-[46px] px-4 py-2.5 rounded-none bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition disabled:opacity-50"
                     >
-                      4. ➕ {t("optSubmitDifferent")}
+                      4.  {t("optSubmitDifferent")}
                     </button>
                   </div>
                 </div>
@@ -1817,7 +1817,7 @@ function ReportWizardContent() {
                     type="button"
                     disabled={submitting}
                     onClick={handlePrevStep}
-                    className="min-h-[48px] px-5 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition disabled:opacity-50"
+                    className="min-h-[48px] px-5 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-sm transition disabled:opacity-50"
                   >
                     {t("btnBack")}
                   </button>
@@ -1826,7 +1826,7 @@ function ReportWizardContent() {
                     type="button"
                     disabled={submitting || !currentUser}
                     onClick={() => submitComplaint(false)}
-                    className="min-h-[48px] px-7 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm shadow-sm transition disabled:opacity-50"
+                    className="min-h-[48px] px-7 py-3 rounded-none bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm shadow-sm transition disabled:opacity-50"
                   >
                     {submitting ? t("btnSubmitting") : `✓ ${t("btnConfirmSubmit")}`}
                   </button>
@@ -1838,7 +1838,7 @@ function ReportWizardContent() {
           {/* REAL DATABASE CONFIRMATION SCREEN AFTER SUBMISSION */}
           {submissionSuccess && (
             <div className="space-y-6">
-              <div className="p-5 rounded-xl bg-emerald-50 border-2 border-emerald-600 space-y-2">
+              <div className="p-5 rounded-none bg-emerald-50 border-2 border-emerald-600 space-y-2">
                 <span className="inline-block px-2.5 py-0.5 rounded bg-emerald-700 text-white text-xs font-bold">
                   ✓ OFFICIAL PMC GRIEVANCE REGISTERED ({submissionSuccess.outcome})
                 </span>
@@ -1854,7 +1854,7 @@ function ReportWizardContent() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-lg border border-slate-300 bg-slate-50">
+                <div className="p-3.5 rounded-none border border-slate-300 bg-slate-50">
                   <div className="text-slate-500 font-bold uppercase">
                     Report Reference ID
                   </div>
@@ -1863,7 +1863,7 @@ function ReportWizardContent() {
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-lg border border-slate-300 bg-slate-50">
+                <div className="p-3.5 rounded-none border border-slate-300 bg-slate-50">
                   <div className="text-slate-500 font-bold uppercase">
                     Initial Workflow Status
                   </div>
@@ -1873,7 +1873,7 @@ function ReportWizardContent() {
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-lg border border-slate-300 bg-slate-50">
+                <div className="p-3.5 rounded-none border border-slate-300 bg-slate-50">
                   <div className="text-slate-500 font-bold uppercase">
                     Category & Subcategory
                   </div>
@@ -1883,7 +1883,7 @@ function ReportWizardContent() {
                   </div>
                 </div>
 
-                <div className="p-3.5 rounded-lg border border-slate-300 bg-slate-50">
+                <div className="p-3.5 rounded-none border border-slate-300 bg-slate-50">
                   <div className="text-slate-500 font-bold uppercase">
                     Target Resolution Deadline
                   </div>
@@ -1898,20 +1898,20 @@ function ReportWizardContent() {
               <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-slate-200">
                 <Link
                   href={`/track/${submissionSuccess.issueReferenceId}`}
-                  className="min-h-[46px] px-6 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm flex items-center"
+                  className="min-h-[46px] px-6 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm flex items-center"
                 >
-                  🔍 Track This Complaint ({submissionSuccess.issueReferenceId}) →
+                   Track This Complaint ({submissionSuccess.issueReferenceId}) →
                 </Link>
                 <Link
                   href="/my-complaints"
-                  className="min-h-[46px] px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center"
+                  className="min-h-[46px] px-5 py-2.5 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center"
                 >
-                  📋 View My Complaints
+                   View My Complaints
                 </Link>
                 <button
                   type="button"
                   onClick={resetForNewComplaint}
-                  className="min-h-[46px] px-4 py-2.5 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-xs"
+                  className="min-h-[46px] px-4 py-2.5 rounded-none bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-xs"
                 >
                   + Register Another Complaint
                 </button>

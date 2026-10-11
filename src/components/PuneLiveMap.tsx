@@ -26,11 +26,11 @@ export interface PublicIssue {
 }
 
 const CATEGORY_EMOJIS: Record<string, string> = {
-  "Waste Management & Sanitation": "🗑️",
-  "Roads & Infrastructure": "🕳️",
-  "Water & Sewage": "💧",
-  "Civic Nuisance & Public Safety": "⚠️",
-  Other: "📍",
+  "Waste Management & Sanitation": "",
+  "Roads & Infrastructure": "",
+  "Water & Sewage": "",
+  "Civic Nuisance & Public Safety": "",
+  Other: "",
 };
 
 export default function PuneLiveMap({
@@ -181,8 +181,13 @@ export default function PuneLiveMap({
       });
 
       filteredIssues.forEach((issue) => {
-        const emoji =
-          CATEGORY_EMOJIS[issue.category.name] || issue.category.emoji || "📍";
+        let deptBadge = "PMC";
+        const catNameLower = issue.category.name.toLowerCase();
+        if (catNameLower.includes("road")) deptBadge = "RD";
+        else if (catNameLower.includes("water") || catNameLower.includes("sewage")) deptBadge = "WT";
+        else if (catNameLower.includes("waste") || catNameLower.includes("sanitation")) deptBadge = "SW";
+        else if (catNameLower.includes("safety") || catNameLower.includes("nuisance")) deptBadge = "SF";
+        else deptBadge = "GN";
 
         // Priority ring colours:
         // Normal -> green (#16a34a), High -> orange (#ea580c), Critical -> red (#dc2626)
@@ -195,18 +200,18 @@ export default function PuneLiveMap({
 
         const ringBgColor =
           issue.priority === "CRITICAL"
-            ? "#fef2f2"
+            ? "#dc2626"
             : issue.priority === "HIGH"
-            ? "#fff7ed"
-            : "#f0fdf4";
+            ? "#ea580c"
+            : "#16a34a";
 
         const isOverdue = issue.isOverdue;
         const pulseEffect = isOverdue
           ? `animation: nagarsetu-pulse 1.8s infinite; box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);`
-          : `box-shadow: 0 2px 6px rgba(0,0,0,0.3);`;
+          : `box-shadow: 0 2px 4px rgba(0,0,0,0.3);`;
 
         const markerHtml = `
-          <div style="position:relative; width:38px; height:38px; cursor:pointer;">
+          <div style="position:relative; width:34px; height:34px; cursor:pointer;">
             <style>
               @keyframes nagarsetu-pulse {
                 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.75); }
@@ -215,22 +220,26 @@ export default function PuneLiveMap({
               }
             </style>
             <div style="
-              width:38px;
-              height:38px;
-              border-radius:50%;
+              width:34px;
+              height:34px;
+              border-radius:2px;
               background:${ringBgColor};
-              border: 3.5px solid ${ringBorderColor};
+              border: 2px solid #ffffff;
               display:flex;
               align-items:center;
               justify-content:center;
-              font-size:18px;
+              font-size:12px;
+              font-weight:900;
+              color:#ffffff;
+              font-family:sans-serif;
+              letter-spacing:0.5px;
               ${pulseEffect}
             ">
-              <span>${emoji}</span>
+              <span>${deptBadge}</span>
             </div>
             ${
               isOverdue
-                ? `<span style="position:absolute;top:-4px;right:-4px;background:#dc2626;color:white;font-size:9px;font-weight:900;border-radius:9999px;padding:1px 4px;border:1px solid white;">!</span>`
+                ? `<span style="position:absolute;top:-4px;right:-4px;background:#000000;color:white;font-size:8px;font-weight:900;padding:1px 3px;border:1px solid white;">!</span>`
                 : ""
             }
           </div>
@@ -263,12 +272,12 @@ export default function PuneLiveMap({
               }; padding:2px 6px; border-radius:4px;">${issue.priority}</span>
             </div>
             <div style="font-weight:bold; margin-bottom:2px; color:#1e293b;">
-              ${emoji} ${issue.category.name} ${
+              [${deptBadge}] ${issue.category.name} ${
           issue.subcategory ? `— ${issue.subcategory.name}` : ""
         }
             </div>
             <div style="color:#475569; font-size:11px; margin-bottom:6px;">
-              📍 ${issue.publicLocationLabel}
+               ${issue.publicLocationLabel}
             </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:6px;">
               <span style="background:#0f2942; color:#ffffff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:9999px;">
@@ -276,11 +285,11 @@ export default function PuneLiveMap({
               </span>
               ${
                 issue.isOverdue
-                  ? `<span style="background:#dc2626; color:#ffffff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;">🚨 Overdue</span>`
+                  ? `<span style="background:#dc2626; color:#ffffff; font-size:10px; font-weight:bold; padding:2px 6px; border-radius:4px;"> Overdue</span>`
                   : ""
               }
               <span style="background:#f1f5f9; color:#334155; font-size:10px; padding:2px 6px; border-radius:4px;">
-                👥 ${issue.reportCount} linked report(s)
+                 ${issue.reportCount} linked report(s)
               </span>
             </div>
             <div style="color:#64748b; font-size:10px; margin-bottom:8px;">
@@ -309,41 +318,41 @@ export default function PuneLiveMap({
   }, [issues, searchQuery, heatmapMode, tStatus]);
 
   return (
-    <div className="bg-white border border-slate-300 rounded-xl overflow-hidden shadow-sm flex flex-col">
+    <div className="bg-white border border-slate-300 rounded-none overflow-hidden shadow-sm flex flex-col">
       {/* Live Map Control Bar & Filters */}
-      <div className="p-4 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-3 border-b-2 border-amber-500">
+      <div className="p-3 bg-[#0f3057] text-white flex flex-wrap items-center justify-between gap-3 border-b-2 border-[#c31a26]">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-bold flex items-center gap-1.5 text-white">
-            🗺️ Pune Live Grievance Map
+          <span className="text-sm font-bold text-white uppercase tracking-wide">
+            Pune Municipal Ward Live GIS Map
           </span>
-          <span className="text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded">
-            {issues.length} Active Points
+          <span className="text-[11px] font-bold bg-[#c31a26] text-white px-2 py-0.5 rounded-none">
+            {issues.length} Active Complaints
           </span>
           {lastStreamEvent && (
-            <span className="text-[11px] font-semibold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded animate-pulse">
-              ⚡ {lastStreamEvent}
+            <span className="text-[11px] font-semibold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-none animate-pulse">
+              LIVE: {lastStreamEvent}
             </span>
           )}
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-xs">
           {/* Priority Ring Legend */}
-          <div className="hidden sm:flex items-center gap-2 bg-slate-800/80 px-2.5 py-1 rounded border border-slate-700">
-            <span className="text-slate-400 font-medium">Priority Rings:</span>
+          <div className="hidden sm:flex items-center gap-2 bg-[#092240] px-2.5 py-1 rounded-none border border-slate-600">
+            <span className="text-slate-300 font-medium">Priority Codes:</span>
             <span className="inline-flex items-center gap-1 text-emerald-400 font-bold">
-              <span className="h-2.5 w-2.5 rounded-full border-2 border-emerald-500 bg-emerald-100"></span>{" "}
+              <span className="h-2.5 w-2.5 border border-white bg-emerald-500 rounded-none"></span>{" "}
               Normal
             </span>
             <span className="inline-flex items-center gap-1 text-amber-400 font-bold">
-              <span className="h-2.5 w-2.5 rounded-full border-2 border-amber-500 bg-amber-100"></span>{" "}
+              <span className="h-2.5 w-2.5 border border-white bg-amber-500 rounded-none"></span>{" "}
               High
             </span>
             <span className="inline-flex items-center gap-1 text-rose-400 font-bold">
-              <span className="h-2.5 w-2.5 rounded-full border-2 border-rose-600 bg-rose-100"></span>{" "}
+              <span className="h-2.5 w-2.5 border border-white bg-rose-600 rounded-none"></span>{" "}
               Critical
             </span>
-            <span className="inline-flex items-center gap-1 text-rose-400 font-bold animate-pulse">
-              🚨 Pulsing = Overdue
+            <span className="inline-flex items-center gap-1 text-rose-400 font-bold">
+              [!] Overdue
             </span>
           </div>
 
@@ -351,23 +360,23 @@ export default function PuneLiveMap({
             type="button"
             onClick={fetchPublicIssues}
             disabled={loading}
-            className="min-h-[34px] px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold"
+            className="min-h-[32px] px-3 py-1 rounded-none bg-[#c31a26] hover:bg-[#a61520] text-white font-bold text-xs uppercase"
           >
-            {loading ? "Refreshing..." : "↻ Refresh"}
+            {loading ? "Refreshing..." : "Refresh Map"}
           </button>
         </div>
       </div>
 
       {/* Filter Row */}
-      <div className="p-3 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+      <div className="p-2.5 bg-slate-100 border-b border-slate-300 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div className="flex flex-wrap items-center gap-2 flex-1">
           {/* Search box */}
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search Pune area, reference ID, or category..."
-            className="min-h-[36px] px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-900 w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+            placeholder="Search Pune area, reference ID, or department..."
+            className="min-h-[34px] px-3 py-1 rounded-none border border-slate-300 bg-white text-slate-900 w-full sm:w-64 focus:outline-none focus:ring-1 focus:ring-[#c31a26]"
           />
 
           {/* Category Filter */}
@@ -375,14 +384,14 @@ export default function PuneLiveMap({
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
             aria-label="Filter by Category"
-            className="min-h-[36px] px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-900 font-medium"
+            className="min-h-[34px] px-2 py-1 rounded-none border border-slate-300 bg-white text-slate-900 font-medium"
           >
             <option value="ALL">All Categories</option>
-            <option value="cmg02waste000100010001">🗑️ Waste & Sanitation</option>
-            <option value="cmg02roads000200020002">🕳️ Roads & Infrastructure</option>
-            <option value="cmg02water000300030003">💧 Water & Sewage</option>
-            <option value="cmg02nuis000400040004">⚠️ Civic Nuisance & Safety</option>
-            <option value="cmg02other000500050005">📍 Other Issues</option>
+            <option value="cmg02waste000100010001">Solid Waste & Sanitation</option>
+            <option value="cmg02roads000200020002">Roads & Infrastructure</option>
+            <option value="cmg02water000300030003">Water Supply & Drainage</option>
+            <option value="cmg02nuis000400040004">Civic Safety & Encroachment</option>
+            <option value="cmg02other000500050005">General Administration</option>
           </select>
 
           {/* Status Filter */}
@@ -390,7 +399,7 @@ export default function PuneLiveMap({
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
             aria-label="Filter by Status"
-            className="min-h-[36px] px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-900 font-medium"
+            className="min-h-[34px] px-2 py-1 rounded-none border border-slate-300 bg-white text-slate-900 font-medium"
           >
             <option value="ALL">All Statuses</option>
             <option value="SUBMITTED">Submitted</option>
@@ -409,7 +418,7 @@ export default function PuneLiveMap({
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
             aria-label="Filter by Priority"
-            className="min-h-[36px] px-2.5 py-1.5 rounded-lg border border-slate-300 bg-white text-slate-900 font-medium"
+            className="min-h-[34px] px-2 py-1 rounded-none border border-slate-300 bg-white text-slate-900 font-medium"
           >
             <option value="ALL">All Priorities</option>
             <option value="NORMAL">Normal</option>
@@ -418,20 +427,20 @@ export default function PuneLiveMap({
           </select>
 
           {/* Overdue checkbox */}
-          <label className="flex items-center gap-1.5 cursor-pointer font-bold text-rose-800 bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-300">
+          <label className="flex items-center gap-1.5 cursor-pointer font-bold text-rose-900 bg-rose-50 px-2.5 py-1.5 rounded-none border border-rose-300">
             <input
               type="checkbox"
               checked={filterOverdue}
               onChange={(e) => setFilterOverdue(e.target.checked)}
-              className="rounded text-rose-600 focus:ring-rose-500"
+              className="rounded-none text-rose-600 focus:ring-rose-500"
             />
-            <span>Overdue Only 🚨</span>
+            <span>Overdue Only</span>
           </label>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-[11px] text-slate-500 bg-slate-200 px-2 py-1 rounded">
-            🔒 Privacy grid: ~100m snapped
+          <span className="text-[11px] text-slate-600 bg-white border border-slate-300 px-2 py-1 rounded-none">
+            Privacy Snapped (~100m Grid)
           </span>
         </div>
       </div>
@@ -467,20 +476,20 @@ export default function PuneLiveMap({
               </span>
               {selectedIssue.isOverdue && (
                 <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-900 border border-rose-300 text-[10px] font-bold animate-pulse">
-                  🚨 OVERDUE
+                   OVERDUE
                 </span>
               )}
             </div>
             <div className="text-xs text-slate-800 font-semibold">
-              {CATEGORY_EMOJIS[selectedIssue.category.name] || "📍"}{" "}
+              {CATEGORY_EMOJIS[selectedIssue.category.name] || ""}{" "}
               {tCategory(selectedIssue.category.name)} —{" "}
               {selectedIssue.subcategory
                 ? tSubcategory(selectedIssue.subcategory.name)
                 : "General"}{" "}
-              • 📍 {selectedIssue.publicLocationLabel}
+              •  {selectedIssue.publicLocationLabel}
             </div>
             <div className="text-[11px] text-slate-500">
-              👥 {selectedIssue.reportCount} linked citizen report(s) •
+               {selectedIssue.reportCount} linked citizen report(s) •
               Reported: {new Date(selectedIssue.submittedAt).toLocaleString()} •
               Target SLA:{" "}
               {new Date(selectedIssue.resolutionDeadline).toLocaleString()}
@@ -490,14 +499,14 @@ export default function PuneLiveMap({
           <div className="flex items-center gap-2">
             <Link
               href={`/track/${selectedIssue.publicRef}`}
-              className="min-h-[38px] px-4 py-1.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-xs flex items-center"
+              className="min-h-[38px] px-4 py-1.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-xs flex items-center"
             >
               Track Complaint Details →
             </Link>
             <button
               type="button"
               onClick={() => setSelectedIssue(null)}
-              className="min-h-[38px] px-2.5 py-1.5 rounded-lg bg-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-300"
+              className="min-h-[38px] px-2.5 py-1.5 rounded-none bg-slate-200 text-slate-700 text-xs font-bold hover:bg-slate-300"
             >
               Close
             </button>

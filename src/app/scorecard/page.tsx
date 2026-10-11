@@ -58,7 +58,7 @@ export default function ScorecardPage() {
 
       <main className="max-w-6xl mx-auto w-full px-4 py-8 space-y-8 flex-1">
         {/* Banner */}
-        <div className="bg-[#0f2942] text-white rounded-xl p-6 sm:p-8 shadow-sm border-l-8 border-amber-500 flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-[#0f2942] text-white rounded-none p-6 sm:p-8 shadow-sm border-l-8 border-amber-500 flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-1.5">
               <span className="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold">
@@ -79,15 +79,15 @@ export default function ScorecardPage() {
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/map"
-              className="min-h-[44px] px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-semibold flex items-center"
+              className="min-h-[44px] px-4 py-2.5 rounded-none bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-semibold flex items-center"
             >
-              🗺️ Explore Map
+               Explore Map
             </Link>
             <Link
               href="/report"
-              className="min-h-[44px] px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center shadow-2xs"
+              className="min-h-[44px] px-5 py-2.5 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center shadow-2xs"
             >
-              📢 {t("navReport")} →
+               {t("navReport")} →
             </Link>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function ScorecardPage() {
         {/* Global Summary Cards */}
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-white p-5 rounded-xl border border-slate-300 shadow-2xs space-y-1">
+            <div className="bg-white p-5 rounded-none border border-slate-300 shadow-2xs space-y-1">
               <div className="text-xs font-semibold text-slate-600">
                 Citywide Resolution Rate
               </div>
@@ -107,7 +107,7 @@ export default function ScorecardPage() {
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-purple-200 shadow-2xs space-y-1">
+            <div className="bg-white p-5 rounded-none border border-purple-200 shadow-2xs space-y-1">
               <div className="text-xs font-semibold text-purple-800">
                 On-Time Resolution Rate
               </div>
@@ -119,7 +119,7 @@ export default function ScorecardPage() {
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-rose-200 shadow-2xs space-y-1">
+            <div className="bg-white p-5 rounded-none border border-rose-200 shadow-2xs space-y-1">
               <div className="text-xs font-semibold text-rose-800">
                 Current Overdue Issues
               </div>
@@ -131,7 +131,7 @@ export default function ScorecardPage() {
               </div>
             </div>
 
-            <div className="bg-white p-5 rounded-xl border border-blue-200 shadow-2xs space-y-1">
+            <div className="bg-white p-5 rounded-none border border-blue-200 shadow-2xs space-y-1">
               <div className="text-xs font-semibold text-blue-800">
                 In Progress on Site
               </div>
@@ -146,11 +146,11 @@ export default function ScorecardPage() {
         )}
 
         {/* Department Breakdown Table */}
-        <div className="bg-white border border-slate-300 rounded-xl overflow-hidden shadow-2xs">
+        <div className="bg-white border border-slate-300 rounded-none overflow-hidden shadow-2xs">
           <div className="p-5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
             <div>
               <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">
-                🏛️ Departmental Performance Matrix
+                 Departmental Performance Matrix
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
                 Comparison across the 5 PMC operational grievance branches
@@ -160,7 +160,7 @@ export default function ScorecardPage() {
               type="button"
               onClick={fetchStats}
               disabled={loading}
-              className="text-xs px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-700 font-semibold hover:bg-slate-100"
+              className="text-xs px-3 py-1.5 rounded-none bg-white border border-slate-300 text-slate-700 font-semibold hover:bg-slate-100"
             >
               {loading ? "Updating..." : "↻ Refresh Stats"}
             </button>
@@ -173,7 +173,7 @@ export default function ScorecardPage() {
                   <th className="p-3.5">Department & Category</th>
                   <th className="p-3.5 text-center">Eligible Issues</th>
                   <th className="p-3.5 text-center">Resolved</th>
-                  <th className="p-3.5 text-center">Overdue 🚨</th>
+                  <th className="p-3.5 text-center">Overdue </th>
                   <th className="p-3.5 text-center">On-Time Rate (%)</th>
                   <th className="p-3.5 text-center">Avg Resolution Time</th>
                   <th className="p-3.5 text-right">Action</th>
@@ -202,7 +202,7 @@ export default function ScorecardPage() {
                       {dept.resolved}
                     </td>
                     <td className="p-3.5 text-center font-bold text-rose-600 font-mono">
-                      {dept.overdue > 0 ? `🚨 ${dept.overdue}` : "0"}
+                      {dept.overdue > 0 ? ` ${dept.overdue}` : "0"}
                     </td>
                     <td className="p-3.5 text-center">
                       <span
@@ -238,9 +238,9 @@ export default function ScorecardPage() {
         </div>
 
         {/* Calculation Invariant Rules Section */}
-        <section className="bg-white border border-slate-300 rounded-xl p-5 shadow-2xs space-y-2 text-xs">
+        <section className="bg-white border border-slate-300 rounded-none p-5 shadow-2xs space-y-2 text-xs">
           <h3 className="font-bold text-slate-900 uppercase tracking-wider">
-            📐 Official Scorecard Calculation Rules
+             Official Scorecard Calculation Rules
           </h3>
           <ul className="list-disc pl-5 space-y-1 text-slate-600">
             <li>

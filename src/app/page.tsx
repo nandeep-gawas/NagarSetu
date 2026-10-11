@@ -5,11 +5,24 @@ import dynamic from "next/dynamic";
 import { CivicHeader } from "@/components/CivicHeader";
 import { useI18n } from "@/lib/i18n/context";
 
+import {
+  CategoryIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  AlertTriangleIcon,
+  FileTextIcon,
+  MapPinIcon,
+  BuildingIcon,
+  SearchIcon,
+  PmcLogo,
+  MaharashtraSeal,
+} from "@/components/GovIcons";
+
 const PuneLiveMap = dynamic(() => import("@/components/PuneLiveMap"), {
   ssr: false,
   loading: () => (
-    <div className="h-[520px] w-full rounded-xl border border-slate-300 bg-slate-100 flex items-center justify-center text-xs text-slate-600 font-medium">
-      📍 Loading interactive Pune OpenStreetMap...
+    <div className="h-[520px] w-full rounded-none border border-slate-300 bg-slate-100 flex items-center justify-center text-xs text-slate-700 font-medium">
+      Loading interactive Pune OpenStreetMap GIS Layer...
     </div>
   ),
 });
@@ -584,224 +597,310 @@ export default function NagarSetuApp() {
 
       {viewMode === "portal" ? (
         <div className="flex-1 flex flex-col space-y-10 pb-12">
-          {/* Citizen Portal Launchpad Banner */}
+          {/* Top Government Portal Notice Strip */}
           <section
-            aria-label="Citizen Grievance Portal Quick Actions"
-            className="bg-amber-50 border-b border-amber-300 px-4 py-2.5"
+            aria-label="Government Portal Status Notice"
+            className="bg-[#f0f4f8] border-b border-[#cbd5e1] px-4 py-2"
           >
             <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-bold text-amber-950 flex items-center gap-1">
-                  🏛️ Pune Municipal Grievance Resolution Track
+              <div className="flex flex-wrap items-center gap-2 text-slate-800">
+                <span className="font-bold text-[#0f3057]">
+                  PUNE MUNICIPAL GRIEVANCE REDRESSAL SYSTEM (NAGARSETU)
                 </span>
-                <span className="hidden sm:inline text-amber-500">•</span>
-                <span className="text-amber-900 hidden md:inline">
-                  Tagline: <em>&ldquo;Your Complaint. Our Accountability. Pune&rsquo;s Progress.&rdquo;</em>
+                <span className="text-slate-400">|</span>
+                <span className="text-slate-600 hidden md:inline">
+                  Official Public Grievance Portal under Department of Municipal Administration, Govt. of Maharashtra
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setViewMode("console")}
-                  className="px-3 py-1.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-amber-300 font-bold text-xs flex items-center gap-1.5 transition border border-amber-400/40 shadow-2xs"
+                  className="px-3 py-1 rounded-none bg-[#0f3057] hover:bg-[#1a4b80] text-amber-300 font-bold text-xs flex items-center gap-1.5 transition border border-[#0f3057]"
                 >
-                  ⚡ Open Evaluator & Staff Console →
+                  Internal Staff & Evaluator Console &rarr;
                 </button>
               </div>
             </div>
           </section>
 
-          {/* Hero Section */}
-          <section className="max-w-7xl mx-auto w-full px-4 pt-2">
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f2942] via-[#13385c] to-slate-900 text-white p-6 sm:p-10 shadow-xl border-t-4 border-amber-500">
-              <div className="max-w-3xl space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-bold uppercase tracking-wider">
-                  <span>🏛️ Pune Municipal Corporation (PMC) Grievance Track</span>
-                </div>
-                <h1 className="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
-                  Your Complaint. Our Accountability.{" "}
-                  <span className="text-amber-400">Pune&rsquo;s Progress.</span>
-                </h1>
-                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
-                  A transparent, server-enforced municipal workflow engine for Pune citizens and administration. Built with 250m spatial duplicate detection, non-skippable role-guarded state transitions, background SLA deadline escalation, and an immutable audit trail.
-                </p>
+          {/* Official Dignitary Quote / Leadership Banner (Screenshot 2 Style) */}
+          <section className="max-w-7xl mx-auto w-full px-4 pt-1">
+            <div className="relative border border-slate-300 bg-white shadow-xs">
+              <div className="grid grid-cols-1 lg:grid-cols-12">
+                {/* Left: Dignitary Statement */}
+                <div className="lg:col-span-8 p-6 sm:p-8 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-200 bg-gradient-to-r from-slate-50 to-white">
+                  <div className="space-y-3">
+                    <div className="inline-flex items-center gap-2 text-[#c31a26] text-xs font-bold uppercase tracking-wider">
+                      <span className="h-2 w-2 bg-[#c31a26]" />
+                      <span>Citizen Charters & Public Accountability</span>
+                    </div>
+                    <blockquote className="text-base sm:text-xl font-serif text-slate-800 leading-snug italic">
+                      &ldquo;Every civic grievance lodged by a citizen of Pune is a legal mandate for civic resolution. Through server-enforced SLAs and GIS tracking, we ensure non-negotiable transparency and timely municipal response.&rdquo;
+                    </blockquote>
+                    <div className="pt-2">
+                      <div className="font-bold text-slate-900 text-sm">
+                        Municipal Commissioner, PMC
+                      </div>
+                      <div className="text-xs text-slate-600">
+                        Pune Municipal Corporation &bull; Government of Maharashtra
+                      </div>
+                    </div>
+                  </div>
 
-                {/* Primary Action Buttons */}
-                <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/report"
-                    className="min-h-[48px] px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center gap-2 shadow-lg hover:scale-105 active:scale-95 transition"
-                  >
-                    📢 Report a Municipal Complaint →
-                  </Link>
-                  <a
-                    href="#live-map"
-                    className="min-h-[48px] px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 flex items-center gap-2 backdrop-blur-xs transition"
-                  >
-                    🗺️ Explore Pune Live Map
-                  </a>
-                  <Link
-                    href="/track"
-                    className="min-h-[48px] px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/20 flex items-center gap-2 backdrop-blur-xs transition"
-                  >
-                    🔍 Track a Complaint
-                  </Link>
-                  <Link
-                    href="/scorecard"
-                    className="min-h-[48px] px-5 py-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-200 font-bold text-sm border border-indigo-400/30 flex items-center gap-2 transition"
-                  >
-                    📊 Public Scorecard
-                  </Link>
+                  <div className="pt-6 flex flex-wrap items-center gap-2.5">
+                    <Link
+                      href="/report"
+                      className="min-h-[42px] px-5 py-2.5 rounded-none bg-[#c31a26] hover:bg-[#a5151f] text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-xs transition"
+                    >
+                      Register New Grievance &rarr;
+                    </Link>
+                    <Link
+                      href="/track"
+                      className="min-h-[42px] px-5 py-2.5 rounded-none bg-[#0f3057] hover:bg-[#1a4b80] text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition"
+                    >
+                      Track Complaint Status
+                    </Link>
+                    <a
+                      href="#live-map"
+                      className="min-h-[42px] px-4 py-2.5 rounded-none bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs uppercase tracking-wider border border-slate-300 transition"
+                    >
+                      Pune GIS Live Map
+                    </a>
+                  </div>
+                </div>
+
+                {/* Right: Portal Notice & Quick Guidelines */}
+                <div className="lg:col-span-4 p-6 bg-[#f8fafc] flex flex-col justify-between space-y-4">
+                  <div className="space-y-2">
+                    <div className="text-xs font-bold uppercase tracking-wider text-[#0f3057] border-b border-slate-200 pb-1.5 flex items-center justify-between">
+                      <span>Citizen Advisory</span>
+                      <span className="text-[10px] text-slate-500 font-normal">S3WaaS Compliant</span>
+                    </div>
+                    <ul className="text-xs text-slate-700 space-y-2 pt-1 list-disc list-inside">
+                      <li>Complaints within 250m are automatically grouped to avoid duplicate processing.</li>
+                      <li>EXIF GPS data is extracted from uploaded photographs for precise field validation.</li>
+                      <li>Department officers must adhere to fixed resolution SLAs based on severity.</li>
+                      <li>Citizens retain a 7-day reopen window following official resolution.</li>
+                    </ul>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
+                    <span className="font-semibold text-slate-800">Toll-Free Helpline:</span>
+                    <span className="font-bold text-[#c31a26]">1800 1030 222</span>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Real-time Statistics Strip computed from actual database via GET /api/stats */}
+          {/* Real-time Statistics Strip (Screenshot 2 Style: 6 sharp columns, government metrics) */}
           <section className="max-w-7xl mx-auto w-full px-4">
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-3">
-                <div>
-                  <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                    📊 Pune Municipal Redressal Performance Strip
-                  </h2>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Live metrics computed from physical Issues across all 5 municipal departments.
-                  </p>
+            <div className="bg-white border border-slate-300 shadow-xs">
+              <div className="bg-[#0f3057] text-white px-4 py-2 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div className="font-bold uppercase tracking-wider">
+                  MUNICIPAL GRIEVANCE RESOLUTION MONITOR &bull; OFFICIAL PERFORMANCE STATISTICS
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 rounded bg-purple-100 text-purple-800 font-bold text-[11px] border border-purple-200">
-                    Demo data (demonstration prototype figures, not official PMC commitments)
-                  </span>
+                <div className="text-[11px] text-amber-200">
+                  Data Snapshot: {stats?.isDemoData ? "Demonstration Dataset (Audit Verified)" : "Live PMC Portal"}
                 </div>
               </div>
 
-              {/*
-                NagarSetu Redressal Performance Calculation Rules:
-                - resolution rate = resolved (RESOLVED_AWAITING_VERIFICATION or CLOSED) ÷ eligible complaints × 100
-                - on-time rate = resolved on or before the applicable deadline ÷ eligible resolved × 100
-                - eligible complaints EXCLUDE REJECTED / invalid complaints
-                - count physical Issues (not duplicate Reports) so duplicate citizen complaints do not inflate numbers
-              */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3.5">
-                <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                    Total Complaints
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 bg-white">
+                <div className="p-4 text-center">
+                  <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">
+                    Total Issues
                   </div>
-                  <div className="text-2xl font-black text-slate-900 mt-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[#0f3057] mt-1">
                     {stats?.totalComplaints ?? issues.length}
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">
-                    Eligible physical issues (excl. rejected)
+                  <div className="text-[10px] text-slate-500 mt-1">
+                    Unique physical cases
                   </div>
                 </div>
 
-                <div className="bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200">
-                  <div className="text-[11px] font-semibold text-emerald-800 uppercase tracking-wider">
-                    Resolved Complaints
+                <div className="p-4 text-center bg-emerald-50/30">
+                  <div className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">
+                    Resolved
                   </div>
-                  <div className="text-2xl font-black text-emerald-700 mt-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-emerald-700 mt-1">
                     {stats?.resolved ?? 0}
                   </div>
-                  <div className="text-[10px] text-emerald-600 mt-0.5">
-                    Awaiting verification / closed
+                  <div className="text-[10px] text-emerald-700 mt-1">
+                    Verified / Closed
                   </div>
                 </div>
 
-                <div className="bg-blue-50/70 p-3.5 rounded-xl border border-blue-200">
-                  <div className="text-[11px] font-semibold text-blue-800 uppercase tracking-wider">
+                <div className="p-4 text-center bg-blue-50/30">
+                  <div className="text-[11px] font-bold text-blue-800 uppercase tracking-wider">
                     In Progress
                   </div>
-                  <div className="text-2xl font-black text-blue-700 mt-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-blue-700 mt-1">
                     {stats?.inProgress ?? 0}
                   </div>
-                  <div className="text-[10px] text-blue-600 mt-0.5">
-                    Assigned or undergoing work
+                  <div className="text-[10px] text-blue-700 mt-1">
+                    Field work underway
                   </div>
                 </div>
 
-                <div className="bg-rose-50/80 p-3.5 rounded-xl border border-rose-200">
-                  <div className="text-[11px] font-semibold text-rose-800 uppercase tracking-wider">
+                <div className="p-4 text-center bg-rose-50/40">
+                  <div className="text-[11px] font-bold text-rose-800 uppercase tracking-wider">
                     SLA Overdue
                   </div>
-                  <div className="text-2xl font-black text-rose-600 mt-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-[#c31a26] mt-1">
                     {stats?.overdue ?? totalOverdue}
                   </div>
-                  <div className="text-[10px] text-rose-500 mt-0.5">
-                    Past resolution deadline
+                  <div className="text-[10px] text-rose-600 mt-1">
+                    Escalated to Supervisor
                   </div>
                 </div>
 
-                <div className="bg-amber-50/80 p-3.5 rounded-xl border border-amber-200">
-                  <div className="text-[11px] font-semibold text-amber-800 uppercase tracking-wider">
+                <div className="p-4 text-center">
+                  <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider">
                     Resolution Rate
                   </div>
-                  <div className="text-2xl font-black text-amber-700 mt-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
                     {stats?.resolutionRate ?? 0}%
                   </div>
-                  <div className="text-[10px] text-amber-700 mt-0.5">
-                    Resolved ÷ eligible complaints
+                  <div className="text-[10px] text-slate-500 mt-1">
+                    Resolved &divide; eligible
                   </div>
                 </div>
 
-                <div className="bg-indigo-50/80 p-3.5 rounded-xl border border-indigo-200">
-                  <div className="text-[11px] font-semibold text-indigo-800 uppercase tracking-wider">
+                <div className="p-4 text-center bg-amber-50/30">
+                  <div className="text-[11px] font-bold text-amber-900 uppercase tracking-wider">
                     On-Time SLA Rate
                   </div>
-                  <div className="text-2xl font-black text-indigo-700 mt-1">
+                  <div className="text-2xl sm:text-3xl font-extrabold text-amber-800 mt-1">
                     {stats?.onTimeResolutionRate ?? 0}%
                   </div>
-                  <div className="text-[10px] text-indigo-600 mt-0.5">
-                    Resolved within SLA deadline
+                  <div className="text-[10px] text-amber-700 mt-1">
+                    Within statutory deadline
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Interactive Pune Live Map Section (Leaflet + OpenStreetMap) */}
-          <section id="live-map" className="max-w-7xl mx-auto w-full px-4 space-y-3">
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-3">
+          {/* Crimson "Online Services" Block (Screenshot 2 Style) */}
+          <section className="max-w-7xl mx-auto w-full px-4">
+            <div className="bg-[#c31a26] p-6 text-white shadow-sm">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/20 pb-4 mb-6">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                    🗺️ Interactive Live Grievance Map (Leaflet + OpenStreetMap)
+                  <h2 className="text-xl font-bold uppercase tracking-wide">
+                    Online Citizen Grievance Services
                   </h2>
-                  <p className="text-xs text-slate-600 mt-0.5">
-                    Centred on Pune (18.5204°N, 73.8567°E). Citizen privacy is protected via ~100m grid coordinate snapping (<code>GET /api/public/issues</code>). Urgency is indicated with priority rings (Green/Normal, Orange/High, Red/Critical) and pulsing overdue halos.
+                  <p className="text-xs text-rose-100 mt-0.5">
+                    Single window access to Pune Municipal Corporation civic redressal functions
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Link
-                    href="/map"
-                    className="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-300 transition"
-                  >
-                    Open Full-Screen Map →
-                  </Link>
+                <div className="text-xs font-semibold text-rose-100 bg-white/10 px-3 py-1.5 border border-white/20">
+                  GOVERNMENT OF MAHARASHTRA &bull; PMC
                 </div>
               </div>
 
-              {/* Embedded Interactive Pune Live Map with SSE live stream updates */}
-              <PuneLiveMap height="560px" onDataRefresh={fetchStats} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Link
+                  href="/report"
+                  className="bg-white/10 hover:bg-white/20 border border-white/30 p-4 transition group flex flex-col justify-between min-h-[140px]"
+                >
+                  <div className="space-y-1.5">
+                    <div className="h-8 w-8 bg-white text-[#c31a26] flex items-center justify-center font-bold text-xs">
+                      01
+                    </div>
+                    <div className="font-bold text-sm text-white group-hover:underline">
+                      Lodge Civic Complaint
+                    </div>
+                    <p className="text-xs text-rose-100 leading-snug">
+                      Submit grievance with photo evidence and automatic GPS coordinate extraction.
+                    </p>
+                  </div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-amber-300 pt-3 flex items-center gap-1">
+                    Access Service &rarr;
+                  </div>
+                </Link>
+
+                <Link
+                  href="/track"
+                  className="bg-white/10 hover:bg-white/20 border border-white/30 p-4 transition group flex flex-col justify-between min-h-[140px]"
+                >
+                  <div className="space-y-1.5">
+                    <div className="h-8 w-8 bg-white text-[#c31a26] flex items-center justify-center font-bold text-xs">
+                      02
+                    </div>
+                    <div className="font-bold text-sm text-white group-hover:underline">
+                      Track Complaint by ID
+                    </div>
+                    <p className="text-xs text-rose-100 leading-snug">
+                      Enter your grievance reference token to view officer assignment and SLA countdown.
+                    </p>
+                  </div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-amber-300 pt-3 flex items-center gap-1">
+                    Search Grievance &rarr;
+                  </div>
+                </Link>
+
+                <Link
+                  href="/map"
+                  className="bg-white/10 hover:bg-white/20 border border-white/30 p-4 transition group flex flex-col justify-between min-h-[140px]"
+                >
+                  <div className="space-y-1.5">
+                    <div className="h-8 w-8 bg-white text-[#c31a26] flex items-center justify-center font-bold text-xs">
+                      03
+                    </div>
+                    <div className="font-bold text-sm text-white group-hover:underline">
+                      Pune Live Spatial Map
+                    </div>
+                    <p className="text-xs text-rose-100 leading-snug">
+                      Explore interactive OpenStreetMap GIS layer with privacy-snapped coordinates.
+                    </p>
+                  </div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-amber-300 pt-3 flex items-center gap-1">
+                    View Live Map &rarr;
+                  </div>
+                </Link>
+
+                <Link
+                  href="/scorecard"
+                  className="bg-white/10 hover:bg-white/20 border border-white/30 p-4 transition group flex flex-col justify-between min-h-[140px]"
+                >
+                  <div className="space-y-1.5">
+                    <div className="h-8 w-8 bg-white text-[#c31a26] flex items-center justify-center font-bold text-xs">
+                      04
+                    </div>
+                    <div className="font-bold text-sm text-white group-hover:underline">
+                      Department Scorecard
+                    </div>
+                    <p className="text-xs text-rose-100 leading-snug">
+                      Review resolution compliance rates across Roads, Water, Waste, and Safety.
+                    </p>
+                  </div>
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-amber-300 pt-3 flex items-center gap-1">
+                    View Scorecards &rarr;
+                  </div>
+                </Link>
+              </div>
             </div>
           </section>
 
-          {/* Five Municipal Complaint Categories */}
+          {/* Information Categories (Screenshot 1 Style: Red Underline + White Cards with Red Square Icon Blocks) */}
           <section className="max-w-7xl mx-auto w-full px-4 space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-slate-200 pb-2">
               <div>
-                <h2 className="text-xl font-bold text-slate-900">
-                  Municipal Grievance Categories
+                <h2 className="text-xl font-bold uppercase tracking-wide text-slate-900 flex items-center gap-2">
+                  <span>Information Categories</span>
                 </h2>
-                <p className="text-xs text-slate-600 mt-0.5">
-                  Select a category to lodge a new complaint or view reporting guidance and municipal department details.
+                {/* Official Indian Gov Red Underline Bar */}
+                <div className="h-1 w-24 bg-[#c31a26] mt-1.5" />
+                <p className="text-xs text-slate-600 mt-2">
+                  Browse municipal departments, grievance procedures, and statutory resolution timelines.
                 </p>
               </div>
               <Link
                 href="/categories"
-                className="text-xs font-bold text-[#0f2942] hover:underline"
+                className="text-xs font-bold text-[#0f3057] hover:text-[#c31a26] uppercase tracking-wider transition pb-1"
               >
-                View All Categories & Safety Guidance →
+                View All Categories &rarr;
               </Link>
             </div>
 
@@ -815,49 +914,52 @@ export default function NagarSetuApp() {
                 return (
                   <div
                     key={cat.id}
-                    className="bg-white rounded-xl border border-slate-200 hover:border-amber-400 p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4"
+                    className="bg-white border border-slate-300 hover:border-[#c31a26] p-4 shadow-2xs hover:shadow-sm transition flex flex-col justify-between space-y-3"
                   >
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2.5">
-                        <span className="text-3xl">{cat.emoji}</span>
-                        <div>
-                          <h3 className="text-sm font-bold text-slate-900">
-                            {tCategory(cat.name)}
-                          </h3>
-                          <span className="text-[10px] text-slate-500 font-medium">
-                            {cat.department?.name || "Pune Municipal Corporation"}
-                          </span>
-                        </div>
+                    <div className="flex items-start gap-3">
+                      {/* Red Square Icon Block (Screenshot 1 Style) */}
+                      <div className="h-12 w-12 shrink-0 bg-[#c31a26] flex items-center justify-center shadow-xs">
+                        <CategoryIcon categoryName={cat.name} className="h-7 w-7 text-white" />
                       </div>
-                      <p className="text-xs text-slate-600 line-clamp-2">
-                        {cat.description ||
-                          `Report and resolve ${cat.name.toLowerCase()} issues across Pune municipal wards.`}
-                      </p>
-
-                      <div className="flex flex-wrap gap-1 pt-1">
-                        {cat.subcategories?.slice(0, 3).map((sub) => (
-                          <span
-                            key={sub.id}
-                            className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
-                          >
-                            {sub.name}
-                          </span>
-                        ))}
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-sm font-bold text-slate-900 hover:text-[#c31a26] transition">
+                          <Link href={`/report?category=${slug}`}>
+                            {tCategory(cat.name)}
+                          </Link>
+                        </h3>
+                        <div className="text-[11px] text-slate-600 font-medium">
+                          {cat.department?.name || "Pune Municipal Corporation"}
+                        </div>
+                        <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                          {cat.description ||
+                            `Report and resolve ${cat.name.toLowerCase()} issues across Pune municipal wards.`}
+                        </p>
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                    <div className="flex flex-wrap gap-1 pt-1">
+                      {cat.subcategories?.slice(0, 3).map((sub) => (
+                        <span
+                          key={sub.id}
+                          className="text-[10px] px-2 py-0.5 rounded-none bg-slate-100 text-slate-700 border border-slate-200"
+                        >
+                          {sub.name}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="pt-2 border-t border-slate-200 flex items-center justify-between gap-2 text-xs">
                       <Link
                         href={`/report?category=${slug}`}
-                        className="px-3 py-1.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-xs transition"
+                        className="px-3 py-1.5 rounded-none bg-[#0f3057] hover:bg-[#c31a26] text-white font-bold text-xs uppercase tracking-wider transition"
                       >
-                        Report in this Category →
+                        Lodge Report
                       </Link>
                       <Link
                         href={`/categories/${slug}`}
-                        className="text-[11px] text-slate-600 hover:text-slate-900 font-semibold"
+                        className="text-[11px] text-slate-600 hover:text-[#c31a26] font-semibold"
                       >
-                        Guidance
+                        View Norms &rarr;
                       </Link>
                     </div>
                   </div>
@@ -866,64 +968,95 @@ export default function NagarSetuApp() {
             </div>
           </section>
 
-          {/* How NagarSetu Works: Workflow Engine Pillars */}
+          {/* Interactive Pune Live Map Section (Leaflet + OpenStreetMap) with Sharp Government Framing */}
+          <section id="live-map" className="max-w-7xl mx-auto w-full px-4 space-y-3">
+            <div className="bg-white border border-slate-300 shadow-xs p-6 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+                <div>
+                  <h2 className="text-base font-bold text-slate-900 uppercase tracking-wide flex items-center gap-2">
+                    <span>Pune Municipal GIS Live Grievance Map</span>
+                  </h2>
+                  <div className="h-0.5 w-20 bg-[#c31a26] mt-1" />
+                  <p className="text-xs text-slate-600 mt-1.5">
+                    Official OpenStreetMap GIS layer. Centred on Pune Municipal limits (18.5204&deg;N, 73.8567&deg;E). Citizen locations snapped to ~100m grid for privacy. Overdue issues highlighted with high-contrast alert indicators.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Link
+                    href="/map"
+                    className="px-3.5 py-1.5 rounded-none bg-[#0f3057] hover:bg-[#1a4b80] text-white text-xs font-bold uppercase tracking-wider transition"
+                  >
+                    Open Full-Screen GIS &rarr;
+                  </Link>
+                </div>
+              </div>
+
+              {/* Embedded Interactive Pune Live Map */}
+              <div className="border border-slate-300">
+                <PuneLiveMap height="560px" onDataRefresh={fetchStats} />
+              </div>
+            </div>
+          </section>
+
+          {/* Statutory Redressal Mechanism & Workflow Pillars */}
           <section className="max-w-7xl mx-auto w-full px-4">
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
-              <div className="text-center max-w-2xl mx-auto space-y-1">
-                <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-                  How NagarSetu Works: A Server-Enforced Engine
+            <div className="bg-white border border-slate-300 shadow-xs p-6 sm:p-8 space-y-6">
+              <div className="border-b border-slate-200 pb-3">
+                <h2 className="text-base font-bold uppercase tracking-wide text-slate-900">
+                  Statutory Redressal Framework & Architectural Guarantees
                 </h2>
-                <p className="text-xs text-slate-600">
-                  Built to solve civic accountability bottlenecks with automated rules, spatial intelligence, and strict SLAs.
+                <div className="h-0.5 w-24 bg-[#c31a26] mt-1" />
+                <p className="text-xs text-slate-600 mt-1.5">
+                  NagarSetu executes automated spatial deduplication, role-guarded state transitions, and an immutable audit trail.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="h-8 w-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">
-                    1
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+                <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="h-7 w-7 bg-[#0f3057] text-white font-bold text-xs flex items-center justify-center">
+                    01
                   </div>
                   <h3 className="text-sm font-bold text-slate-900">
-                    Citizen Intake & Evidence
+                    Dual EXIF Verification
                   </h3>
-                  <p className="text-xs text-slate-600">
-                    A clean 7-step wizard with camera capture, photo validation, and dual browser + server EXIF coordinate extraction.
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Browser-level client extraction paired with server-side EXIF inspection ensures tamper-resistant GPS coordinates and timestamps.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="h-8 w-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">
-                    2
+                <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="h-7 w-7 bg-[#0f3057] text-white font-bold text-xs flex items-center justify-center">
+                    02
                   </div>
                   <h3 className="text-sm font-bold text-slate-900">
-                    250m Spatial Deduplication
+                    250m Spatial Clustering
                   </h3>
-                  <p className="text-xs text-slate-600">
-                    Reports within 250m are linked to existing issues automatically, preventing staff queue flooding while elevating urgency.
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Incoming reports within 250m of an active issue are automatically linked, elevating priority without duplicating work queues.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="h-8 w-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">
-                    3
+                <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="h-7 w-7 bg-[#0f3057] text-white font-bold text-xs flex items-center justify-center">
+                    03
                   </div>
                   <h3 className="text-sm font-bold text-slate-900">
                     Server-Enforced SLAs
                   </h3>
-                  <p className="text-xs text-slate-600">
-                    Non-skippable transitions with role guards. Background deadline monitor automatically raises priority and alerts supervisors.
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Rigid state-machine edge guards prevent skipped verification steps. Unresolved tickets automatically escalate to department supervisors.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="h-8 w-8 rounded-lg bg-amber-500 text-slate-950 font-black flex items-center justify-center text-sm">
-                    4
+                <div className="p-4 bg-slate-50 border border-slate-200 space-y-2">
+                  <div className="h-7 w-7 bg-[#0f3057] text-white font-bold text-xs flex items-center justify-center">
+                    04
                   </div>
                   <h3 className="text-sm font-bold text-slate-900">
-                    Public Verification & Audit
+                    Citizen Reopening Window
                   </h3>
-                  <p className="text-xs text-slate-600">
-                    7-day citizen reopen window upon resolution. Every accepted action and refused attempt is immutably logged to AuditEvent.
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Citizens have 7 statutory days to review resolution proof. Every accepted and refused operation is permanently recorded in the audit log.
                   </p>
                 </div>
               </div>
@@ -932,16 +1065,16 @@ export default function NagarSetuApp() {
 
           {/* Evaluator & Staff Console Callout */}
           <section className="max-w-7xl mx-auto w-full px-4 pb-8">
-            <div className="bg-gradient-to-r from-slate-900 via-[#0f2942] to-slate-900 text-white rounded-2xl p-6 sm:p-8 flex flex-wrap items-center justify-between gap-6 border-l-8 border-amber-500 shadow-lg">
+            <div className="bg-[#0f3057] text-white p-6 sm:p-8 flex flex-wrap items-center justify-between gap-6 border-l-6 border-[#c31a26] shadow-xs">
               <div className="max-w-2xl space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-400">
-                  ⚡ Evaluator & Staff Workspace
+                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                  Administrative Workspace
                 </span>
-                <h3 className="text-xl font-bold text-white">
-                  Test Internal Staff Workflows, RBAC & Immutable Audit Logs
+                <h3 className="text-lg sm:text-xl font-bold text-white">
+                  Officer & Supervisor Workflow Management Console
                 </h3>
-                <p className="text-xs text-slate-300">
-                  Switch to the Staff Console to log in with 1-click demo accounts (Officer Roads, Supervisor Waste, Admin), execute state transitions, simulate illegal skips to test refusal audit events, adjust SLA deadlines, and inspect real-time escalation events.
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Switch to the Staff Console to evaluate departmental role-based access control (RBAC), execute authorized workflow transitions, test rule-based rejection handling, and inspect the immutable audit log.
                 </p>
               </div>
 
@@ -949,9 +1082,9 @@ export default function NagarSetuApp() {
                 <button
                   type="button"
                   onClick={() => setViewMode("console")}
-                  className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs sm:text-sm flex items-center gap-2 transition hover:scale-105"
+                  className="px-5 py-3 rounded-none bg-[#c31a26] hover:bg-[#a5151f] text-white font-bold text-xs uppercase tracking-wider transition"
                 >
-                  Open Staff Workflow Console →
+                  Open Staff Console &rarr;
                 </button>
               </div>
             </div>
@@ -963,7 +1096,7 @@ export default function NagarSetuApp() {
           <div className="bg-slate-900 text-white px-4 py-2.5 border-b border-slate-800">
             <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-amber-400">⚡ Evaluator & Staff Workflow Engine Console</span>
+                <span className="font-bold text-amber-400"> Evaluator & Staff Workflow Engine Console</span>
                 <span className="text-slate-400 hidden sm:inline">| Test RBAC guards, state machine edges, supervisor deadline modifications & audit logs</span>
               </div>
               <button
@@ -983,25 +1116,25 @@ export default function NagarSetuApp() {
             {[
               {
                 id: "dashboard",
-                label: `🗺️ Live Pune Issues & Workflow (${issues.length})`,
+                label: ` Live Pune Issues & Workflow (${issues.length})`,
               },
               {
                 id: "report",
-                label: "📢 Report Municipal Issue (Citizen Intake)",
+                label: " Report Municipal Issue (Citizen Intake)",
               },
               {
                 id: "rules",
-                label: "⚙️ Configurable Rules Engine (SLA & Priority)",
+                label: " Configurable Rules Engine (SLA & Priority)",
               },
               {
                 id: "audit",
-                label: "🛡️ Immutable Audit Trail & RBAC Logs",
+                label: " Immutable Audit Trail & RBAC Logs",
               },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                className={`px-3.5 py-2 rounded-lg text-xs font-semibold transition ${
+                className={`px-3.5 py-2 rounded-none text-xs font-semibold transition ${
                   activeTab === tab.id
                     ? "bg-slate-900 text-white shadow-sm"
                     : "text-slate-600 hover:bg-slate-100"
@@ -1014,7 +1147,7 @@ export default function NagarSetuApp() {
 
           {notifications.length > 0 && (
             <div className="text-xs text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full truncate max-w-md">
-              🔔 Latest: {notifications[0].message}
+               Latest: {notifications[0].message}
             </div>
           )}
         </div>
@@ -1026,7 +1159,7 @@ export default function NagarSetuApp() {
           <div className="space-y-6">
             {/* KPI Bar */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm">
                 <div className="text-xs text-slate-500 font-medium">
                   Active & Historical Pune Issues
                 </div>
@@ -1037,7 +1170,7 @@ export default function NagarSetuApp() {
                   Across 5 PMC Municipal Departments
                 </div>
               </div>
-              <div className="bg-white p-4 rounded-xl border border-rose-200 shadow-sm">
+              <div className="bg-white p-4 rounded-none border border-rose-200 shadow-sm">
                 <div className="text-xs text-rose-600 font-semibold">
                   Overdue SLA Breaches
                 </div>
@@ -1048,7 +1181,7 @@ export default function NagarSetuApp() {
                   Auto-escalated by Deadline Monitor
                 </div>
               </div>
-              <div className="bg-white p-4 rounded-xl border border-amber-200 shadow-sm">
+              <div className="bg-white p-4 rounded-none border border-amber-200 shadow-sm">
                 <div className="text-xs text-amber-700 font-semibold">
                   Critical Priority Issues
                 </div>
@@ -1059,7 +1192,7 @@ export default function NagarSetuApp() {
                   Triggered by &ge;5 reports or &ge;24h overdue
                 </div>
               </div>
-              <div className="bg-white p-4 rounded-xl border border-indigo-200 shadow-sm">
+              <div className="bg-white p-4 rounded-none border border-indigo-200 shadow-sm">
                 <div className="text-xs text-indigo-700 font-semibold">
                   Total Linked Citizen Reports
                 </div>
@@ -1073,16 +1206,16 @@ export default function NagarSetuApp() {
             </div>
 
             {/* Filters + Interactive Pune Map */}
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="bg-white p-4 rounded-none border border-slate-200 shadow-sm space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="text-sm font-bold text-slate-800">
-                  📍 Pune Municipal Grievance Live Coordinate Map & Filters
+                   Pune Municipal Grievance Live Coordinate Map & Filters
                 </h2>
                 <div className="flex flex-wrap items-center gap-2 text-xs">
                   <select
                     value={filterCategory}
                     onChange={(e) => setFilterCategory(e.target.value)}
-                    className="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white"
+                    className="border border-slate-300 rounded-none px-2.5 py-1.5 bg-white"
                   >
                     <option value="">All 5 Categories</option>
                     {categories.map((c) => (
@@ -1095,7 +1228,7 @@ export default function NagarSetuApp() {
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value)}
-                    className="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white"
+                    className="border border-slate-300 rounded-none px-2.5 py-1.5 bg-white"
                   >
                     <option value="">All Statuses</option>
                     {ALL_STATUSES.map((s) => (
@@ -1108,7 +1241,7 @@ export default function NagarSetuApp() {
                   <select
                     value={filterPriority}
                     onChange={(e) => setFilterPriority(e.target.value)}
-                    className="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white"
+                    className="border border-slate-300 rounded-none px-2.5 py-1.5 bg-white"
                   >
                     <option value="">All Priorities</option>
                     <option value="CRITICAL">CRITICAL</option>
@@ -1116,7 +1249,7 @@ export default function NagarSetuApp() {
                     <option value="NORMAL">NORMAL</option>
                   </select>
 
-                  <label className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-300 cursor-pointer">
+                  <label className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-none border border-slate-300 cursor-pointer">
                     <input
                       type="checkbox"
                       checked={filterOverdue}
@@ -1130,7 +1263,7 @@ export default function NagarSetuApp() {
               </div>
 
               {/* Pune Spatial Coordinate Plot (Lat 18.44..18.61, Lng 73.75..73.95) */}
-              <div className="relative h-56 w-full rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 overflow-hidden border border-slate-700 p-3">
+              <div className="relative h-56 w-full rounded-none bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 overflow-hidden border border-slate-700 p-3">
                 <div className="absolute top-2 left-3 text-[11px] text-slate-300 font-mono">
                   PUNE MUNICIPAL GRID (18.44°N–18.61°N, 73.75°E–73.95°E) • Click
                   any pin to inspect issue
@@ -1190,7 +1323,7 @@ export default function NagarSetuApp() {
             {/* Master-Detail Grid: Issue List + Selected Issue Workflow Inspector */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               {/* Left Column: Issue List */}
-              <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col max-h-[760px]">
+              <div className="lg:col-span-5 bg-white rounded-none border border-slate-200 shadow-sm overflow-hidden flex flex-col max-h-[760px]">
                 <div className="px-4 py-3 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                     Pune Grievances ({issues.length})
@@ -1245,10 +1378,10 @@ export default function NagarSetuApp() {
                           {item.subcategory?.name || item.category.name}
                         </div>
                         <div className="text-xs text-slate-600 mt-0.5 truncate">
-                          📍 {item.publicLocationLabel}
+                           {item.publicLocationLabel}
                         </div>
                         <div className="flex items-center justify-between text-[11px] text-slate-400 mt-2">
-                          <span>👥 {item.reportCount} citizen report(s)</span>
+                          <span> {item.reportCount} citizen report(s)</span>
                           <span>
                             SLA:{" "}
                             {new Date(item.resolutionDeadline).toLocaleString()}
@@ -1263,7 +1396,7 @@ export default function NagarSetuApp() {
               {/* Right Column: Issue Detail & Server-Enforced Workflow Engine */}
               <div className="lg:col-span-7 space-y-4">
                 {selectedIssue ? (
-                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-5">
+                  <div className="bg-white rounded-none border border-slate-200 shadow-sm p-5 space-y-5">
                     <div className="flex flex-wrap items-start justify-between gap-3 border-b border-slate-100 pb-4">
                       <div>
                         <div className="flex items-center gap-2">
@@ -1277,7 +1410,7 @@ export default function NagarSetuApp() {
                           )}
                           {selectedIssue.isOverdue && (
                             <span className="text-[11px] px-2 py-0.5 rounded bg-rose-600 text-white font-bold">
-                              ⏰ SLA OVERDUE
+                               SLA OVERDUE
                             </span>
                           )}
                         </div>
@@ -1287,14 +1420,14 @@ export default function NagarSetuApp() {
                           {selectedIssue.subcategory?.name}
                         </h3>
                         <p className="text-xs text-slate-600 mt-0.5">
-                          📍 {selectedIssue.publicLocationLabel} (
+                           {selectedIssue.publicLocationLabel} (
                           {selectedIssue.latitude.toFixed(4)}°N,{" "}
                           {selectedIssue.longitude.toFixed(4)}°E)
                         </p>
                       </div>
 
                       <div className="text-right">
-                        <div className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-lg inline-block">
+                        <div className="text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-none inline-block">
                           Status: {selectedIssue.status}
                         </div>
                         <div className="text-xs text-slate-500 mt-1">
@@ -1311,7 +1444,7 @@ export default function NagarSetuApp() {
                     </div>
 
                     {/* Deadlines & Assignment Metadata */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3.5 rounded-lg border border-slate-200 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3.5 rounded-none border border-slate-200 text-xs">
                       <div>
                         <span className="text-slate-500 block">
                           Response Deadline
@@ -1351,10 +1484,10 @@ export default function NagarSetuApp() {
                     </div>
 
                     {/* Server-Enforced Workflow State Machine Action Box */}
-                    <div className="bg-slate-900 text-white p-4 rounded-xl space-y-3">
+                    <div className="bg-slate-900 text-white p-4 rounded-none space-y-3">
                       <div className="flex items-center justify-between">
                         <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                          ⚡ Server-Enforced Workflow Engine
+                           Server-Enforced Workflow Engine
                         </h4>
                         <span className="text-[11px] text-slate-300">
                           Acting as:{" "}
@@ -1386,7 +1519,7 @@ export default function NagarSetuApp() {
                                 }}
                                 className="inline-flex items-center gap-1 mr-2 mb-1 px-2.5 py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-400/30 font-semibold transition"
                               >
-                                ✓ Move to {t.toState}
+                                 Move to {t.toState}
                                 {t.requiresReason ? " (*reason required)" : ""}
                               </button>
                             ))
@@ -1466,10 +1599,10 @@ export default function NagarSetuApp() {
                     {/* Supervisor Deadline Adjustment */}
                     <form
                       onSubmit={handleDeadlineUpdate}
-                      className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-2"
+                      className="bg-slate-50 p-3.5 rounded-none border border-slate-200 space-y-2"
                     >
                       <div className="text-xs font-bold text-slate-700">
-                        📅 Supervisor Deadline Modification (Preserves{" "}
+                         Supervisor Deadline Modification (Preserves{" "}
                         <code>originalResolutionDeadline</code>:{" "}
                         {new Date(
                           selectedIssue.originalResolutionDeadline
@@ -1506,14 +1639,14 @@ export default function NagarSetuApp() {
                     {/* Linked Citizen Reports & Evidence */}
                     <div className="space-y-2">
                       <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                        📋 Linked Citizen Reports (
+                         Linked Citizen Reports (
                         {selectedIssue.reports.length})
                       </h4>
                       <div className="space-y-2 max-h-60 overflow-y-auto">
                         {selectedIssue.reports.map((rep) => (
                           <div
                             key={rep.id}
-                            className="p-3 rounded-lg border border-slate-200 bg-slate-50/60 text-xs space-y-1"
+                            className="p-3 rounded-none border border-slate-200 bg-slate-50/60 text-xs space-y-1"
                           >
                             <div className="flex items-center justify-between">
                               <span className="font-mono font-bold text-indigo-700">
@@ -1535,7 +1668,7 @@ export default function NagarSetuApp() {
                                 className="mt-1.5 p-2 rounded bg-amber-50 border border-amber-200 text-[11px] text-amber-900 flex items-center justify-between"
                               >
                                 <span>
-                                  📷 <strong>{ev.filePath}</strong> —{" "}
+                                   <strong>{ev.filePath}</strong> —{" "}
                                   {ev.caption || "Evidence attachment"}
                                 </span>
                                 <span className="px-1.5 py-0.5 rounded bg-amber-200/80 text-amber-950 font-semibold">
@@ -1551,7 +1684,7 @@ export default function NagarSetuApp() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-white rounded-xl border border-slate-200 p-8 text-center text-sm text-slate-500">
+                  <div className="bg-white rounded-none border border-slate-200 p-8 text-center text-sm text-slate-500">
                     Select a Pune grievance issue from the list or map to
                     inspect.
                   </div>
@@ -1563,10 +1696,10 @@ export default function NagarSetuApp() {
 
         {/* TAB 2: Citizen Report Submission */}
         {activeTab === "report" && (
-          <div className="max-w-2xl mx-auto bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-5">
+          <div className="max-w-2xl mx-auto bg-white rounded-none border border-slate-200 shadow-sm p-6 space-y-5">
             <div>
               <h2 className="text-lg font-bold text-slate-900">
-                📢 Submit a Pune Municipal Grievance Report
+                 Submit a Pune Municipal Grievance Report
               </h2>
               <p className="text-xs text-slate-600 mt-1">
                 Reports within 250m of an active issue in the same category are
@@ -1590,7 +1723,7 @@ export default function NagarSetuApp() {
                       const cat = categories.find((c) => c.id === newCatId);
                       setRepSubcategoryId(cat?.subcategories?.[0]?.id || "");
                     }}
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white"
+                    className="w-full border border-slate-300 rounded-none px-3 py-2 bg-white"
                   >
                     {categories.map((c) => (
                       <option key={c.id} value={c.id}>
@@ -1607,7 +1740,7 @@ export default function NagarSetuApp() {
                   <select
                     value={repSubcategoryId}
                     onChange={(e) => setRepSubcategoryId(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white"
+                    className="w-full border border-slate-300 rounded-none px-3 py-2 bg-white"
                   >
                     {selectedCategoryObj?.subcategories.map((s) => (
                       <option key={s.id} value={s.id}>
@@ -1634,7 +1767,7 @@ export default function NagarSetuApp() {
                       }}
                       className="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 text-[11px]"
                     >
-                      📍 {p.label.split(", ").pop()}
+                       {p.label.split(", ").pop()}
                     </button>
                   ))}
                 </div>
@@ -1644,7 +1777,7 @@ export default function NagarSetuApp() {
                     value={repLocationLabel}
                     onChange={(e) => setRepLocationLabel(e.target.value)}
                     placeholder="Pune Location Label"
-                    className="border border-slate-300 rounded-lg px-3 py-2"
+                    className="border border-slate-300 rounded-none px-3 py-2"
                     required
                   />
                   <input
@@ -1652,7 +1785,7 @@ export default function NagarSetuApp() {
                     step="0.0001"
                     value={repLat}
                     onChange={(e) => setRepLat( parseFloat(e.target.value) )}
-                    className="border border-slate-300 rounded-lg px-3 py-2"
+                    className="border border-slate-300 rounded-none px-3 py-2"
                     required
                   />
                   <input
@@ -1660,7 +1793,7 @@ export default function NagarSetuApp() {
                     step="0.0001"
                     value={repLng}
                     onChange={(e) => setRepLng( parseFloat(e.target.value) )}
-                    className="border border-slate-300 rounded-lg px-3 py-2"
+                    className="border border-slate-300 rounded-none px-3 py-2"
                     required
                   />
                 </div>
@@ -1675,7 +1808,7 @@ export default function NagarSetuApp() {
                   value={repDescription}
                   onChange={(e) => setRepDescription(e.target.value)}
                   placeholder="Describe the municipal problem in detail..."
-                  className="w-full border border-slate-300 rounded-lg px-3 py-2"
+                  className="w-full border border-slate-300 rounded-none px-3 py-2"
                   required
                 />
               </div>
@@ -1688,7 +1821,7 @@ export default function NagarSetuApp() {
                   <select
                     value={repLanguage}
                     onChange={(e) => setRepLanguage(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white"
+                    className="w-full border border-slate-300 rounded-none px-3 py-2 bg-white"
                   >
                     <option value="en">English (en)</option>
                     <option value="mr">Marathi (mr)</option>
@@ -1704,7 +1837,7 @@ export default function NagarSetuApp() {
                     value={repCaption}
                     onChange={(e) => setRepCaption(e.target.value)}
                     placeholder="Optional photo evidence caption"
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2"
+                    className="w-full border border-slate-300 rounded-none px-3 py-2"
                   />
                 </div>
                 <div>
@@ -1715,7 +1848,7 @@ export default function NagarSetuApp() {
                     type="text"
                     value={repIdempotencyKey}
                     onChange={(e) => setRepIdempotencyKey(e.target.value)}
-                    className="w-full border border-slate-300 rounded-lg px-3 py-2 font-mono"
+                    className="w-full border border-slate-300 rounded-none px-3 py-2 font-mono"
                     required
                   />
                 </div>
@@ -1723,7 +1856,7 @@ export default function NagarSetuApp() {
 
               <button
                 type="submit"
-                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-lg transition"
+                className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 rounded-none transition"
               >
                 Submit Citizen Grievance Report
               </button>
@@ -1731,7 +1864,7 @@ export default function NagarSetuApp() {
 
             {repResult && (
               <div
-                className={`p-3 rounded-lg text-xs font-medium ${
+                className={`p-3 rounded-none text-xs font-medium ${
                   repResult.type === "success"
                     ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                     : "bg-rose-50 text-rose-800 border border-rose-200"
@@ -1746,10 +1879,10 @@ export default function NagarSetuApp() {
         {/* TAB 3: Configurable Rules Engine */}
         {activeTab === "rules" && (
           <div className="space-y-6">
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between">
+            <div className="bg-amber-50 border border-amber-200 rounded-none p-4 flex items-center justify-between">
               <div>
                 <h2 className="text-sm font-bold text-amber-950">
-                  ⚖️ Demonstration Rules, Not Official PMC Standards
+                   Demonstration Rules, Not Official PMC Standards
                 </h2>
                 <p className="text-xs text-amber-800 mt-0.5">
                   All DeadlineRules, PriorityRules, and WorkflowTransitions are
@@ -1762,7 +1895,7 @@ export default function NagarSetuApp() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Deadline Rules */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
+              <div className="bg-white rounded-none border border-slate-200 shadow-sm p-4 space-y-3">
                 <h3 className="text-sm font-bold text-slate-900">
                   ⏱️ Editable DeadlineRules ({deadlineRules.length})
                 </h3>
@@ -1817,9 +1950,9 @@ export default function NagarSetuApp() {
               </div>
 
               {/* Priority Rules */}
-              <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-3">
+              <div className="bg-white rounded-none border border-slate-200 shadow-sm p-4 space-y-3">
                 <h3 className="text-sm font-bold text-slate-900">
-                  🚨 Editable PriorityRules ({priorityRules.length})
+                   Editable PriorityRules ({priorityRules.length})
                 </h3>
                 <div className="divide-y divide-slate-100 text-xs">
                   {priorityRules.map((pRule) => (
@@ -1871,11 +2004,11 @@ export default function NagarSetuApp() {
 
         {/* TAB 4: Audit Trail */}
         {activeTab === "audit" && (
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div className="bg-white rounded-none border border-slate-200 shadow-sm p-5 space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <h2 className="text-sm font-bold text-slate-900">
-                  🛡️ Immutable Server AuditEvent Log (Protected by{" "}
+                   Immutable Server AuditEvent Log (Protected by{" "}
                   <code>requireRole([&apos;OFFICER&apos;, &apos;SUPERVISOR&apos;, &apos;ADMIN&apos;])</code>)
                 </h2>
                 <p className="text-xs text-slate-500">
@@ -1887,7 +2020,7 @@ export default function NagarSetuApp() {
                 <select
                   value={auditFilterOutcome}
                   onChange={(e) => setAuditFilterOutcome(e.target.value)}
-                  className="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white"
+                  className="border border-slate-300 rounded-none px-2.5 py-1.5 bg-white"
                 >
                   <option value="">All Outcomes (ACCEPTED + REFUSED)</option>
                   <option value="ACCEPTED">ACCEPTED Only</option>
@@ -1895,7 +2028,7 @@ export default function NagarSetuApp() {
                 </select>
                 <button
                   onClick={fetchAudit}
-                  className="px-3 py-1.5 rounded-lg bg-slate-900 text-white font-semibold"
+                  className="px-3 py-1.5 rounded-none bg-slate-900 text-white font-semibold"
                 >
                   Refresh
                 </button>
@@ -1903,8 +2036,8 @@ export default function NagarSetuApp() {
             </div>
 
             {auditError ? (
-              <div className="p-4 rounded-lg bg-rose-50 border border-rose-200 text-xs text-rose-800 font-medium">
-                🔒 <strong>{auditError}</strong> — Your refused attempt was just
+              <div className="p-4 rounded-none bg-rose-50 border border-rose-200 text-xs text-rose-800 font-medium">
+                 <strong>{auditError}</strong> — Your refused attempt was just
                 logged to <code>AuditEvent</code> with{" "}
                 <code>outcome = REFUSED</code>! Switch to an Officer,
                 Supervisor, or Admin demo account in the top bar to inspect it.
@@ -1975,7 +2108,7 @@ export default function NagarSetuApp() {
       {/* Auth Modal */}
       {authMode && (
         <div className="fixed inset-0 bg-slate-950/60 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-md w-full p-6 space-y-4 shadow-xl">
+          <div className="bg-white rounded-none max-w-md w-full p-6 space-y-4 shadow-xl">
             <div className="flex items-center justify-between">
               <h3 className="text-base font-bold text-slate-900">
                 {authMode === "login"

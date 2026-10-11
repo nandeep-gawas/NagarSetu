@@ -308,26 +308,26 @@ export default function TrackReferencePage({
             href="/my-complaints"
             className="text-xs font-bold text-[#0f2942] hover:underline"
           >
-            📋 {t("navMyComplaints")} →
+             {t("navMyComplaints")} →
           </Link>
         </div>
 
         {loading && (
-          <div className="bg-white border border-slate-300 rounded-xl p-8 text-sm text-slate-600">
+          <div className="bg-white border border-slate-300 rounded-none p-8 text-sm text-slate-600">
             Loading complaint status for{" "}
             <code className="font-mono font-bold">{referenceId}</code>...
           </div>
         )}
 
         {error && !loading && (
-          <div className="bg-white border-2 border-rose-300 rounded-xl p-6 space-y-3">
+          <div className="bg-white border-2 border-rose-300 rounded-none p-6 space-y-3">
             <h1 className="text-lg font-bold text-rose-900">
-              ⚠️ Complaint Not Found
+               Complaint Not Found
             </h1>
             <p className="text-xs sm:text-sm text-slate-700">{error}</p>
             <Link
               href="/track"
-              className="inline-flex min-h-[42px] px-4 py-2 rounded-lg bg-[#0f2942] text-white text-xs font-bold items-center"
+              className="inline-flex min-h-[42px] px-4 py-2 rounded-none bg-[#0f2942] text-white text-xs font-bold items-center"
             >
               Try Another Reference ID
             </Link>
@@ -338,7 +338,7 @@ export default function TrackReferencePage({
           <>
             {/* Privacy / Access Level Notice Banner */}
             <div
-              className={`p-3.5 rounded-xl border text-xs font-semibold flex flex-wrap items-center justify-between gap-2 ${
+              className={`p-3.5 rounded-none border text-xs font-semibold flex flex-wrap items-center justify-between gap-2 ${
                 data.accessLevel === "PUBLIC"
                   ? "bg-amber-50 border-amber-300 text-amber-950"
                   : "bg-emerald-50 border-emerald-300 text-emerald-950"
@@ -346,7 +346,7 @@ export default function TrackReferencePage({
             >
               <span>
                 {data.accessLevel === "PUBLIC"
-                  ? `🔒 ${t("publicViewNotice")}`
+                  ? ` ${t("publicViewNotice")}`
                   : `✓ ${t("ownerViewNotice")} (${data.accessLevel})`}
               </span>
               {data.accessLevel === "PUBLIC" && (
@@ -362,7 +362,7 @@ export default function TrackReferencePage({
             </div>
 
             {/* HEADER SUMMARY CARD */}
-            <div className="bg-white border border-slate-300 rounded-xl shadow-sm overflow-hidden">
+            <div className="bg-white border border-slate-300 rounded-none shadow-sm overflow-hidden">
               <div className="bg-[#0f2942] text-white p-5 sm:p-6 border-b-4 border-amber-500">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
@@ -388,7 +388,7 @@ export default function TrackReferencePage({
                       </span>
                       {issue.escalationLevel > 0 && (
                         <span className="px-2.5 py-0.5 rounded bg-rose-700 text-white text-xs font-bold border border-rose-400">
-                          ⚡ ESCALATED (LEVEL {issue.escalationLevel})
+                           ESCALATED (LEVEL {issue.escalationLevel})
                         </span>
                       )}
                     </div>
@@ -399,14 +399,14 @@ export default function TrackReferencePage({
                       {tSubcategory(issue.subcategory.name)}
                     </h1>
                     <p className="text-xs text-slate-300 mt-1">
-                      📍 {issue.publicLocationLabel} • Department:{" "}
+                       {issue.publicLocationLabel} • Department:{" "}
                       <strong>{issue.department}</strong> • Linked Reports:{" "}
                       <strong>{issue.reportCount}</strong>
                     </p>
                   </div>
 
                   {/* Live SLA Countdown / Overdue Badge */}
-                  <div className="bg-slate-900/90 border border-slate-700 rounded-xl p-3.5 text-right min-w-[210px]">
+                  <div className="bg-slate-900/90 border border-slate-700 rounded-none p-3.5 text-right min-w-[210px]">
                     <div className="text-[11px] text-slate-400 uppercase font-bold">
                       Target Resolution SLA
                     </div>
@@ -416,7 +416,7 @@ export default function TrackReferencePage({
                       </div>
                     ) : isCurrentlyOverdue ? (
                       <div className="text-sm font-black text-rose-400 mt-0.5">
-                        🚨 Overdue by {formatDurationDelta(deadlineMs)}
+                         Overdue by {formatDurationDelta(deadlineMs)}
                       </div>
                     ) : (
                       <div className="text-sm font-mono font-bold text-amber-300 mt-0.5">
@@ -484,7 +484,7 @@ export default function TrackReferencePage({
               {issue.escalationEvents.length > 0 && (
                 <div className="p-4 bg-rose-50 border-b border-rose-200 space-y-1.5">
                   <div className="text-xs font-bold text-rose-900 uppercase">
-                    ⚡ Automatic SLA Escalation Record
+                     Automatic SLA Escalation Record
                   </div>
                   {issue.escalationEvents.map((esc) => (
                     <div
@@ -508,7 +508,7 @@ export default function TrackReferencePage({
                 <div className="p-5 sm:p-6 space-y-5 border-b border-slate-200">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-                      📄 Reporting Citizen Details & Evidence (
+                       Reporting Citizen Details & Evidence (
                       {data.privateDetails.reportReferenceId})
                     </h2>
                     <span className="text-xs font-semibold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded">
@@ -517,7 +517,7 @@ export default function TrackReferencePage({
                   </div>
 
                   {/* Verbatim Citizen Description */}
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-300">
+                  <div className="p-4 rounded-none bg-slate-50 border border-slate-300">
                     <div className="text-xs font-bold text-slate-500 uppercase mb-1">
                       Citizen Complaint Description (Stored Verbatim)
                     </div>
@@ -528,9 +528,9 @@ export default function TrackReferencePage({
 
                   {/* Attached Photo / Video Evidence */}
                   {data.privateDetails.photoUrl && (
-                    <div className="p-4 rounded-xl bg-slate-50 border border-slate-300 space-y-2">
+                    <div className="p-4 rounded-none bg-slate-50 border border-slate-300 space-y-2">
                       <div className="text-xs font-bold text-slate-700">
-                        📷 Attached Evidence
+                         Attached Evidence
                       </div>
                       {data.privateDetails.photoUrl.startsWith(
                         "/api/evidence/"
@@ -538,7 +538,7 @@ export default function TrackReferencePage({
                         <img
                           src={data.privateDetails.photoUrl}
                           alt="Citizen grievance evidence"
-                          className="max-h-64 rounded-lg border border-slate-300"
+                          className="max-h-64 rounded-none border border-slate-300"
                         />
                       ) : (
                         <div className="text-xs font-mono text-slate-700 bg-white p-2.5 rounded border border-slate-200">
@@ -562,13 +562,13 @@ export default function TrackReferencePage({
                   {actionMessage && (
                     <div
                       role="alert"
-                      className={`p-3.5 rounded-lg border text-xs font-bold ${
+                      className={`p-3.5 rounded-none border text-xs font-bold ${
                         actionMessage.type === "ok"
                           ? "bg-emerald-50 border-emerald-300 text-emerald-950"
                           : "bg-rose-50 border-rose-300 text-rose-950"
                       }`}
                     >
-                      {actionMessage.type === "ok" ? "✓ " : "⚠️ "}
+                      {actionMessage.type === "ok" ? "✓ " : " "}
                       {actionMessage.text}
                     </div>
                   )}
@@ -586,7 +586,7 @@ export default function TrackReferencePage({
                           type="button"
                           disabled={actionLoading}
                           onClick={handleConfirmClosure}
-                          className="min-h-[44px] px-4 py-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition disabled:opacity-50"
+                          className="min-h-[44px] px-4 py-2 rounded-none bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold transition disabled:opacity-50"
                         >
                           {t("btnConfirmClosure")}
                         </button>
@@ -598,7 +598,7 @@ export default function TrackReferencePage({
                           type="button"
                           disabled={actionLoading}
                           onClick={() => setShowReopenModal((v) => !v)}
-                          className="min-h-[44px] px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition disabled:opacity-50"
+                          className="min-h-[44px] px-4 py-2 rounded-none bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition disabled:opacity-50"
                         >
                           {t("btnRequestReopen")}
                         </button>
@@ -609,14 +609,14 @@ export default function TrackReferencePage({
                         type="button"
                         disabled={actionLoading}
                         onClick={() => setShowAddEvidence((v) => !v)}
-                        className="min-h-[44px] px-4 py-2 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold transition disabled:opacity-50"
+                        className="min-h-[44px] px-4 py-2 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold transition disabled:opacity-50"
                       >
                         {t("btnAddEvidenceUpdate")}
                       </button>
                     </div>
 
                     {/* Reopen Rule Explanation */}
-                    <p className="text-xs text-slate-600 bg-slate-100 p-2.5 rounded-lg border border-slate-200">
+                    <p className="text-xs text-slate-600 bg-slate-100 p-2.5 rounded-none border border-slate-200">
                       ℹ️ {t("reopenRuleInfo")}
                       {data.privateDetails.reopenDeadline && (
                         <span className="ml-1 font-mono font-semibold text-slate-800">
@@ -633,7 +633,7 @@ export default function TrackReferencePage({
                     {showAddEvidence && (
                       <form
                         onSubmit={handleSubmitEvidenceUpdate}
-                        className="p-4 rounded-xl border border-slate-300 bg-slate-50 space-y-3"
+                        className="p-4 rounded-none border border-slate-300 bg-slate-50 space-y-3"
                       >
                         <div className="text-xs font-bold text-slate-900">
                           Attach Additional Evidence or Progress Note
@@ -651,12 +651,12 @@ export default function TrackReferencePage({
                             value={updateNote}
                             onChange={(e) => setUpdateNote(e.target.value)}
                             placeholder="Add any new observations or landmark details..."
-                            className="w-full p-2.5 rounded-lg border border-slate-300 bg-white text-xs text-slate-900"
+                            className="w-full p-2.5 rounded-none border border-slate-300 bg-white text-xs text-slate-900"
                           />
                         </div>
                         <div className="flex flex-wrap items-center gap-3">
-                          <label className="min-h-[38px] px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-800 cursor-pointer flex items-center">
-                            📷 Attach Photo / Video
+                          <label className="min-h-[38px] px-3 py-1.5 rounded-none bg-white border border-slate-300 hover:bg-slate-100 text-xs font-bold text-slate-800 cursor-pointer flex items-center">
+                             Attach Photo / Video
                             <input
                               type="file"
                               accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
@@ -686,14 +686,14 @@ export default function TrackReferencePage({
                               uploadingUpdatePhoto ||
                               (!updateNote.trim() && !updatePhotoUrl)
                             }
-                            className="min-h-[40px] px-4 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold disabled:opacity-50"
+                            className="min-h-[40px] px-4 py-1.5 rounded-none bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold disabled:opacity-50"
                           >
                             Save Evidence Update
                           </button>
                           <button
                             type="button"
                             onClick={() => setShowAddEvidence(false)}
-                            className="min-h-[40px] px-3 py-1.5 rounded-lg bg-slate-200 text-slate-800 text-xs font-bold"
+                            className="min-h-[40px] px-3 py-1.5 rounded-none bg-slate-200 text-slate-800 text-xs font-bold"
                           >
                             Cancel
                           </button>
@@ -705,7 +705,7 @@ export default function TrackReferencePage({
                     {showReopenModal && (
                       <form
                         onSubmit={handleRequestReopen}
-                        className="p-4 rounded-xl border-2 border-amber-500 bg-amber-50 space-y-3"
+                        className="p-4 rounded-none border-2 border-amber-500 bg-amber-50 space-y-3"
                       >
                         <div className="text-xs font-bold text-amber-950">
                           Request Reopening of Complaint ({issue.referenceId})
@@ -716,20 +716,20 @@ export default function TrackReferencePage({
                           value={reopenReason}
                           onChange={(e) => setReopenReason(e.target.value)}
                           placeholder="Explain why the issue is still unresolved on site (required)..."
-                          className="w-full p-2.5 rounded-lg border border-amber-300 bg-white text-xs text-slate-900"
+                          className="w-full p-2.5 rounded-none border border-amber-300 bg-white text-xs text-slate-900"
                         />
                         <div className="flex gap-2">
                           <button
                             type="submit"
                             disabled={actionLoading || !reopenReason.trim()}
-                            className="min-h-[40px] px-4 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold disabled:opacity-50"
+                            className="min-h-[40px] px-4 py-1.5 rounded-none bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold disabled:opacity-50"
                           >
                             Submit Reopen Request
                           </button>
                           <button
                             type="button"
                             onClick={() => setShowReopenModal(false)}
-                            className="min-h-[40px] px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-slate-800 text-xs font-bold"
+                            className="min-h-[40px] px-3 py-1.5 rounded-none bg-white border border-slate-300 text-slate-800 text-xs font-bold"
                           >
                             Cancel
                           </button>
@@ -743,7 +743,7 @@ export default function TrackReferencePage({
               {/* AUDIT TIMELINE OF ACCEPTED STATUS CHANGES & ESCALATIONS */}
               <div className="p-5 sm:p-6">
                 <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">
-                  📜 Verified Workflow & Escalation Audit Timeline (
+                   Verified Workflow & Escalation Audit Timeline (
                   {data.timeline.length} events)
                 </h2>
 
@@ -760,7 +760,7 @@ export default function TrackReferencePage({
                       >
                         •
                       </span>
-                      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                      <div className="p-3.5 rounded-none bg-slate-50 border border-slate-200">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="text-xs font-bold text-slate-900">

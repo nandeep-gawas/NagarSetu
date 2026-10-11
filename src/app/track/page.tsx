@@ -46,7 +46,7 @@ export default function TrackSearchPage() {
       <CivicHeader />
 
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-        <div className="bg-[#0f2942] text-white rounded-xl p-6 shadow-sm border-l-8 border-amber-500">
+        <div className="bg-[#0f2942] text-white rounded-none p-6 shadow-sm border-l-8 border-amber-500">
           <span className="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold mb-1.5">
             PMC GRIEVANCE TRACKER • PUNE
           </span>
@@ -70,22 +70,22 @@ export default function TrackSearchPage() {
               value={refInput}
               onChange={(e) => setRefInput(e.target.value)}
               placeholder={t("trackSearchPlaceholder")}
-              className="flex-1 min-h-[48px] px-4 py-2.5 rounded-lg bg-white text-slate-900 font-mono text-sm border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              className="flex-1 min-h-[48px] px-4 py-2.5 rounded-none bg-white text-slate-900 font-mono text-sm border border-slate-300 focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
             <button
               type="submit"
-              className="min-h-[48px] px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition"
+              className="min-h-[48px] px-6 py-2.5 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm transition"
             >
-              🔍 {t("btnSearchRef")}
+               {t("btnSearchRef")}
             </button>
           </form>
         </div>
 
         {/* Seeded Pune Reference IDs for Quick Demo Testing */}
-        <div className="bg-white border border-slate-300 rounded-xl p-6 shadow-sm">
+        <div className="bg-white border border-slate-300 rounded-none p-6 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-              📌 Seeded Pune Grievance Reference IDs (1-Click Track)
+               Seeded Pune Grievance Reference IDs (1-Click Track)
             </h2>
             <Link
               href="/my-complaints"
@@ -100,7 +100,7 @@ export default function TrackSearchPage() {
               <Link
                 key={item.ref}
                 href={`/track/${item.ref}`}
-                className="p-3.5 rounded-lg border border-slate-300 hover:border-[#0f2942] bg-slate-50 hover:bg-amber-50/50 transition flex items-center justify-between gap-3"
+                className="p-3.5 rounded-none border border-slate-300 hover:border-[#0f2942] bg-slate-50 hover:bg-amber-50/50 transition flex items-center justify-between gap-3"
               >
                 <div>
                   <div className="font-mono text-sm font-bold text-[#0f2942]">

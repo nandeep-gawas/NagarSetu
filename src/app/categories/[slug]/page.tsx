@@ -56,9 +56,9 @@ export default function CategoryDetailPage({
         </nav>
 
         {/* Hero Card */}
-        <div className="bg-[#0f2942] text-white rounded-xl p-6 sm:p-8 shadow-sm border-l-8 border-amber-500 space-y-3">
+        <div className="bg-[#0f2942] text-white rounded-none p-6 sm:p-8 shadow-sm border-l-8 border-amber-500 space-y-3">
           <div className="flex items-center gap-3">
-            <span className="text-4xl p-2 rounded-xl bg-slate-800 border border-slate-700">
+            <span className="text-4xl p-2 rounded-none bg-slate-800 border border-slate-700">
               {category.emoji}
             </span>
             <div>
@@ -81,30 +81,30 @@ export default function CategoryDetailPage({
           <div className="flex flex-wrap items-center gap-3 pt-3">
             <Link
               href={`/report?category=${category.slug}`}
-              className="min-h-[44px] px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center shadow-2xs"
+              className="min-h-[44px] px-6 py-2.5 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center shadow-2xs"
             >
-              📢 Register a Complaint in this Category →
+               Register a Complaint in this Category →
             </Link>
             <Link
               href="/track"
-              className="min-h-[44px] px-4 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-semibold flex items-center"
+              className="min-h-[44px] px-4 py-2.5 rounded-none bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 text-xs sm:text-sm font-semibold flex items-center"
             >
-              🔍 Track an Existing Complaint
+               Track an Existing Complaint
             </Link>
           </div>
         </div>
 
         {/* Subcategories (Complaint Types) */}
-        <div className="bg-white border border-slate-300 rounded-xl p-6 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-300 rounded-none p-6 shadow-2xs space-y-4">
           <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">
-            📋 Specific Issues Handled Under This Category
+             Specific Issues Handled Under This Category
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {category.subcategories.map((sub, idx) => (
               <div
                 key={sub}
-                className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 flex items-start gap-3"
+                className="p-3.5 rounded-none bg-slate-50 border border-slate-200 flex items-start gap-3"
               >
                 <span className="h-6 w-6 rounded-full bg-[#0f2942] text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                   {idx + 1}
@@ -123,31 +123,31 @@ export default function CategoryDetailPage({
         </div>
 
         {/* Reporting Guidance & Photo Instructions */}
-        <div className="bg-white border border-slate-300 rounded-xl p-6 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-300 rounded-none p-6 shadow-2xs space-y-4">
           <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">
-            📸 Best Practices for Registering This Complaint
+             Best Practices for Registering This Complaint
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                📷 1. Clear Photo Evidence
+                 1. Clear Photo Evidence
               </div>
               <p className="text-slate-600 leading-relaxed">
                 Capture the problem clearly with visible landmarks in the background (e.g. shop signboards, road dividers, chowk names) to assist municipal field teams.
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <div className="font-bold text-slate-900 flex items-center gap-1.5">
-                📍 2. Accurate Pune Location
+                 2. Accurate Pune Location
               </div>
               <p className="text-slate-600 leading-relaxed">
                 If taking a photo on-site, ensure camera location is enabled or confirm the marker pin on our interactive Pune map in Step 5.
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <div className="font-bold text-slate-900 flex items-center gap-1.5">
                 ⏱️ 3. SLA & Escalation
               </div>
@@ -159,9 +159,9 @@ export default function CategoryDetailPage({
         </div>
 
         {/* Urgent Safety Guidance */}
-        <div className="bg-amber-50 border-2 border-amber-400 rounded-xl p-5 shadow-2xs space-y-2">
+        <div className="bg-amber-50 border-2 border-amber-400 rounded-none p-5 shadow-2xs space-y-2">
           <div className="flex items-center gap-2 text-amber-950 font-bold text-sm uppercase tracking-wider">
-            ⚠️ Urgent Safety Notice & Precautions
+             Urgent Safety Notice & Precautions
           </div>
           <p className="text-xs sm:text-sm text-slate-800 leading-relaxed">
             {category.safetyGuidance}
@@ -172,11 +172,11 @@ export default function CategoryDetailPage({
         </div>
 
         {/* Official Department Contacts Section */}
-        <div className="bg-white border border-slate-300 rounded-xl p-6 shadow-2xs space-y-4">
+        <div className="bg-white border border-slate-300 rounded-none p-6 shadow-2xs space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">
-                🏛️ Official Department Ward & Office Directory
+                 Official Department Ward & Office Directory
               </h2>
               <p className="text-xs text-slate-600 mt-0.5">
                 {category.department} • Pune Municipal Corporation
@@ -187,7 +187,7 @@ export default function CategoryDetailPage({
             </span>
           </div>
 
-          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3 text-xs">
+          <div className="bg-slate-50 border border-slate-200 rounded-none p-4 space-y-3 text-xs">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-700">
               <div>
                 <span className="font-semibold text-slate-500">Official Office Phone:</span>{" "}
@@ -225,16 +225,16 @@ export default function CategoryDetailPage({
                 rel="noreferrer"
                 className="px-3 py-1.5 rounded bg-[#0f2942] text-white font-bold text-xs hover:bg-slate-800 transition inline-flex items-center gap-1"
               >
-                🌐 Open pmc.gov.in (Official Website) →
+                 Open pmc.gov.in (Official Website) →
               </a>
             </div>
           </div>
         </div>
 
         {/* NagarSetu Technical Support Box */}
-        <div className="bg-slate-50 border border-slate-300 rounded-xl p-5 space-y-2 text-xs">
+        <div className="bg-slate-50 border border-slate-300 rounded-none p-5 space-y-2 text-xs">
           <div className="font-bold text-slate-900 uppercase">
-            🛠️ NagarSetu Portal Technical Support
+             NagarSetu Portal Technical Support
           </div>
           <p className="text-slate-600 leading-relaxed">
             {NAGARSETU_TECH_SUPPORT.disclaimer}

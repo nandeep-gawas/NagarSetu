@@ -65,7 +65,7 @@ export default function MyComplaintsPage() {
       <CivicHeader onAuthChange={() => loadComplaints()} />
 
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-        <div className="bg-[#0f2942] text-white rounded-xl p-6 shadow-sm border-l-8 border-amber-500 flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-[#0f2942] text-white rounded-none p-6 shadow-sm border-l-8 border-amber-500 flex flex-wrap items-center justify-between gap-4">
           <div>
             <span className="inline-block px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold mb-1.5">
               CITIZEN GRIEVANCE RECORD • PUNE
@@ -78,22 +78,22 @@ export default function MyComplaintsPage() {
           </div>
           <Link
             href="/report"
-            className="min-h-[44px] px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center"
+            className="min-h-[44px] px-5 py-2.5 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm flex items-center"
           >
             + {t("navReport")}
           </Link>
         </div>
 
         {loading && (
-          <div className="bg-white border border-slate-300 rounded-xl p-8 text-sm text-slate-600">
+          <div className="bg-white border border-slate-300 rounded-none p-8 text-sm text-slate-600">
             Loading your complaints...
           </div>
         )}
 
         {!loading && unauthenticated && (
-          <div className="bg-white border-2 border-amber-500 rounded-xl p-6 space-y-3">
+          <div className="bg-white border-2 border-amber-500 rounded-none p-6 space-y-3">
             <h2 className="text-lg font-bold text-slate-900">
-              🔐 Sign In Required to View Your Complaints
+               Sign In Required to View Your Complaints
             </h2>
             <p className="text-xs sm:text-sm text-slate-700">
               Please sign in as a citizen (or use the 1-click Demo Role Switcher
@@ -101,7 +101,7 @@ export default function MyComplaintsPage() {
             </p>
             <Link
               href="/login?returnTo=/my-complaints"
-              className="inline-flex min-h-[44px] px-5 py-2.5 rounded-lg bg-[#0f2942] text-white text-xs font-bold items-center"
+              className="inline-flex min-h-[44px] px-5 py-2.5 rounded-none bg-[#0f2942] text-white text-xs font-bold items-center"
             >
               Sign In Now →
             </Link>
@@ -109,13 +109,13 @@ export default function MyComplaintsPage() {
         )}
 
         {!loading && !unauthenticated && complaints.length === 0 && (
-          <div className="bg-white border border-slate-300 rounded-xl p-8 text-center space-y-3">
+          <div className="bg-white border border-slate-300 rounded-none p-8 text-center space-y-3">
             <div className="text-base font-bold text-slate-900">
               No complaints registered under this account yet.
             </div>
             <Link
               href="/report"
-              className="inline-flex min-h-[44px] px-5 py-2.5 rounded-lg bg-[#0f2942] text-white text-xs font-bold items-center"
+              className="inline-flex min-h-[44px] px-5 py-2.5 rounded-none bg-[#0f2942] text-white text-xs font-bold items-center"
             >
               + {t("navReport")}
             </Link>
@@ -129,7 +129,7 @@ export default function MyComplaintsPage() {
               return (
                 <div
                   key={c.reportId}
-                  className="bg-white border border-slate-300 rounded-xl p-5 shadow-2xs hover:border-slate-400 transition space-y-3"
+                  className="bg-white border border-slate-300 rounded-none p-5 shadow-2xs hover:border-slate-400 transition space-y-3"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
@@ -156,7 +156,7 @@ export default function MyComplaintsPage() {
                         </span>
                         {c.issue.isOverdue && (
                           <span className="px-2 py-0.5 rounded bg-rose-100 text-rose-900 border border-rose-300 text-xs font-bold">
-                            🚨 OVERDUE
+                             OVERDUE
                           </span>
                         )}
                       </div>
@@ -167,22 +167,22 @@ export default function MyComplaintsPage() {
                         {tSubcategory(c.issue.subcategory.name)}
                       </h2>
                       <p className="text-xs text-slate-600 mt-0.5">
-                        📍 {c.issue.publicLocationLabel} • Submitted:{" "}
+                         {c.issue.publicLocationLabel} • Submitted:{" "}
                         {new Date(c.createdAt).toLocaleString()}
                       </p>
                     </div>
 
                     <Link
                       href={`/track/${c.issue.referenceId}`}
-                      className="min-h-[42px] px-4 py-2 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold flex items-center shrink-0"
+                      className="min-h-[42px] px-4 py-2 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white text-xs font-bold flex items-center shrink-0"
                     >
                       {c.issue.status === "RESOLVED_AWAITING_VERIFICATION"
-                        ? "✓ Verify & Confirm Closure →"
+                        ? " Verify & Confirm Closure →"
                         : "Track & Manage →"}
                     </Link>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-800 bg-slate-50 p-3 rounded-lg border border-slate-200 line-clamp-2">
+                  <p className="text-xs sm:text-sm text-slate-800 bg-slate-50 p-3 rounded-none border border-slate-200 line-clamp-2">
                     {c.description}
                   </p>
                 </div>

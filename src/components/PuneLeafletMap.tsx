@@ -213,20 +213,20 @@ export default function PuneLeafletMap({
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t("searchPlaceholder")}
           aria-label={t("searchPlaceholder")}
-          className="flex-1 min-h-[44px] border-2 border-slate-300 rounded-lg px-3.5 py-2 text-sm focus:outline-none focus:border-[#0f2942]"
+          className="flex-1 min-h-[44px] border-2 border-slate-300 rounded-none px-3.5 py-2 text-sm focus:outline-none focus:border-[#0f2942]"
         />
         <button
           type="submit"
           disabled={searching}
-          className="min-h-[44px] px-5 py-2 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
+          className="min-h-[44px] px-5 py-2 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition"
         >
-          {searching ? "..." : `🔍 ${t("btnSearchMap")}`}
+          {searching ? "..." : ` ${t("btnSearchMap")}`}
         </button>
       </form>
 
       {/* Search Results Dropdown */}
       {searchResults.length > 0 && (
-        <div className="bg-white border-2 border-slate-300 rounded-lg divide-y divide-slate-200 shadow-sm">
+        <div className="bg-white border-2 border-slate-300 rounded-none divide-y divide-slate-200 shadow-sm">
           {searchResults.map((r, idx) => (
             <button
               key={idx}
@@ -245,7 +245,7 @@ export default function PuneLeafletMap({
               }}
               className="w-full text-left px-3.5 py-2.5 text-xs sm:text-sm hover:bg-amber-50 font-medium text-slate-800 flex items-center gap-2"
             >
-              <span>📍</span>
+              <span></span>
               <span>{r.display_name}</span>
             </button>
           ))}
@@ -268,15 +268,15 @@ export default function PuneLeafletMap({
                 publicLocationLabel: lm.name,
               })
             }
-            className="min-h-[34px] px-2.5 py-1 rounded-md bg-slate-100 hover:bg-amber-100 text-slate-800 border border-slate-300 text-xs font-medium transition"
+            className="min-h-[34px] px-2.5 py-1 rounded-none bg-slate-100 hover:bg-amber-100 text-slate-800 border border-slate-300 text-xs font-medium transition"
           >
-            📍 {lm.name.split(",")[0]}
+             {lm.name.split(",")[0]}
           </button>
         ))}
       </div>
 
       {/* Interactive Leaflet Map Container */}
-      <div className="rounded-xl overflow-hidden border-2 border-slate-300 shadow-sm bg-slate-100">
+      <div className="rounded-none overflow-hidden border-2 border-slate-300 shadow-sm bg-slate-100">
         <div
           ref={mapContainerRef}
           className="h-80 w-full z-10"
@@ -285,7 +285,7 @@ export default function PuneLeafletMap({
       </div>
 
       {/* Editable Nearby Landmark / Street Label (Never asks for raw lat/lng!) */}
-      <div className="bg-slate-50 border border-slate-300 rounded-lg p-3.5 space-y-1.5">
+      <div className="bg-slate-50 border border-slate-300 rounded-none p-3.5 space-y-1.5">
         <label
           htmlFor="public-location-label-input"
           className="block text-xs font-bold text-slate-700"
@@ -303,7 +303,7 @@ export default function PuneLeafletMap({
               publicLocationLabel: e.target.value,
             })
           }
-          className="w-full min-h-[42px] border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white font-medium text-slate-900 focus:outline-none focus:border-[#0f2942]"
+          className="w-full min-h-[42px] border border-slate-300 rounded-none px-3 py-2 text-sm bg-white font-medium text-slate-900 focus:outline-none focus:border-[#0f2942]"
         />
       </div>
     </div>

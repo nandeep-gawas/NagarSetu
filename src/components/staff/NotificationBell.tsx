@@ -101,7 +101,7 @@ export default function NotificationBell({ onSelectIssue }: NotificationBellProp
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition focus:outline-none"
+        className="relative p-2 rounded-none text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition focus:outline-none"
         aria-label="Staff notifications"
       >
         <Bell className="w-5 h-5" />
@@ -113,7 +113,7 @@ export default function NotificationBell({ onSelectIssue }: NotificationBellProp
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-none shadow-xl border border-slate-200 z-50 overflow-hidden">
           {/* Header */}
           <div className="p-3 bg-slate-50 border-b border-slate-100 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
@@ -159,7 +159,7 @@ export default function NotificationBell({ onSelectIssue }: NotificationBellProp
                     }`}
                   >
                     <div
-                      className={`p-2 rounded-lg flex-shrink-0 mt-0.5 ${
+                      className={`p-2 rounded-none flex-shrink-0 mt-0.5 ${
                         isEscalation
                           ? "bg-rose-100 text-rose-700"
                           : "bg-blue-100 text-blue-700"

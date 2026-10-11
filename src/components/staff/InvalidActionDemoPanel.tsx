@@ -111,12 +111,12 @@ export function InvalidActionDemoPanel({
   };
 
   return (
-    <div className="bg-white border-2 border-rose-300 rounded-2xl shadow-sm p-6 space-y-5">
+    <div className="bg-white border-2 border-rose-300 rounded-none shadow-sm p-6 space-y-5">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rose-100 pb-3">
         <div className="flex items-center gap-2.5">
-          <span className="h-8 w-8 rounded-lg bg-rose-600 text-white font-black flex items-center justify-center text-sm">
-            ⚡
+          <span className="h-8 w-8 rounded-none bg-rose-600 text-white font-black flex items-center justify-center text-sm">
+            
           </span>
           <div>
             <h3 className="text-base font-bold text-slate-900">
@@ -137,7 +137,7 @@ export function InvalidActionDemoPanel({
       </p>
 
       {/* Simulator Form */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-rose-50/50 p-4 rounded-xl border border-rose-200 text-xs">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-rose-50/50 p-4 rounded-none border border-rose-200 text-xs">
         <div>
           <label className="font-bold text-slate-800 block mb-1">
             1. Select Target Grievance:
@@ -145,7 +145,7 @@ export function InvalidActionDemoPanel({
           <select
             value={selectedIssueId}
             onChange={(e) => setSelectedIssueId(e.target.value)}
-            className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-mono font-medium"
+            className="w-full bg-white border border-slate-300 rounded-none px-3 py-2 text-xs font-mono font-medium"
           >
             {issues.map((i) => (
               <option key={i.id} value={i.id}>
@@ -164,7 +164,7 @@ export function InvalidActionDemoPanel({
             onChange={(e) =>
               setScenarioType(e.target.value as typeof scenarioType)
             }
-            className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-medium"
+            className="w-full bg-white border border-slate-300 rounded-none px-3 py-2 text-xs font-medium"
           >
             <option value="citizen_close">
               Illegal Skip: Attempt to jump straight to CLOSED
@@ -184,9 +184,9 @@ export function InvalidActionDemoPanel({
           type="button"
           onClick={handleExecuteIllegalAction}
           disabled={loading || !selectedIssue}
-          className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition active:scale-95"
+          className="px-5 py-2.5 rounded-none bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition active:scale-95"
         >
-          {loading ? "Simulating Refusal..." : "🚨 Deliberately Execute Illegal Action →"}
+          {loading ? "Simulating Refusal..." : " Deliberately Execute Illegal Action →"}
         </button>
       </div>
 
@@ -194,7 +194,7 @@ export function InvalidActionDemoPanel({
       {result && (
         <div className="space-y-3 pt-2">
           <div
-            className={`p-4 rounded-xl border text-xs space-y-2 ${
+            className={`p-4 rounded-none border text-xs space-y-2 ${
               result.status === 400 || result.status === 403 || result.status === 401
                 ? "bg-rose-950 text-rose-100 border-rose-700"
                 : "bg-emerald-950 text-emerald-100 border-emerald-700"
@@ -223,10 +223,10 @@ export function InvalidActionDemoPanel({
 
           {/* New REFUSED Audit Entry Card */}
           {result.refusedAuditEntry && (
-            <div className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-xs text-white space-y-2">
+            <div className="bg-slate-900 border border-slate-700 rounded-none p-4 text-xs text-white space-y-2">
               <div className="flex items-center justify-between text-[11px] text-slate-300">
                 <span className="font-bold text-amber-400">
-                  🛡️ New Immutable Audit Event Created:
+                   New Immutable Audit Event Created:
                 </span>
                 <span className="px-2 py-0.5 rounded bg-rose-600 text-white font-bold text-[10px]">
                   {result.refusedAuditEntry.outcome}

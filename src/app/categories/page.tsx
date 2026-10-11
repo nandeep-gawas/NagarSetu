@@ -20,7 +20,7 @@ export default function CategoriesIndexPage() {
 
       <main className="max-w-6xl mx-auto w-full px-4 py-8 space-y-8 flex-1">
         {/* Banner */}
-        <div className="bg-[#0f2942] text-white rounded-xl p-6 shadow-sm border-l-8 border-amber-500 flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-[#0f2942] text-white rounded-none p-6 shadow-sm border-l-8 border-amber-500 flex flex-wrap items-center justify-between gap-4">
           <div>
             <span className="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold mb-1.5 inline-block">
               PMC MUNICIPAL JURISDICTION TRACKS
@@ -33,9 +33,9 @@ export default function CategoriesIndexPage() {
 
           <Link
             href="/report"
-            className="min-h-[44px] px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center shadow-2xs"
+            className="min-h-[44px] px-5 py-2.5 rounded-none bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm flex items-center shadow-2xs"
           >
-            📢 {t("navReport")} →
+             {t("navReport")} →
           </Link>
         </div>
 
@@ -46,11 +46,11 @@ export default function CategoriesIndexPage() {
             return (
               <div
                 key={cat.slug}
-                className="bg-white border border-slate-300 rounded-xl p-6 shadow-2xs hover:border-[#0f2942] transition flex flex-col justify-between space-y-4"
+                className="bg-white border border-slate-300 rounded-none p-6 shadow-2xs hover:border-[#0f2942] transition flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl p-2 rounded-xl bg-slate-100 border border-slate-200">
+                    <span className="text-3xl p-2 rounded-none bg-slate-100 border border-slate-200">
                       {cat.emoji}
                     </span>
                     <div>
@@ -85,9 +85,9 @@ export default function CategoriesIndexPage() {
                   </div>
 
                   {/* Urgent Safety Guidance */}
-                  <div className="bg-amber-50 border border-amber-300 rounded-lg p-3 text-xs text-amber-950 space-y-1">
+                  <div className="bg-amber-50 border border-amber-300 rounded-none p-3 text-xs text-amber-950 space-y-1">
                     <div className="font-bold flex items-center gap-1">
-                      ⚠️ Urgent Safety Guidance:
+                       Urgent Safety Guidance:
                     </div>
                     <p className="text-[11px] leading-relaxed">
                       {cat.safetyGuidance}
@@ -95,7 +95,7 @@ export default function CategoriesIndexPage() {
                   </div>
 
                   {/* Official Municipal Contacts Section */}
-                  <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs space-y-1.5">
+                  <div className="bg-slate-50 border border-slate-200 rounded-none p-3 text-xs space-y-1.5">
                     <div className="text-slate-700 font-bold flex items-center justify-between">
                       <span>Official PMC Ward / Office Contacts:</span>
                       <span className="text-[10px] bg-slate-200 px-1.5 py-0.5 rounded text-slate-700 font-semibold">
@@ -112,7 +112,7 @@ export default function CategoriesIndexPage() {
                         rel="noreferrer"
                         className="text-[#0f2942] underline font-bold text-xs inline-flex items-center gap-1 hover:text-amber-800"
                       >
-                        🌐 Visit official PMC portal (pmc.gov.in) →
+                         Visit official PMC portal (pmc.gov.in) →
                       </a>
                     </div>
                   </div>
@@ -122,13 +122,13 @@ export default function CategoriesIndexPage() {
                 <div className="pt-3 border-t border-slate-200 flex flex-wrap items-center gap-2">
                   <Link
                     href={`/report?category=${cat.slug}`}
-                    className="min-h-[40px] px-4 py-2 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-xs flex items-center"
+                    className="min-h-[40px] px-4 py-2 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-xs flex items-center"
                   >
                     Register in this Category →
                   </Link>
                   <Link
                     href={`/categories/${cat.slug}`}
-                    className="min-h-[40px] px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center"
+                    className="min-h-[40px] px-3.5 py-2 rounded-none bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs flex items-center"
                   >
                     Detailed Scope & Guidance
                   </Link>
@@ -139,7 +139,7 @@ export default function CategoriesIndexPage() {
         </div>
 
         {/* Technical Support vs Municipal Notice */}
-        <section className="bg-white border border-slate-300 rounded-xl p-5 shadow-2xs space-y-2">
+        <section className="bg-white border border-slate-300 rounded-none p-5 shadow-2xs space-y-2">
           <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800">
             ℹ️ NagarSetu Portal Technical Support Notice
           </h3>

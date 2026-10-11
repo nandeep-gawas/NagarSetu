@@ -113,12 +113,12 @@ export function AiSuggestionPanel({
   };
 
   return (
-    <div className="bg-slate-900 border-2 border-indigo-500/40 rounded-xl p-4 text-white space-y-3 shadow-md">
+    <div className="bg-slate-900 border-2 border-indigo-500/40 rounded-none p-4 text-white space-y-3 shadow-md">
       {/* Header with Mandatory Governance Disclaimers */}
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
         <div className="flex items-center gap-2">
-          <span className="h-6 w-6 rounded-md bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">
-            🤖
+          <span className="h-6 w-6 rounded-none bg-indigo-600 text-white flex items-center justify-center text-xs font-bold">
+            
           </span>
           <div>
             <h4 className="text-xs font-bold text-indigo-300 uppercase tracking-wider">
@@ -136,7 +136,7 @@ export function AiSuggestionPanel({
       </div>
 
       {/* AI Separation Invariant Notice */}
-      <div className="p-2.5 rounded-lg bg-indigo-950/60 border border-indigo-500/30 text-[11px] text-indigo-200 leading-relaxed">
+      <div className="p-2.5 rounded-none bg-indigo-950/60 border border-indigo-500/30 text-[11px] text-indigo-200 leading-relaxed">
         <strong>Mandatory Governance Rule:</strong> AI modules are strictly prohibited from changing complaint status, officer assignment, or SLA deadlines. This panel contains <u>NO buttons</u> that modify issue state or deadlines. An officer must review, manually edit, or copy drafts.
       </div>
 
@@ -166,7 +166,7 @@ export function AiSuggestionPanel({
                 onClick={handleCopySummary}
                 className="text-[10px] text-indigo-400 hover:text-indigo-300 underline"
               >
-                {copiedSummary ? "✓ Copied" : "Copy Summary"}
+                {copiedSummary ? " Copied" : "Copy Summary"}
               </button>
             </div>
             <div className="bg-slate-800/80 p-2.5 rounded border border-slate-700 text-slate-300 text-[11px]">
@@ -185,7 +185,7 @@ export function AiSuggestionPanel({
                     key={idx}
                     className="px-2 py-0.5 rounded bg-slate-800 text-amber-300 border border-slate-700 text-[10px]"
                   >
-                    🔍 {cue}
+                     {cue}
                   </span>
                 ))}
               </div>
@@ -209,9 +209,9 @@ export function AiSuggestionPanel({
             <button
               type="button"
               onClick={handleCopyResponse}
-              className="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 transition active:scale-95"
+              className="px-3 py-1.5 rounded-none bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 transition active:scale-95"
             >
-              {copiedResponse ? "✓ Copied & Audit Logged" : "📋 Copy Draft Response"}
+              {copiedResponse ? " Copied & Audit Logged" : " Copy Draft Response"}
             </button>
           </div>
         </div>

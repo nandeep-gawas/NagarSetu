@@ -122,11 +122,11 @@ function LoginContent() {
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8">
-      <div className="bg-white border border-slate-300 rounded-xl shadow-sm overflow-hidden grid grid-cols-1 md:grid-cols-12">
+      <div className="bg-white border border-slate-300 rounded-none shadow-sm overflow-hidden grid grid-cols-1 md:grid-cols-12">
         {/* Left Form Column */}
         <div className="md:col-span-7 p-6 sm:p-8 border-b md:border-b-0 md:border-r border-slate-200">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-amber-100 text-amber-900 text-xs font-bold mb-3">
-            🏛️ Pune Municipal Corporation • Citizen & Staff Portal
+             Pune Municipal Corporation • Citizen & Staff Portal
           </div>
           <h1 className="text-2xl font-bold text-slate-900">
             {mode === "login"
@@ -146,7 +146,7 @@ function LoginContent() {
                 setMode("login");
                 setError(null);
               }}
-              className={`min-h-[40px] px-4 py-1.5 rounded-lg text-xs font-bold transition ${
+              className={`min-h-[40px] px-4 py-1.5 rounded-none text-xs font-bold transition ${
                 mode === "login"
                   ? "bg-[#0f2942] text-white"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -162,7 +162,7 @@ function LoginContent() {
                 setPassword("");
                 setError(null);
               }}
-              className={`min-h-[40px] px-4 py-1.5 rounded-lg text-xs font-bold transition ${
+              className={`min-h-[40px] px-4 py-1.5 rounded-none text-xs font-bold transition ${
                 mode === "register"
                   ? "bg-[#0f2942] text-white"
                   : "bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -175,9 +175,9 @@ function LoginContent() {
           {error && (
             <div
               role="alert"
-              className="mt-4 p-3 rounded-lg bg-rose-50 border border-rose-300 text-rose-900 text-xs font-semibold"
+              className="mt-4 p-3 rounded-none bg-rose-50 border border-rose-300 text-rose-900 text-xs font-semibold"
             >
-              ⚠️ {error}
+               {error}
             </div>
           )}
 
@@ -197,7 +197,7 @@ function LoginContent() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g., Rohan Deshpande"
-                  className="w-full min-h-[44px] px-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+                  className="w-full min-h-[44px] px-3 py-2 rounded-none border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
                 />
               </div>
             )}
@@ -216,7 +216,7 @@ function LoginContent() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="citizen@example.com"
-                className="w-full min-h-[44px] px-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+                className="w-full min-h-[44px] px-3 py-2 rounded-none border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
               />
             </div>
 
@@ -234,7 +234,7 @@ function LoginContent() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 98XXXXXXXX"
-                  className="w-full min-h-[44px] px-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+                  className="w-full min-h-[44px] px-3 py-2 rounded-none border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
                 />
               </div>
             )}
@@ -253,14 +253,14 @@ function LoginContent() {
                 minLength={6}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full min-h-[44px] px-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
+                className="w-full min-h-[44px] px-3 py-2 rounded-none border border-slate-300 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#0f2942]"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full min-h-[46px] px-4 py-2.5 rounded-lg bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition disabled:opacity-50"
+              className="w-full min-h-[46px] px-4 py-2.5 rounded-none bg-[#0f2942] hover:bg-slate-800 text-white font-bold text-sm transition disabled:opacity-50"
             >
               {loading
                 ? "Signing in..."
@@ -275,7 +275,7 @@ function LoginContent() {
         <div className="md:col-span-5 bg-slate-50 p-6 sm:p-8 flex flex-col justify-between">
           <div>
             <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-              ⚡ 1-Click Hackathon Demo Accounts
+               1-Click Hackathon Demo Accounts
             </h2>
             <p className="text-xs text-slate-600 mt-1 mb-4">
               Click any seeded account below to sign in immediately and return to{" "}
@@ -292,7 +292,7 @@ function LoginContent() {
                   type="button"
                   disabled={loading}
                   onClick={() => quickLogin(u.email)}
-                  className="w-full text-left p-3 rounded-lg bg-white hover:bg-amber-50 border border-slate-300 hover:border-amber-500 transition flex items-center justify-between gap-2 shadow-2xs"
+                  className="w-full text-left p-3 rounded-none bg-white hover:bg-amber-50 border border-slate-300 hover:border-amber-500 transition flex items-center justify-between gap-2 shadow-2xs"
                 >
                   <div>
                     <div className="text-xs font-bold text-slate-900">

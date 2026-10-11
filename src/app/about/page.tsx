@@ -14,7 +14,7 @@ export default function AboutPage() {
 
       <main className="max-w-4xl mx-auto w-full px-4 py-8 space-y-8 flex-1">
         {/* Banner */}
-        <div className="bg-[#0f2942] text-white rounded-xl p-6 sm:p-8 shadow-sm border-l-8 border-amber-500 space-y-3">
+        <div className="bg-[#0f2942] text-white rounded-none p-6 sm:p-8 shadow-sm border-l-8 border-amber-500 space-y-3">
           <span className="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 text-[11px] font-bold inline-block">
             G-02 GOVFIX • PUNE MUNICIPAL GRIEVANCE ENGINE
           </span>
@@ -25,7 +25,7 @@ export default function AboutPage() {
         </div>
 
         {/* Mission & Purpose */}
-        <section className="bg-white border border-slate-300 rounded-xl p-6 shadow-2xs space-y-4">
+        <section className="bg-white border border-slate-300 rounded-none p-6 shadow-2xs space-y-4">
           <h2 className="text-lg font-bold text-slate-900">
             Mission: Accountable Civic Redressal for Pune Citizens
           </h2>
@@ -38,13 +38,13 @@ export default function AboutPage() {
         </section>
 
         {/* Five Architectural Pillars */}
-        <section className="bg-white border border-slate-300 rounded-xl p-6 shadow-2xs space-y-4">
+        <section className="bg-white border border-slate-300 rounded-none p-6 shadow-2xs space-y-4">
           <h2 className="text-lg font-bold text-slate-900">
             Five Core Architectural Pillars
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <strong className="text-slate-900 font-bold block text-sm">
                 1. Server-Enforced Workflow Engine
               </strong>
@@ -53,7 +53,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <strong className="text-slate-900 font-bold block text-sm">
                 2. Automated SLA Deadlines & Escalation
               </strong>
@@ -62,7 +62,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <strong className="text-slate-900 font-bold block text-sm">
                 3. Intelligent Duplicate Detection
               </strong>
@@ -71,7 +71,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5">
               <strong className="text-slate-900 font-bold block text-sm">
                 4. Immutable Audit Trail & RBAC
               </strong>
@@ -80,7 +80,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 md:col-span-2">
+            <div className="p-4 rounded-none bg-slate-50 border border-slate-200 space-y-1.5 md:col-span-2">
               <strong className="text-slate-900 font-bold block text-sm">
                 5. Location Privacy by Design
               </strong>
@@ -92,9 +92,9 @@ export default function AboutPage() {
         </section>
 
         {/* Demo Notice Disclaimer */}
-        <section className="bg-amber-50 border-2 border-amber-400 rounded-xl p-5 shadow-2xs space-y-2 text-xs">
+        <section className="bg-amber-50 border-2 border-amber-400 rounded-none p-5 shadow-2xs space-y-2 text-xs">
           <div className="font-bold text-amber-950 uppercase tracking-wider">
-            ⚖️ Demonstration & Prototype Disclosure
+             Demonstration & Prototype Disclosure
           </div>
           <p className="text-slate-700 leading-relaxed">
             NagarSetu is developed as an academic and hackathon engineering demonstration for G-02 GovFix. All seeded data, ward configurations, and SLA rules represent demonstration models and are not official Pune Municipal Corporation legal commitments.
