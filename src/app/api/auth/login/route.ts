@@ -3,8 +3,14 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { setSessionCookie } from "@/lib/auth";
 import { logAuditEvent } from "@/lib/audit";
+import { checkRateLimit, rateLimitResponse } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(req, "login", 15, 60 * 1000);
+  if (!rl.allowed) {
+    return rateLimitResponse(rl.resetMs);
+  }
+
   try {
     const body = await req.json();
     const { email, password } = body;

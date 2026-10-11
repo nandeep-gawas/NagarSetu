@@ -1817,9 +1817,11 @@ export default function StaffPortalPage() {
 
                   {/* AI Suggestion Panel (Strict Draft Text Only, No Mutation Buttons) */}
                   <AiSuggestionPanel
+                    issueId={selectedIssue.id}
                     issueRef={selectedIssue.publicRef}
                     categoryName={selectedIssue.category.name}
                     descriptions={selectedIssue.reports.map((r) => r.description)}
+                    locationLabel={selectedIssue.publicLocationLabel || undefined}
                   />
 
                   {/* Linked Citizen Reports & Evidence Photos */}

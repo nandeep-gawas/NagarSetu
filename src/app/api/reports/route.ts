@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireRole } from "@/lib/auth";
 import { submitReport } from "@/lib/rules";
+import { checkRateLimit, rateLimitResponse } from "@/lib/rateLimit";
 
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(req, "report", 20, 60 * 1000);
+  if (!rl.allowed) {
+    return rateLimitResponse(rl.resetMs);
+  }
+
   // Anonymous reports are not supported; duplicate detection depends on verified accounts.
   const guard = await requireRole(
     ["CITIZEN", "OFFICER", "SUPERVISOR", "ADMIN"],
