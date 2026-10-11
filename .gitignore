@@ -13,4 +13,6 @@ yarn-error.log*
 *.tsbuildinfo
 storage/
 .env
-
+.cache/
+.config/
+.libreoffice_pdf/

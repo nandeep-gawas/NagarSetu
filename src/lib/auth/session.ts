@@ -79,7 +79,7 @@ export async function setSessionCookie(user: {
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_TTL_SECONDS,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.FORCE_SECURE_COOKIE === "true",
   });
   return token;
 }

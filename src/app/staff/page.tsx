@@ -58,6 +58,7 @@ interface IssueItem {
   status: string;
   priority: string;
   isOverdue: boolean;
+  isDemo?: boolean;
   reportCount: number;
   latitude: number | null;
   longitude: number | null;
@@ -70,11 +71,12 @@ interface IssueItem {
   resolutionEvidencePath?: string | null;
   escalationLevel: number;
   createdAt: string;
-  category: { id: string; name: string; slug: string; department?: { id: string; name: string } };
+  category: { id: string; name: string; slug?: string; department?: { id: string; name: string } };
   subcategory?: { id: string; name: string } | null;
   assignedOfficer?: { id: string; name: string; email: string; role: string } | null;
   reports: Array<{
     id: string;
+    referenceId?: string;
     description: string;
     latitude: number;
     longitude: number;
@@ -135,6 +137,12 @@ interface DepartmentOfficer {
   id: string;
   name: string;
   email: string;
+  departmentId?: string | null;
+  department?: {
+    id: string;
+    name: string;
+    categoryId: string;
+  } | null;
 }
 
 export default function StaffPortalPage() {
@@ -292,6 +300,17 @@ export default function StaffPortalPage() {
 
       if (issueData.ok) {
         setSelectedIssue(issueData.issue);
+        // Pre-select the matching department officer so assignment is 1-click
+        const matchingOfficer = departmentOfficers.find(
+          (off) => off.department?.categoryId === issueData.issue.category?.id
+        );
+        if (matchingOfficer) {
+          setReassignOfficerId(matchingOfficer.id);
+        } else if (user?.role === "OFFICER") {
+          setReassignOfficerId(user.id);
+        } else if (departmentOfficers.length > 0) {
+          setReassignOfficerId(departmentOfficers[0].id);
+        }
       }
       if (transData.ok) {
         setAllowedTransitions(transData.allowedTransitions || []);
@@ -420,17 +439,20 @@ export default function StaffPortalPage() {
     }
   };
 
-  // Supervisor: Reassign Issue
-  const handleReassign = async () => {
-    if (!selectedIssue || !reassignOfficerId) return;
+  // Staff: Assign or Reassign Issue
+  const handleReassign = async (explicitOfficerId?: string) => {
+    const targetOfficerId = explicitOfficerId || reassignOfficerId;
+    if (!selectedIssue || !targetOfficerId) return;
     setIsSubmittingReassign(true);
     try {
       const res = await fetch(`/api/issues/${selectedIssue.id}/assign`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          officerId: reassignOfficerId,
-          reason: reassignReason || "Supervisor reassigned grievance to field officer",
+          officerId: targetOfficerId,
+          reason:
+            reassignReason.trim() ||
+            "Assigned to department field officer for inspection and resolution",
         }),
       });
       const data = await res.json();
@@ -440,7 +462,7 @@ export default function StaffPortalPage() {
         await loadIssueDetail(selectedIssue.id);
         await fetchStaffIssues();
       } else {
-        alert(data.error || "Reassignment failed.");
+        alert(data.error || "Assignment failed.");
       }
     } catch (err: any) {
       alert(err.message || "Network error.");
@@ -623,15 +645,29 @@ export default function StaffPortalPage() {
     REOPENED: "bg-amber-100 text-amber-800 border-amber-300",
   };
 
-  // Filtered issues
+  // Filtered issues (safely matches PMC publicRef, NS citizen referenceId, title, description, category, or location)
   const filteredIssues = issues.filter((issue) => {
     if (filterSearch) {
-      const q = filterSearch.toLowerCase();
+      const q = filterSearch.toLowerCase().trim();
+      const titleText = (
+        issue.title ||
+        issue.reports?.[0]?.description ||
+        issue.subcategory?.name ||
+        ""
+      ).toLowerCase();
+      const matchReportRef = Array.isArray(issue.reports)
+        ? issue.reports.some(
+            (r) =>
+              (r.referenceId || "").toLowerCase().includes(q) ||
+              (r.description || "").toLowerCase().includes(q)
+          )
+        : false;
       const match =
-        issue.publicRef.toLowerCase().includes(q) ||
-        issue.title.toLowerCase().includes(q) ||
-        issue.publicLocationLabel.toLowerCase().includes(q) ||
-        issue.category.name.toLowerCase().includes(q);
+        (issue.publicRef || "").toLowerCase().includes(q) ||
+        titleText.includes(q) ||
+        (issue.publicLocationLabel || "").toLowerCase().includes(q) ||
+        (issue.category?.name || "").toLowerCase().includes(q) ||
+        matchReportRef;
       if (!match) return false;
     }
     return true;
@@ -727,12 +763,16 @@ export default function StaffPortalPage() {
                 <span className="text-xs font-medium text-slate-700 hidden sm:inline truncate max-w-[120px]">
                   {user.name}
                 </span>
-                <Link
-                  href="/api/auth/logout"
-                  className="text-xs text-rose-600 hover:text-rose-800 font-semibold px-2 py-1 rounded hover:bg-rose-50 transition"
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.href = "/login";
+                  }}
+                  className="text-xs text-rose-600 hover:text-rose-800 font-semibold px-2 py-1 rounded-none hover:bg-rose-50 transition"
                 >
                   Logout
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -1062,29 +1102,46 @@ export default function StaffPortalPage() {
                           }
                         }
 
+                        const citizenRef = issue.reports?.[0]?.referenceId;
+                        const isLiveSubmission = issue.isDemo === false;
+
                         return (
                           <tr
                             key={issue.id}
                             className={`hover:bg-slate-50/80 transition cursor-pointer ${
-                              selectedIssueId === issue.id ? "bg-indigo-50/40" : ""
+                              selectedIssueId === issue.id
+                                ? "bg-indigo-50/60"
+                                : isLiveSubmission
+                                  ? "bg-amber-50/40"
+                                  : ""
                             }`}
                             onClick={() => loadIssueDetail(issue.id)}
                           >
                             <td className="py-3 px-4">
-                              <div className="flex items-center gap-1.5">
+                              <div className="flex flex-wrap items-center gap-1.5">
                                 <span className="font-mono font-bold text-indigo-700">
                                   {issue.publicRef}
                                 </span>
+                                {citizenRef && (
+                                  <span className="font-mono text-[10px] px-1.5 py-0.5 bg-slate-100 text-slate-600 border border-slate-200">
+                                    {citizenRef}
+                                  </span>
+                                )}
+                                {isLiveSubmission && (
+                                  <span className="px-1.5 py-0.5 bg-emerald-700 text-white text-[9px] font-bold uppercase tracking-wider">
+                                    NEW SUBMISSION
+                                  </span>
+                                )}
                                 {issue.escalationLevel > 0 && (
-                                  <span className="p-0.5 rounded bg-rose-100 text-rose-700" title={`Escalation Level ${issue.escalationLevel}`}>
+                                  <span className="p-0.5 rounded-none bg-rose-100 text-rose-700" title={`Escalation Level ${issue.escalationLevel}`}>
                                     <Flame className="w-3.5 h-3.5" />
                                   </span>
                                 )}
                               </div>
                               <p className="font-medium text-slate-800 line-clamp-1 max-w-xs mt-0.5">
-                                {issue.title}
+                                {issue.title || issue.reports?.[0]?.description || issue.subcategory?.name}
                               </p>
-                              <span className="text-[10px] text-slate-400">
+                              <span className="text-[10px] text-slate-500">
                                 {issue.publicLocationLabel}
                               </span>
                             </td>
@@ -1100,7 +1157,7 @@ export default function StaffPortalPage() {
 
                             <td className="py-3 px-4">
                               <span
-                                className={`px-2 py-0.5 rounded-full border text-[10px] uppercase font-semibold ${
+                                className={`px-2 py-0.5 rounded-none border text-[10px] uppercase font-semibold ${
                                   priorityColors[issue.priority as keyof typeof priorityColors] || "bg-slate-100"
                                 }`}
                               >
@@ -1110,7 +1167,7 @@ export default function StaffPortalPage() {
 
                             <td className="py-3 px-4">
                               <span
-                                className={`px-2 py-0.5 rounded-full border text-[10px] uppercase font-semibold ${
+                                className={`px-2 py-0.5 rounded-none border text-[10px] uppercase font-semibold ${
                                   statusColors[issue.status] || "bg-slate-100"
                                 }`}
                               >
@@ -1141,12 +1198,14 @@ export default function StaffPortalPage() {
                                   {issue.assignedOfficer.name}
                                 </span>
                               ) : (
-                                <span className="text-amber-600 italic">Unassigned</span>
+                                <span className="text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 border border-amber-200 text-[10px] uppercase">
+                                  Unassigned
+                                </span>
                               )}
                             </td>
 
                             <td className="py-3 px-4 text-center">
-                              <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-bold">
+                              <span className="px-2 py-0.5 bg-slate-100 text-slate-700 rounded-none font-bold">
                                 {issue.reportCount}
                               </span>
                             </td>
@@ -1157,9 +1216,9 @@ export default function StaffPortalPage() {
                                   e.stopPropagation();
                                   loadIssueDetail(issue.id);
                                 }}
-                                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-none bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+                                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-none bg-[#0b3b60] text-white hover:bg-[#082c48] transition"
                               >
-                                Inspect
+                                {issue.assignedOfficer ? "Inspect / Act" : "Assign / Act"}
                                 <ChevronRight className="w-3.5 h-3.5" />
                               </button>
                             </td>
@@ -1640,18 +1699,28 @@ export default function StaffPortalPage() {
             {/* Drawer Header */}
             <div className="p-6 bg-slate-900 text-white flex items-center justify-between sticky top-0 z-10">
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="font-mono text-lg font-bold text-indigo-300">
                     {selectedIssue?.publicRef || "Loading..."}
                   </span>
+                  {selectedIssue?.reports?.[0]?.referenceId && (
+                    <span className="font-mono text-xs px-2 py-0.5 bg-slate-800 text-slate-200 border border-slate-700">
+                      Citizen Ref: {selectedIssue.reports[0].referenceId}
+                    </span>
+                  )}
+                  {selectedIssue?.isDemo === false && (
+                    <span className="px-2 py-0.5 bg-emerald-600 text-white text-[10px] font-bold uppercase">
+                      NEW SUBMISSION
+                    </span>
+                  )}
                   {selectedIssue?.escalationLevel && selectedIssue.escalationLevel > 0 ? (
-                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-rose-500 text-white flex items-center gap-1">
+                    <span className="px-2 py-0.5 rounded-none text-xs font-bold bg-rose-500 text-white flex items-center gap-1">
                       <Flame className="w-3.5 h-3.5" /> Escalated (L{selectedIssue.escalationLevel})
                     </span>
                   ) : null}
                 </div>
                 <h3 className="text-sm font-semibold text-slate-200 mt-1 line-clamp-1">
-                  {selectedIssue?.title}
+                  {selectedIssue?.title || selectedIssue?.reports?.[0]?.description}
                 </h3>
               </div>
 
@@ -1682,7 +1751,7 @@ export default function StaffPortalPage() {
                       <span className="text-[11px] text-slate-500 uppercase font-bold tracking-wider block">
                         Current Status
                       </span>
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${statusColors[selectedIssue.status]}`}>
+                      <span className={`px-2.5 py-1 rounded-none text-xs font-bold border ${statusColors[selectedIssue.status]}`}>
                         {selectedIssue.status.replace(/_/g, " ")}
                       </span>
                     </div>
@@ -1691,7 +1760,7 @@ export default function StaffPortalPage() {
                       <span className="text-[11px] text-slate-500 uppercase font-bold tracking-wider block">
                         Priority
                       </span>
-                      <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${priorityColors[selectedIssue.priority as keyof typeof priorityColors]}`}>
+                      <span className={`px-2.5 py-1 rounded-none text-xs font-bold border ${priorityColors[selectedIssue.priority as keyof typeof priorityColors]}`}>
                         {selectedIssue.priority}
                       </span>
                     </div>
@@ -1717,44 +1786,74 @@ export default function StaffPortalPage() {
                     </div>
                   </div>
 
-                  {/* Supervisor Controls: Reassign & Deadline Modification */}
-                  {(user.role === "SUPERVISOR" || user.role === "ADMIN") && (
-                    <div className="flex items-center gap-2 p-3 bg-purple-50 rounded-none border border-purple-200 text-xs">
-                      <span className="font-semibold text-purple-900">Supervisor Actions:</span>
-                      <button
-                        onClick={() => setShowReassignModal(true)}
-                        className="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded-none font-semibold transition"
-                      >
-                        Reassign Officer
-                      </button>
+                  {/* Staff Assignment & SLA Controls */}
+                  <div className="flex flex-wrap items-center gap-2 p-3 bg-slate-100 rounded-none border border-slate-300 text-xs">
+                    <span className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">
+                      Officer &amp; SLA Controls:
+                    </span>
+                    {(() => {
+                      const matchingDeptOfficer =
+                        departmentOfficers.find(
+                          (off) => off.department?.categoryId === selectedIssue.category.id
+                        ) || (user.role === "OFFICER" ? { id: user.id, name: user.name } : null);
+
+                      return matchingDeptOfficer &&
+                        selectedIssue.assignedOfficer?.id !== matchingDeptOfficer.id ? (
+                        <button
+                          disabled={isSubmittingReassign}
+                          onClick={() => handleReassign(matchingDeptOfficer.id)}
+                          className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-none font-bold transition disabled:opacity-50"
+                        >
+                          {isSubmittingReassign
+                            ? "Assigning..."
+                            : user.role === "OFFICER"
+                              ? "1-Click Assign to Me"
+                              : `1-Click Assign to ${matchingDeptOfficer.name}`}
+                        </button>
+                      ) : null;
+                    })()}
+                    <button
+                      onClick={() => setShowReassignModal(true)}
+                      className="px-3 py-1.5 bg-[#0b3b60] hover:bg-[#082c48] text-white rounded-none font-semibold transition"
+                    >
+                      {selectedIssue.assignedOfficer ? "Reassign Officer" : "Choose Officer to Assign"}
+                    </button>
+                    {(user.role === "SUPERVISOR" || user.role === "ADMIN") && (
                       <button
                         onClick={() => setShowDeadlineModal(true)}
-                        className="px-3 py-1 bg-white hover:bg-purple-100 text-purple-700 border border-purple-300 rounded-none font-semibold transition"
+                        className="px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 border border-slate-300 rounded-none font-semibold transition"
                       >
                         Modify Deadline SLA
                       </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   {/* Reassign Modal */}
                   {showReassignModal && (
                     <div className="p-4 bg-slate-100 rounded-none border border-slate-300 space-y-3">
-                      <h4 className="text-xs font-bold text-slate-900">Reassign Field Officer</h4>
+                      <h4 className="text-xs font-bold text-slate-900">
+                        Assign / Reassign Field Officer ({selectedIssue.category.department?.name || selectedIssue.category.name})
+                      </h4>
                       <select
                         value={reassignOfficerId}
                         onChange={(e) => setReassignOfficerId(e.target.value)}
                         className="w-full text-xs p-2 rounded-none border border-slate-300 bg-white"
                       >
                         <option value="">Select Department Officer...</option>
-                        {departmentOfficers.map((off) => (
-                          <option key={off.id} value={off.id}>
-                            {off.name} ({off.email})
-                          </option>
-                        ))}
+                        {departmentOfficers.map((off) => {
+                          const isSameDept =
+                            off.department?.categoryId === selectedIssue.category.id;
+                          return (
+                            <option key={off.id} value={off.id}>
+                              {isSameDept ? "[MATCHING DEPT] " : ""}
+                              {off.name} ({off.email}) — {off.department?.name || "Municipal"}
+                            </option>
+                          );
+                        })}
                       </select>
                       <input
                         type="text"
-                        placeholder="Mandatory reason for reassignment..."
+                        placeholder="Reason for assignment (optional — defaults to standard dispatch note)..."
                         value={reassignReason}
                         onChange={(e) => setReassignReason(e.target.value)}
                         className="w-full text-xs p-2 rounded-none border border-slate-300"
@@ -1762,16 +1861,16 @@ export default function StaffPortalPage() {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => setShowReassignModal(false)}
-                          className="px-3 py-1 bg-white text-slate-700 rounded text-xs"
+                          className="px-3 py-1 bg-white text-slate-700 rounded-none border border-slate-300 text-xs"
                         >
                           Cancel
                         </button>
                         <button
                           disabled={!reassignOfficerId || isSubmittingReassign}
-                          onClick={handleReassign}
-                          className="px-3 py-1 bg-indigo-600 text-white rounded text-xs font-semibold disabled:opacity-50"
+                          onClick={() => handleReassign()}
+                          className="px-3 py-1 bg-[#0b3b60] text-white rounded-none text-xs font-semibold disabled:opacity-50"
                         >
-                          Confirm Reassignment
+                          {isSubmittingReassign ? "Assigning..." : "Confirm Assignment"}
                         </button>
                       </div>
                     </div>
@@ -1800,14 +1899,14 @@ export default function StaffPortalPage() {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => setShowDeadlineModal(false)}
-                          className="px-3 py-1 bg-white text-slate-700 rounded text-xs"
+                          className="px-3 py-1 bg-white text-slate-700 rounded-none border border-slate-300 text-xs"
                         >
                           Cancel
                         </button>
                         <button
                           disabled={!newDeadlineVal || !deadlineReason || isSubmittingDeadline}
                           onClick={handleDeadlineChange}
-                          className="px-3 py-1 bg-purple-600 text-white rounded text-xs font-semibold disabled:opacity-50"
+                          className="px-3 py-1 bg-purple-600 text-white rounded-none text-xs font-semibold disabled:opacity-50"
                         >
                           Save Revised Deadline
                         </button>
@@ -1836,7 +1935,7 @@ export default function StaffPortalPage() {
                       >
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-semibold text-slate-800">
-                            Report #{idx + 1} &bull; {report.citizen?.name || "Anonymous Citizen"}
+                            Report #{idx + 1} {report.referenceId ? `(${report.referenceId})` : ""} &bull; {report.citizen?.name || "Anonymous Citizen"}
                           </span>
                           <span className="text-slate-400">
                             {new Date(report.submittedAt).toLocaleString("en-IN")}
@@ -1880,7 +1979,7 @@ export default function StaffPortalPage() {
                                   </a>
 
                                   {/* EXIF Warning */}
-                                  <div className="p-2 bg-amber-50 rounded border border-amber-200 text-[10px] text-amber-800">
+                                  <div className="p-2 bg-amber-50 rounded-none border border-amber-200 text-[10px] text-amber-800">
                                     <div className="flex items-center gap-1 font-bold">
                                       <AlertTriangle className="w-3 h-3 text-amber-600" />
                                       Unverified Metadata Warning
@@ -1926,7 +2025,11 @@ export default function StaffPortalPage() {
                             onClick={() => {
                               setActionTransition(tr);
                               setActionReason("");
-                              setActionResolutionNote("");
+                              setActionResolutionNote(
+                                tr.toState === "RESOLVED_AWAITING_VERIFICATION"
+                                  ? "Municipal field team completed on-site repair, cleared hazard, and verified safety compliance."
+                                  : ""
+                              );
                               setActionError(null);
                             }}
                             className={`px-3 py-1.5 rounded-none text-xs font-semibold transition ${
@@ -1979,7 +2082,7 @@ export default function StaffPortalPage() {
                               type="file"
                               accept="image/*"
                               onChange={(e) => setResolutionPhotoFile(e.target.files?.[0] || null)}
-                              className="text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"
+                              className="text-xs text-slate-200 file:mr-2 file:py-1 file:px-2 file:rounded-none file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700"
                             />
                           </div>
                         )}

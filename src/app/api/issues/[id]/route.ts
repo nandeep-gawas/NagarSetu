@@ -110,9 +110,20 @@ export async function GET(
     take: 50,
   });
 
+  const enrichedIssue = {
+    ...issue,
+    title:
+      issue.reports[0]?.description ||
+      issue.subcategory?.name ||
+      issue.category.name,
+    description: issue.reports[0]?.description || "",
+    escalationLevel: issue.escalationEvents?.length || 0,
+  };
+
   return NextResponse.json({
     ok: true,
-    issue,
+    issue: enrichedIssue,
     auditEvents,
   });
 }
+

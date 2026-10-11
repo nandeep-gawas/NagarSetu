@@ -6,6 +6,10 @@ import {
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "file:./dev.db";
+}
+
 const prisma = new PrismaClient();
 
 export const DEMO_PASSWORD = "PuneDemo@2026";
@@ -13,7 +17,16 @@ export const DEMO_RULE_LABEL =
   "Demonstration rules, not official PMC standards";
 
 async function main() {
+  if (process.argv.includes("--if-empty")) {
+    const existingCount = await prisma.category.count();
+    if (existingCount > 0) {
+      console.log("✅ Database already seeded, skipping (--if-empty).");
+      return;
+    }
+  }
+
   console.log("🌱 Seeding NagarSetu (Pune Municipal Grievance Engine)...");
+
 
   // Clean existing records in dependency order
   await prisma.deadlineChange.deleteMany();
@@ -231,28 +244,28 @@ async function main() {
     {
       fromState: "SUBMITTED",
       toState: "VERIFIED",
-      allowedRoles: ["OFFICER", "SUPERVISOR"],
+      allowedRoles: ["OFFICER", "SUPERVISOR", "ADMIN"],
       requiresReason: false,
       sameDepartmentOnly: true,
     },
     {
       fromState: "VERIFIED",
       toState: "ASSIGNED",
-      allowedRoles: ["SUPERVISOR"],
+      allowedRoles: ["OFFICER", "SUPERVISOR", "ADMIN"],
       requiresReason: false,
-      sameDepartmentOnly: false,
+      sameDepartmentOnly: true,
     },
     {
       fromState: "ASSIGNED",
       toState: "IN_PROGRESS",
-      allowedRoles: ["OFFICER"],
+      allowedRoles: ["OFFICER", "SUPERVISOR", "ADMIN"],
       requiresReason: false,
       sameDepartmentOnly: true,
     },
     {
       fromState: "IN_PROGRESS",
       toState: "RESOLVED_AWAITING_VERIFICATION",
-      allowedRoles: ["OFFICER"],
+      allowedRoles: ["OFFICER", "SUPERVISOR", "ADMIN"],
       requiresReason: false,
       sameDepartmentOnly: true,
     },
@@ -266,28 +279,28 @@ async function main() {
     {
       fromState: "RESOLVED_AWAITING_VERIFICATION",
       toState: "REOPENED",
-      allowedRoles: ["CITIZEN", "SUPERVISOR"],
+      allowedRoles: ["CITIZEN", "SUPERVISOR", "ADMIN"],
       requiresReason: true,
       sameDepartmentOnly: false,
     },
     {
       fromState: "REOPENED",
       toState: "ASSIGNED",
-      allowedRoles: ["SUPERVISOR"],
+      allowedRoles: ["OFFICER", "SUPERVISOR", "ADMIN"],
       requiresReason: false,
-      sameDepartmentOnly: false,
+      sameDepartmentOnly: true,
     },
     {
       fromState: "SUBMITTED",
       toState: "REJECTED",
-      allowedRoles: ["SUPERVISOR"],
+      allowedRoles: ["SUPERVISOR", "ADMIN"],
       requiresReason: true,
       sameDepartmentOnly: false,
     },
     {
       fromState: "VERIFIED",
       toState: "REJECTED",
-      allowedRoles: ["SUPERVISOR"],
+      allowedRoles: ["SUPERVISOR", "ADMIN"],
       requiresReason: true,
       sameDepartmentOnly: false,
     },

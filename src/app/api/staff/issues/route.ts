@@ -81,7 +81,11 @@ export async function GET(req: NextRequest) {
     ...(statusParam && statusParam !== "ALL" ? { status: statusParam as IssueStatus } : {}),
     ...(priorityParam && priorityParam !== "ALL" ? { priority: priorityParam as IssuePriority } : {}),
     ...(overdueOnly ? { isOverdue: true } : {}),
-    ...(assignedToMe ? { assignedOfficerId: user.id } : {}),
+    ...(assignedToMe
+      ? {
+          OR: [{ assignedOfficerId: user.id }, { assignedOfficerId: null }],
+        }
+      : {}),
   };
 
   const issues = await prisma.issue.findMany({
@@ -121,31 +125,53 @@ export async function GET(req: NextRequest) {
       },
     },
     orderBy: [
+      { isDemo: "asc" },
+      { createdAt: "desc" },
       { isOverdue: "desc" },
       { priority: "desc" },
       { resolutionDeadline: "asc" },
     ],
   });
 
+  // Enrich issues with computed title, description, and escalationLevel
+  const enrichedIssues = issues.map((issue) => ({
+    ...issue,
+    title:
+      issue.reports[0]?.description ||
+      issue.subcategory?.name ||
+      issue.category.name,
+    description: issue.reports[0]?.description || "",
+    escalationLevel: issue.escalationEvents?.length || 0,
+  }));
+
   // Filter escalated in memory if requested
   const filteredIssues = escalatedOnly
-    ? issues.filter((i) => i.escalationEvents.length > 0)
-    : issues;
+    ? enrichedIssues.filter((i) => i.escalationEvents.length > 0)
+    : enrichedIssues;
 
-  // Officers in this department (for supervisor reassignment dropdown)
-  let departmentOfficers: { id: string; name: string; email: string }[] = [];
-  if (user.role === "SUPERVISOR" || user.role === "ADMIN") {
-    departmentOfficers = await prisma.user.findMany({
-      where: {
-        role: "OFFICER",
-        ...(effectiveCategoryId
-          ? { department: { categoryId: effectiveCategoryId } }
-          : {}),
+  // Officers in this department (for officer/supervisor assignment dropdown)
+  const departmentOfficers = await prisma.user.findMany({
+    where: {
+      role: "OFFICER",
+      ...(effectiveCategoryId
+        ? { department: { categoryId: effectiveCategoryId } }
+        : {}),
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      departmentId: true,
+      department: {
+        select: {
+          id: true,
+          name: true,
+          categoryId: true,
+        },
       },
-      select: { id: true, name: true, email: true },
-      orderBy: { name: "asc" },
-    });
-  }
+    },
+    orderBy: { name: "asc" },
+  });
 
   return NextResponse.json({
     ok: true,
@@ -155,3 +181,4 @@ export async function GET(req: NextRequest) {
     departmentOfficers,
   });
 }
+

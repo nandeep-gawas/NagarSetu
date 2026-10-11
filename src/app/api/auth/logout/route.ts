@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { clearSessionCookie, getSessionUser } from "@/lib/auth";
 import { logAuditEvent } from "@/lib/audit";
 
-export async function POST() {
+async function performLogout() {
   const user = await getSessionUser();
   await clearSessionCookie();
 
@@ -21,6 +21,15 @@ export async function POST() {
       outcome: "ACCEPTED",
     });
   }
+}
 
+export async function POST() {
+  await performLogout();
   return NextResponse.json({ success: true });
 }
+
+export async function GET(req: NextRequest) {
+  await performLogout();
+  return NextResponse.redirect(new URL("/login", req.url));
+}
+

@@ -8,7 +8,7 @@ export async function POST(
 ) {
   const { id } = await context.params;
 
-  const guard = await requireRole(["SUPERVISOR", "ADMIN"], {
+  const guard = await requireRole(["OFFICER", "SUPERVISOR", "ADMIN"], {
     action: "ASSIGN_ISSUE_OFFICER",
     entityType: "Issue",
     entityId: id,
@@ -26,7 +26,17 @@ export async function POST(
       );
     }
 
-    const result = await assignIssue(id, String(officerId), guard.user, reason);
+    const effectiveReason =
+      typeof reason === "string" && reason.trim().length > 0
+        ? reason.trim()
+        : "Assigned to department field officer for inspection and resolution";
+
+    const result = await assignIssue(
+      id,
+      String(officerId),
+      guard.user,
+      effectiveReason
+    );
     if (!result.ok) {
       return NextResponse.json(
         {

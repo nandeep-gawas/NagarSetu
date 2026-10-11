@@ -519,22 +519,30 @@ export async function transition(
     };
   }
 
-  // Resolve officer assignment if transitioning to ASSIGNED
+  // Resolve officer assignment if transitioning to VERIFIED, ASSIGNED, or IN_PROGRESS
   let nextAssignedOfficerId = issue.assignedOfficerId;
-  if (toState === "ASSIGNED") {
+  if (
+    toState === "VERIFIED" ||
+    toState === "ASSIGNED" ||
+    toState === "IN_PROGRESS"
+  ) {
     if (options?.assignedOfficerId) {
       nextAssignedOfficerId = options.assignedOfficerId;
     } else if (!nextAssignedOfficerId) {
-      const deptOfficer = await prisma.user.findFirst({
-        where: {
-          role: "OFFICER",
-          department: {
-            categoryId: issue.categoryId,
+      if (actor.role === "OFFICER") {
+        nextAssignedOfficerId = actor.id;
+      } else {
+        const deptOfficer = await prisma.user.findFirst({
+          where: {
+            role: "OFFICER",
+            department: {
+              categoryId: issue.categoryId,
+            },
           },
-        },
-      });
-      if (deptOfficer) {
-        nextAssignedOfficerId = deptOfficer.id;
+        });
+        if (deptOfficer) {
+          nextAssignedOfficerId = deptOfficer.id;
+        }
       }
     }
   }
@@ -659,7 +667,7 @@ export async function executeWorkflowTransition(req: {
 }
 
 /**
- * Supervisor-only Officer Assignment / Reassignment Engine Function.
+ * Officer / Supervisor / Admin Assignment & Reassignment Engine Function.
  * Enforces same-department officer assignment, preserves history, and records AuditEvent.
  */
 export async function assignIssue(
@@ -693,8 +701,12 @@ export async function assignIssue(
     };
   }
 
-  if (actor.role !== "SUPERVISOR" && actor.role !== "ADMIN") {
-    const msg = `${formatRolePlural(String(actor.role))} are not permitted to assign officers. Supervisor or Admin role is required.`;
+  if (
+    actor.role !== "SUPERVISOR" &&
+    actor.role !== "ADMIN" &&
+    actor.role !== "OFFICER"
+  ) {
+    const msg = `${formatRolePlural(String(actor.role))} are not permitted to assign officers. Staff role is required.`;
     const audit = await logAuditEvent({
       actorType: "USER",
       actorId: actor.id,
@@ -705,7 +717,7 @@ export async function assignIssue(
       oldValue: { actorRole: actor.role },
       newValue: { officerId },
       reason: msg,
-      ruleApplied: "AssignmentPolicy:SupervisorOnly",
+      ruleApplied: "AssignmentPolicy:StaffOnly",
       outcome: "REFUSED",
     });
     return {
@@ -830,10 +842,10 @@ export async function assignIssue(
     };
   }
 
-  // Check supervisor department if supervisor has a specific departmentId
+  // Check actor department if actor has a specific departmentId
   const supervisorDept = await resolveActorDepartment(actor);
   if (supervisorDept && supervisorDept.categoryId !== issue.categoryId) {
-    const msg = `Supervisors can only assign complaints inside their own department (${supervisorDept.name}).`;
+    const msg = `Staff can only assign complaints inside their own department (${supervisorDept.name}).`;
     const audit = await logAuditEvent({
       actorType: "USER",
       actorId: actor.id,
@@ -857,7 +869,9 @@ export async function assignIssue(
   }
 
   const nextStatus: IssueStatus =
-    issue.status === "VERIFIED" || issue.status === "REOPENED"
+    issue.status === "SUBMITTED" ||
+    issue.status === "VERIFIED" ||
+    issue.status === "REOPENED"
       ? "ASSIGNED"
       : issue.status;
 
