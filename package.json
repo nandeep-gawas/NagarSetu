@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev -H 0.0.0.0 -p 3000",
-    "build": "DATABASE_URL=${DATABASE_URL:-file:./dev.db} prisma generate && DATABASE_URL=${DATABASE_URL:-file:./dev.db} prisma db push --skip-generate && DATABASE_URL=${DATABASE_URL:-file:./dev.db} tsx prisma/seed.ts --if-empty && next build",
+    "build": "rm -rf .next/cache && DATABASE_URL=${DATABASE_URL:-file:./dev.db} prisma generate && DATABASE_URL=${DATABASE_URL:-file:./dev.db} prisma db push --skip-generate && DATABASE_URL=${DATABASE_URL:-file:./dev.db} tsx prisma/seed.ts --if-empty && next build",
     "start": "DATABASE_URL=${DATABASE_URL:-file:./dev.db} prisma db push --skip-generate && DATABASE_URL=${DATABASE_URL:-file:./dev.db} tsx prisma/seed.ts --if-empty && next start -H 0.0.0.0 -p ${PORT:-3000}",
     "lint": "next lint",
     "test": "vitest run",
