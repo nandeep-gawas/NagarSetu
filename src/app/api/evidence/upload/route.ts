@@ -24,14 +24,18 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const file = formData.get("file");
 
-    if (!file || !(file instanceof File)) {
+    if (
+      !file ||
+      typeof file === "string" ||
+      typeof (file as Blob).arrayBuffer !== "function"
+    ) {
       return NextResponse.json(
         { ok: false, error: "Please select a valid photo or video file." },
         { status: 400 }
       );
     }
 
-    const mimeType = file.type.toLowerCase();
+    const mimeType = (file.type || "").toLowerCase();
     const isImage = mimeType in ALLOWED_IMAGE_TYPES;
     const isVideo = mimeType in ALLOWED_VIDEO_TYPES;
 
