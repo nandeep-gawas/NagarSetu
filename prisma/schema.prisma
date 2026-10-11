@@ -1,0 +1,323 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CITIZEN
+  OFFICER
+  SUPERVISOR
+  ADMIN
+}
+
+enum IssueStatus {
+  SUBMITTED
+  VERIFIED
+  ASSIGNED
+  IN_PROGRESS
+  RESOLVED_AWAITING_VERIFICATION
+  CLOSED
+  REJECTED
+  REOPENED
+}
+
+enum IssuePriority {
+  NORMAL
+  HIGH
+  CRITICAL
+}
+
+enum PriorityRuleType {
+  OVERDUE_HIGH
+  OVERDUE_CRITICAL
+  REPORT_COUNT
+}
+
+enum AuditActorType {
+  USER
+  SYSTEM
+}
+
+enum AuditOutcome {
+  ACCEPTED
+  REFUSED
+}
+
+model User {
+  id           String      @id @default(cuid())
+  name         String
+  email        String      @unique
+  passwordHash String
+  phone        String?
+  role         Role        @default(CITIZEN)
+  departmentId String?
+  isDemo       Boolean     @default(false)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  department          Department?       @relation(fields: [departmentId], references: [id])
+  assignedIssues      Issue[]           @relation("AssignedOfficer")
+  reports             Report[]
+  notifiedEscalations EscalationEvent[]
+  notifications       Notification[]
+  deadlineChanges     DeadlineChange[]
+
+  @@index([role])
+  @@index([departmentId])
+}
+
+model Department {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  categoryId String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  category Category @relation(fields: [categoryId], references: [id])
+  users    User[]
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  emoji       String
+  description String?
+  createdAt   DateTime @default(now())
+
+  department    Department?
+  subcategories Subcategory[]
+  issues        Issue[]
+  deadlineRules DeadlineRule[]
+}
+
+model Subcategory {
+  id         String   @id @default(cuid())
+  name       String
+  categoryId String
+  createdAt  DateTime @default(now())
+
+  category      Category       @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  issues        Issue[]
+  deadlineRules DeadlineRule[]
+
+  @@unique([categoryId, name])
+  @@index([categoryId])
+}
+
+model Issue {
+  id                         String        @id @default(cuid())
+  publicRef                  String        @unique
+  categoryId                 String
+  subcategoryId              String?
+  status                     IssueStatus   @default(SUBMITTED)
+  priority                   IssuePriority @default(NORMAL)
+  isOverdue                  Boolean       @default(false)
+  isApproachingDeadline      Boolean       @default(false)
+  latitude                   Float
+  longitude                  Float
+  publicLocationLabel        String
+  responseDeadline           DateTime
+  resolutionDeadline         DateTime
+  originalResolutionDeadline DateTime
+  reportCount                Int           @default(1)
+  assignedOfficerId          String?
+  createdAt                  DateTime      @default(now())
+  updatedAt                  DateTime      @updatedAt
+  resolvedAt                 DateTime?
+  closedAt                   DateTime?
+  isDemo                     Boolean       @default(false)
+  resolutionNote             String?
+  resolutionEvidencePath     String?
+  satisfactionRating         Int?
+  satisfactionComment        String?
+  ratedAt                    DateTime?
+
+  category            Category             @relation(fields: [categoryId], references: [id])
+  subcategory         Subcategory?         @relation(fields: [subcategoryId], references: [id])
+  assignedOfficer     User?                @relation("AssignedOfficer", fields: [assignedOfficerId], references: [id])
+  reports             Report[]
+  escalationEvents    EscalationEvent[]
+  notifications       Notification[]
+  deadlineChanges     DeadlineChange[]
+  primaryDuplicates   DuplicateCandidate[] @relation("PrimaryIssue")
+  secondaryDuplicates DuplicateCandidate[] @relation("DuplicateIssue")
+
+  @@index([status])
+  @@index([priority])
+  @@index([isOverdue])
+  @@index([categoryId, subcategoryId])
+  @@index([assignedOfficerId])
+  @@index([resolutionDeadline])
+}
+
+model Report {
+  id             String   @id @default(cuid())
+  referenceId    String   @unique
+  issueId        String
+  citizenId      String
+  description    String
+  language       String   @default("en")
+  latitude       Float
+  longitude      Float
+  submittedAt    DateTime @default(now())
+  idempotencyKey String   @unique
+
+  issue     Issue      @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  citizen   User       @relation(fields: [citizenId], references: [id])
+  evidences Evidence[]
+
+  @@index([issueId])
+  @@index([citizenId])
+  @@index([submittedAt])
+}
+
+model Evidence {
+  id             String    @id @default(cuid())
+  reportId       String
+  filePath       String
+  mimeType       String
+  sizeBytes      Int
+  caption        String?
+  exifLatitude   Float?
+  exifLongitude  Float?
+  exifCapturedAt DateTime?
+  uploadedAt     DateTime  @default(now())
+
+  report Report @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+}
+
+model WorkflowTransition {
+  id                 String      @id @default(cuid())
+  fromState          IssueStatus
+  toState            IssueStatus
+  allowedRoles       Json
+  requiresReason     Boolean     @default(false)
+  sameDepartmentOnly Boolean     @default(true)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  @@unique([fromState, toState])
+}
+
+model DeadlineRule {
+  id              String   @id @default(cuid())
+  categoryId      String
+  subcategoryId   String?
+  severity        String   @default("STANDARD")
+  responseHours   Int
+  resolutionHours Int
+  label           String   @default("Demonstration rules, not official PMC standards")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  category    Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  subcategory Subcategory? @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId, subcategoryId])
+}
+
+model PriorityRule {
+  id                String           @id @default(cuid())
+  ruleType          PriorityRuleType
+  threshold         Int
+  resultingPriority IssuePriority
+  label             String           @default("Demonstration rules, not official PMC standards")
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@index([ruleType])
+}
+
+model AuditEvent {
+  id          String         @id @default(cuid())
+  timestamp   DateTime       @default(now())
+  actorType   AuditActorType
+  actorId     String?
+  actorLabel  String
+  action      String
+  entityType  String
+  entityId    String?
+  oldValue    Json?
+  newValue    Json?
+  reason      String?
+  ruleApplied String?
+  outcome     AuditOutcome
+
+  @@index([timestamp])
+  @@index([entityType, entityId])
+  @@index([actorId])
+  @@index([outcome])
+}
+
+model EscalationEvent {
+  id             String   @id @default(cuid())
+  issueId        String
+  level          Int      @default(1)
+  reason         String
+  notifiedUserId String
+  createdAt      DateTime @default(now())
+
+  issue        Issue @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  notifiedUser User  @relation(fields: [notifiedUserId], references: [id])
+
+  @@index([issueId])
+  @@index([notifiedUserId])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  message   String
+  issueId   String?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  issue Issue? @relation(fields: [issueId], references: [id], onDelete: SetNull)
+
+  @@index([userId, readAt])
+  @@index([issueId])
+}
+
+model DeadlineChange {
+  id          String   @id @default(cuid())
+  issueId     String
+  oldDeadline DateTime
+  newDeadline DateTime
+  actorId     String
+  reason      String
+  createdAt   DateTime @default(now())
+
+  issue Issue @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  actor User  @relation(fields: [actorId], references: [id])
+
+  @@index([issueId])
+  @@index([actorId])
+}
+
+model DuplicateCandidate {
+  id               String    @id @default(cuid())
+  primaryIssueId   String
+  duplicateIssueId String
+  distanceMeters   Float
+  similarityScore  Float
+  status           String    @default("PENDING")
+  resolvedById     String?
+  resolvedAt       DateTime?
+  reason           String?
+  createdAt        DateTime  @default(now())
+
+  primaryIssue   Issue @relation("PrimaryIssue", fields: [primaryIssueId], references: [id], onDelete: Cascade)
+  duplicateIssue Issue @relation("DuplicateIssue", fields: [duplicateIssueId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([primaryIssueId])
+  @@index([duplicateIssueId])
+}
+
