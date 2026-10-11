@@ -47,6 +47,25 @@ export function CivicHeader({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchCategory, setSearchCategory] = useState("all");
   const [fontSizeOffset, setFontSizeOffset] = useState<number>(0);
+  const [isDark, setIsDark] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("nagarsetu_theme");
+      const darkActive =
+        saved === "dark" || document.documentElement.classList.contains("dark");
+      setIsDark(darkActive);
+      document.documentElement.classList.toggle("dark", darkActive);
+    }
+  }, []);
+
+  const toggleDarkMode = (dark: boolean) => {
+    setIsDark(dark);
+    if (typeof window !== "undefined") {
+      document.documentElement.classList.toggle("dark", dark);
+      localStorage.setItem("nagarsetu_theme", dark ? "dark" : "light");
+    }
+  };
 
   const loadSession = async () => {
     try {
@@ -181,6 +200,36 @@ export function CivicHeader({
                 className="px-1.5 py-0.5 hover:bg-slate-100 text-[10px] font-bold"
               >
                 A+
+              </button>
+            </div>
+
+            <span className="text-slate-300">|</span>
+
+            {/* Standard / Dark Mode (High Contrast) Toggle */}
+            <div className="flex items-center border border-slate-300">
+              <button
+                type="button"
+                onClick={() => toggleDarkMode(false)}
+                title="Standard Light Theme"
+                className={`px-2 py-0.5 text-[10px] font-bold rounded-none border-r border-slate-300 transition ${
+                  !isDark
+                    ? "bg-white text-slate-900 underline"
+                    : "bg-slate-200 text-slate-700 hover:bg-white"
+                }`}
+              >
+                Light
+              </button>
+              <button
+                type="button"
+                onClick={() => toggleDarkMode(true)}
+                title="Dark / High Contrast Theme"
+                className={`px-2 py-0.5 text-[10px] font-bold rounded-none transition ${
+                  isDark
+                    ? "bg-slate-950 text-amber-300 underline"
+                    : "bg-slate-900 text-white hover:bg-slate-950"
+                }`}
+              >
+                Dark Mode
               </button>
             </div>
 

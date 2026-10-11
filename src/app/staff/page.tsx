@@ -150,6 +150,25 @@ export default function StaffPortalPage() {
   // Auth & Session
   const [user, setUser] = useState<UserProfile | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("nagarsetu_theme");
+      const darkActive =
+        saved === "dark" || document.documentElement.classList.contains("dark");
+      setIsDark(darkActive);
+      document.documentElement.classList.toggle("dark", darkActive);
+    }
+  }, []);
+
+  const toggleDarkMode = (dark: boolean) => {
+    setIsDark(dark);
+    if (typeof window !== "undefined") {
+      document.documentElement.classList.toggle("dark", dark);
+      localStorage.setItem("nagarsetu_theme", dark ? "dark" : "light");
+    }
+  };
 
   // Active navigation tab
   const [activeTab, setActiveTab] = useState<string>("queue");
@@ -751,6 +770,34 @@ export default function StaffPortalPage() {
                   title="PMC Admin (Rules, Config, Full audit)"
                 >
                    Admin
+                </button>
+              </div>
+
+              {/* Light / Dark Mode Toggle */}
+              <div className="flex items-center border border-slate-300">
+                <button
+                  type="button"
+                  onClick={() => toggleDarkMode(false)}
+                  title="Standard Light Theme"
+                  className={`px-2 py-1 text-[11px] font-bold rounded-none border-r border-slate-300 transition ${
+                    !isDark
+                      ? "bg-white text-slate-900 underline"
+                      : "bg-slate-200 text-slate-700 hover:bg-white"
+                  }`}
+                >
+                  Light
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleDarkMode(true)}
+                  title="Dark / High Contrast Theme"
+                  className={`px-2 py-1 text-[11px] font-bold rounded-none transition ${
+                    isDark
+                      ? "bg-slate-950 text-amber-300 underline"
+                      : "bg-slate-900 text-white hover:bg-slate-950"
+                  }`}
+                >
+                  Dark Mode
                 </button>
               </div>
 
