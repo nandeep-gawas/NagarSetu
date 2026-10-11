@@ -131,7 +131,6 @@ The citizen intake flow is a resilient 7-step wizard that functions with or with
   - `TRIAGED` &rarr; `ASSIGNED`
   - `ASSIGNED` &rarr; `IN_PROGRESS`
   - `IN_PROGRESS` &rarr; `RESOLVED_AWAITING_VERIFICATION` (Requires resolution note and photo proof)
-* **AI Copilot Suggestions**: Drafts departmental response notes and verifies subcategory tagging.
 
 ### Supervisor Workspace
 * **Overdue & Escalation Queue**: Instant view of tickets where SLA has breached.

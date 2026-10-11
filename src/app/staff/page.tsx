@@ -35,7 +35,6 @@ import {
 } from "lucide-react";
 import { CivicHeader } from "@/components/CivicHeader";
 import NotificationBell from "@/components/staff/NotificationBell";
-import { AiSuggestionPanel } from "@/components/staff/AiSuggestionPanel";
 import { InvalidActionDemoPanel } from "@/components/staff/InvalidActionDemoPanel";
 import PerformanceCharts from "@/components/staff/PerformanceCharts";
 import DuplicateReviewQueue from "@/components/staff/DuplicateReviewQueue";
@@ -1913,15 +1912,6 @@ export default function StaffPortalPage() {
                       </div>
                     </div>
                   )}
-
-                  {/* AI Suggestion Panel (Strict Draft Text Only, No Mutation Buttons) */}
-                  <AiSuggestionPanel
-                    issueId={selectedIssue.id}
-                    issueRef={selectedIssue.publicRef}
-                    categoryName={selectedIssue.category.name}
-                    descriptions={selectedIssue.reports.map((r) => r.description)}
-                    locationLabel={selectedIssue.publicLocationLabel || undefined}
-                  />
 
                   {/* Linked Citizen Reports & Evidence Photos */}
                   <div className="space-y-4">

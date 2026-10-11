@@ -130,10 +130,7 @@ NagarSetu incorporates artificial intelligence while strictly upholding municipa
    - Guides citizens through multi-step grievance filing in natural conversation.
    - Connected to Gemini API (`POST /api/assistant`) with an offline rule-based fallback ensuring 100% demo uptime even without API keys.
    - Browser Web Speech API integration (`en-IN`, `hi-IN`, `mr-IN`) with privacy transparency disclosure (voice audio is not recorded on server).
-2. **Staff AI Suggestion Panel (`AiSuggestionPanel.tsx`):**
-   - Synthesizes duplicate reports, detects safety cues, and drafts citizen responses.
-   - Clearly labeled: `AI suggestion, not an official action`.
-   - **Strict Governance Invariant:** AI modules have **zero access** to state transition functions, assignment tables, or SLA deadlines. Any copy action is logged to `AuditEvent` (`STAFF_COPIED_AI_SUGGESTION`).
+   - **Strict Governance Invariant:** AI modules have **zero access** to state transition functions, assignment tables, or SLA deadlines.
 
 ---
 
